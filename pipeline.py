@@ -45,8 +45,41 @@ def save_details(details):
         json.dump(details, f, indent=2)
 
 # ---------------------------------------------------------------------------
-# MCQ definitions — based on "The Illumina Run Folder" section of README.md
+# MCQ definitions — based on README background sections
 # ---------------------------------------------------------------------------
+
+NGS_INTRO_QUESTIONS = [
+    {
+        "question": "In NGS, what does coverage (depth) refer to?",
+        "options": [
+            "The number of unique genes included in a panel",
+            "How many times a genomic position is sequenced",
+            "The percentage of samples that pass QC in a batch",
+            "The number of cycles used for index reads",
+        ],
+        "correct": 1,
+    },
+    {
+        "question": "What is paired-end sequencing?",
+        "options": [
+            "Sequencing both ends of the same DNA fragment",
+            "Sequencing two samples on the same flow cell lane",
+            "Running the same sample on two instruments",
+            "Using two index reads instead of one",
+        ],
+        "correct": 0,
+    },
+    {
+        "question": "What does a Q30 base quality score indicate?",
+        "options": [
+            "About 1 error in 10 bases",
+            "About 1 error in 100 bases",
+            "About 1 error in 1000 bases",
+            "No base-calling errors",
+        ],
+        "correct": 2,
+    },
+]
 
 QUESTIONS = [
     {
@@ -221,6 +254,43 @@ def run_quiz(details):
     save_details(details)
 
 
+def run_ngs_intro_quiz(details):
+    total = len(NGS_INTRO_QUESTIONS)
+    if details.get("ngs_mcq_complete") and details.get("ngs_mcq_total") == total:
+        score = details.get("ngs_mcq_score", "?")
+        print(c("─" * 52, DIM))
+        print(c(f"\n  NGS intro quiz already completed ", DIM) +
+              c(f"({score}/{total})", GREEN) +
+              c(" — skipping.\n", DIM))
+        print(c("─" * 52, DIM))
+        return
+
+    print(c("─" * 52, DIM))
+    print(c("\n  First, open the README and read the", DIM))
+    print(c("  'Next Generation Sequencing (NGS)' section.\n", BOLD))
+    if details.get("ngs_mcq_complete"):
+        print(c("  The NGS quiz has been updated — you'll run the latest version.\n", DIM))
+    else:
+        print(c("  Then answer a few quick warm-up questions.\n", DIM))
+
+    response = input(c("  Ready? Press Y to start: ", YELLOW)).strip().lower()
+    if response != "y":
+        print(c("\n  Come back when you're ready. Good luck!\n", DIM))
+        sys.exit(0)
+
+    score = 0
+    for i, q in enumerate(NGS_INTRO_QUESTIONS, 1):
+        correct = ask_question(i, total, q["question"], q["options"], q["correct"])
+        if correct:
+            score += 1
+
+    details["ngs_mcq_complete"] = True
+    details["ngs_mcq_score"] = score
+    details["ngs_mcq_total"] = total
+    details.pop("ngs_mcq_correct", None)
+    save_details(details)
+
+
 # ---------------------------------------------------------------------------
 # Banner, name, samplesheet, challenge
 # ---------------------------------------------------------------------------
@@ -248,12 +318,20 @@ def get_name(details):
     return name
 
 
+def print_task_header(task_number, task_title):
+    print(c("\n" + "═" * 52, CYAN, DIM))
+    print(c(f"  TASK {task_number}: {task_title}", CYAN, BOLD))
+    print(c("═" * 52, CYAN, DIM))
+
+
 def validate_samplesheet(details):
+    print_task_header(1, "Fix the SampleSheet")
+
     if details.get("task1_complete"):
-        print(c("\n[ TASK 1 ]", CYAN, BOLD) + c(" Already complete — skipping.\n", DIM))
+        print(c("  Already complete — skipping.\n", DIM))
         return True
 
-    print(c("\n[ TASK 1 ]", CYAN, BOLD) + c(" Validating SampleSheet.csv...", BOLD))
+    print(c("  Validating SampleSheet.csv...\n", BOLD))
 
     errors = []
     in_data_section = False
@@ -278,8 +356,8 @@ def validate_samplesheet(details):
                   f"Sample_ID {c(repr(sample_id), YELLOW)} contains a space.")
             print(c(f"           Use underscores instead — e.g. '{sample_id.replace(' ', '_')}'\n", DIM))
         print(c(f"  Task 1: Fix the error in ", DIM) +
-              c(SAMPLESHEET_PATH, BOLD) +
-              c(" and re-run the script.\n", DIM))
+              c(SAMPLESHEET_PATH, BOLD) + c(".\n", DIM))
+        print(c("          See README.md > '🟩 Task 1 — Fix the SampleSheet' for instructions.\n", DIM))
         return None
 
     samples = []
@@ -307,7 +385,8 @@ def validate_samplesheet(details):
 
 
 def print_challenge():
-    print(c("\n[ Step 2 ]", CYAN, BOLD) + c(" Variant calling complete.\n", BOLD))
+    print_task_header(2, "Inspect the VCF")
+    print(c("  Variant calling complete.\n", BOLD))
     print(c("  The file ", DIM) + c(VCF_PATH, BOLD) +
           c(" contains variant calls for all samples.\n", DIM))
 
@@ -344,6 +423,7 @@ if __name__ == "__main__":
     if not details.get("mcq_complete"):
         print(c(f"\n  Hello, {name}! Let's get started.\n", GREEN))
 
+    run_ngs_intro_quiz(details)
     run_quiz(details)
 
     samples = validate_samplesheet(details)

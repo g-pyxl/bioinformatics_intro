@@ -15,9 +15,9 @@
 
 - [Prerequisites](#prerequisites)
 - [Setup](#setup)
-- [Background](#background)
-- [Task 1 — Fix the SampleSheet](#task-1--fix-the-samplesheet)
-- [Task 2 — Inspect the VCF](#task-2--inspect-the-vcf)
+- [📚 Background Reading](#background-reading)
+- [🟩 Task 1 — Fix the SampleSheet](#task-1--fix-the-samplesheet)
+- [🟩 Task 2 — Inspect the VCF](#task-2--inspect-the-vcf)
 
 <p align="center">
   <img src="assets/divider.svg" width="100%" alt=""/>
@@ -28,25 +28,6 @@
 This exercise is hosted on **GitHub** and runs entirely in the browser — no local software installation required. You will need:
 
 - A free **GitHub account** — [create one here](https://github.com/signup) if you don't already have one.
-
-### What is GitHub?
-
-GitHub is a web-based platform for hosting, sharing, and collaborating on code. It is built on top of **Git**, a version control system that tracks changes to files over time — letting you see who changed what, when, and why, and roll back to earlier versions if something goes wrong.
-
-At its core, GitHub stores code in **repositories** (repos): collections of files, their full history, and any associated discussion or documentation.
-
-### Why does GitHub matter in clinical bioinformatics?
-
-In a clinical setting, the software used to analyse patient samples must be:
-
-| Requirement | Why it matters |
-|---|---|
-| **Auditable** | Every change to the analysis pipeline must be traceable. Git commit history provides a complete record of what code was running at any given time. |
-| **Version-controlled** | If a pipeline is updated, older results can be reproduced exactly by checking out the previous version of the code. |
-| **Validated before deployment** | GitHub's pull request and code review workflow ensures changes are reviewed and approved before they affect patient results. |
-| **Reproducible** | By pinning software versions and storing pipeline code in a repo, analyses can be rerun identically weeks or months later. |
-
-Most clinical bioinformatics teams use GitHub (or a similar platform such as GitLab) as the central system of record for their pipelines, reference files, and validation evidence.
 
 [↑ Back to top](#contents)
 
@@ -61,7 +42,13 @@ Most clinical bioinformatics teams use GitHub (or a similar platform such as Git
 2. **Open a Codespace** — on your forked repo, click the green **Code** button, select the **Codespaces** tab, and click **Create codespace on main**.
    Alternatively, navigate directly to: `https://codespaces.new/<your-username>/bioinformatics_intro`
 
-3. **Open a terminal** — once the Codespace has loaded, open a terminal via `Terminal > New Terminal`.
+3. **Start the exercise** — in the terminal that opens with your Codespace, run [`pipeline.py`](pipeline.py):
+
+```bash
+python pipeline.py
+```
+
+Then follow the on-screen prompts and complete each exercise in this README.
 
 [↑ Back to top](#contents)
 
@@ -69,7 +56,61 @@ Most clinical bioinformatics teams use GitHub (or a similar platform such as Git
   <img src="assets/divider.svg" width="100%" alt=""/>
 </p>
 
-## Background
+## 📚 BACKGROUND READING
+
+<details>
+<summary><strong>What is GitHub?</strong></summary>
+
+<br>
+
+GitHub is a web-based platform for hosting, sharing, and collaborating on code. It is built on top of **Git**, a version control system that tracks changes to files over time — letting you see who changed what, when, and why, and roll back to earlier versions if something goes wrong.
+
+At its core, GitHub stores code in **repositories** (repos): collections of files, their full history, and any associated discussion or documentation.
+
+#### Why does GitHub matter in clinical bioinformatics?
+
+In a clinical setting, the software used to analyse patient samples must be:
+
+| Requirement | Why it matters |
+|---|---|
+| **Auditable** | Every change to the analysis pipeline must be traceable. Git commit history provides a complete record of what code was running at any given time. |
+| **Version-controlled** | If a pipeline is updated, older results can be reproduced exactly by checking out the previous version of the code. |
+| **Validated before deployment** | GitHub's pull request and code review workflow ensures changes are reviewed and approved before they affect patient results. |
+| **Reproducible** | By pinning software versions and storing pipeline code in a repo, analyses can be rerun identically weeks or months later. |
+
+Most clinical bioinformatics teams use GitHub (or a similar platform such as GitLab) as the central system of record for their pipelines, reference files, and validation evidence.
+
+</details>
+
+<details>
+<summary><strong>Next Generation Sequencing (NGS)</strong></summary>
+
+<br>
+
+**Next Generation Sequencing (NGS)** is a group of high-throughput methods that can sequence millions of DNA fragments in parallel. Compared with older single-fragment methods (such as Sanger sequencing), NGS produces much more data per run and enables broad tests such as gene panels, exomes, genomes, and targeted amplicon assays.
+
+#### Typical NGS workflow
+
+| Stage | What happens |
+|---|---|
+| Sample preparation | DNA (or RNA converted to cDNA) is extracted from the specimen and converted into a sequencing library by adding adapters and, where needed, sample indexes (barcodes). |
+| Sequencing run | Library fragments bind to a flow cell and are sequenced cycle-by-cycle. The instrument captures signals and converts them into base calls with quality scores. |
+| Primary analysis | Raw instrument output is converted into FASTQ files, then demultiplexed into one file pair per sample if multiple samples were pooled. |
+| Secondary analysis | Reads are aligned to a reference genome and analysed for variants (SNVs, indels, CNVs, etc.), depending on the test design. |
+| Interpretation & reporting | Detected variants are filtered, annotated, and interpreted in a clinical context before a report is issued. |
+
+#### Core terms
+
+| Term | Meaning |
+|---|---|
+| Read | One sequenced DNA fragment (or one end of a fragment in paired-end sequencing). |
+| Paired-end sequencing | Sequencing both ends of the same DNA fragment, improving alignment and structural resolution. |
+| Coverage (depth) | How many times a base is sequenced; higher coverage usually increases confidence in variant calls. |
+| Q score | A Phred quality score representing confidence in each base call (e.g. Q30 means 1 in 1000 error probability). |
+
+NGS underpins modern clinical genomics because it can process many samples and many genomic targets efficiently, while still supporting traceability and quality control throughout the pipeline.
+
+</details>
 
 <details>
 <summary><strong>The Illumina Run Folder</strong></summary>
@@ -125,7 +166,7 @@ SampleSheet errors are a common cause of pipeline failures. A single typo in a s
   <img src="assets/divider.svg" width="100%" alt=""/>
 </p>
 
-## Task 1 — Fix the SampleSheet
+## 🟩 Task 1 — Fix the SampleSheet
 
 The `SampleSheet.csv` in the run folder contains a deliberate error — the kind of mistake that is easy to make and quick to miss.
 
@@ -134,17 +175,7 @@ The `SampleSheet.csv` in the run folder contains a deliberate error — the kind
 
 <br>
 
-**Step 1** — Run the pipeline script from the terminal:
-
-```bash
-python pipeline.py
-```
-
-The script will ask for your name, then quiz you on the run folder background before proceeding. It will then validate the SampleSheet and **fail with an error message** telling you exactly which line is wrong.
-
----
-
-**Step 2** — Open the SampleSheet in the editor:
+**Step 1** — Open the SampleSheet in the editor:
 
 ```
 240315_M00123_0042_000000000-ABCDE/SampleSheet.csv
@@ -152,17 +183,17 @@ The script will ask for your name, then quiz you on the run folder background be
 
 Navigate to the `[Data]` section at the bottom. Look carefully at the `Sample_ID` column.
 
+---
+
+**Step 2** — Fix the invalid sample ID:
+
 > **Hint:** Illumina sample IDs must not contain spaces. Replace any space with an underscore (`_`).
 
 ---
 
-**Step 3** — Save the file and re-run the script:
+**Step 3** — Save the file.
 
-```bash
-python pipeline.py
-```
-
-The validation should now pass and the script will list the samples found in the run.
+The next run will validate the SampleSheet and list the samples found in the run.
 
 </details>
 
@@ -172,7 +203,7 @@ The validation should now pass and the script will list the samples found in the
   <img src="assets/divider.svg" width="100%" alt=""/>
 </p>
 
-## Task 2 — Inspect the VCF
+## 🟩 Task 2 — Inspect the VCF
 
 The file `output/variants.vcf` contains pre-computed variant calls for the samples in this run. This is a [Variant Call Format (VCF)](https://samtools.github.io/hts-specs/VCFv4.2.pdf) file — the standard format for representing genetic variants identified from sequencing data.
 
