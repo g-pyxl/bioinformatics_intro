@@ -1,4 +1,4 @@
-# Bioinformatics Intro Exercise - Find the variant
+# Bioinformatics Intro Exercise - Find the variant 🧬
 
 > A hands-on introduction to clinical bioinformatics concepts for prospective applicants. No prior bioinformatics knowledge required.
 
@@ -110,7 +110,7 @@ SampleSheet errors are a common cause of pipeline failures. A single typo in a s
 
 ---
 
-## Task 1 — Fix the SampleSheet
+## TASK 1 — Fix the SampleSheet 🟩
 
 The `SampleSheet.csv` in the run folder contains a deliberate error — the kind of mistake that is easy to make and quick to miss.
 
@@ -155,7 +155,7 @@ The validation should now pass and the script will list the samples found in the
 
 ---
 
-## Task 2 — Inspect the VCF
+## Task 2 — Inspect the VCF 🟩
 
 The file `output/variants.vcf` contains pre-computed variant calls for the samples in this run. This is a [Variant Call Format (VCF)](https://samtools.github.io/hts-specs/VCFv4.2.pdf) file — the standard format for representing genetic variants identified from sequencing data.
 
