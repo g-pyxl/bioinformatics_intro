@@ -56,7 +56,7 @@ Most clinical bioinformatics teams use GitHub (or a similar platform such as Git
 
 ---
 
-## Background
+## BACKGROUND 📖
 
 <details>
 <summary><strong>The Illumina Run Folder</strong></summary>

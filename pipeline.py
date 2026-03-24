@@ -6,6 +6,7 @@ A simulated sequencing pipeline introducing key concepts.
 
 import sys
 import os
+import json
 import select
 import tty
 import termios
@@ -25,6 +26,23 @@ def c(text, *codes):
 RUN_FOLDER = "240315_M00123_0042_000000000-ABCDE"
 SAMPLESHEET_PATH = os.path.join(RUN_FOLDER, "SampleSheet.csv")
 VCF_PATH = os.path.join("output", "variants.vcf")
+DETAILS_PATH = "details.json"
+
+
+# ---------------------------------------------------------------------------
+# Save / load progress
+# ---------------------------------------------------------------------------
+
+def load_details():
+    if os.path.exists(DETAILS_PATH):
+        with open(DETAILS_PATH) as f:
+            return json.load(f)
+    return {}
+
+
+def save_details(details):
+    with open(DETAILS_PATH, "w") as f:
+        json.dump(details, f, indent=2)
 
 # ---------------------------------------------------------------------------
 # MCQ definitions — based on "The Illumina Run Folder" section of README.md
@@ -158,7 +176,17 @@ def ask_question(number, total, question, options, correct_index):
     return correct
 
 
-def run_quiz():
+def run_quiz(details):
+    if details.get("mcq_complete"):
+        score = details.get("mcq_score", "?")
+        total = len(QUESTIONS)
+        print(c("─" * 52, DIM))
+        print(c(f"\n  Quiz already completed ", DIM) +
+              c(f"({score}/{total})", GREEN) +
+              c(" — skipping.\n", DIM))
+        print(c("─" * 52, DIM))
+        return
+
     print(c("─" * 52, DIM))
     print(c("\n  Before continuing, open the README and read the", DIM))
     print(c("  'The Illumina Run Folder' section.\n", BOLD))
@@ -188,6 +216,10 @@ def run_quiz():
 
     print(c("─" * 52, DIM))
 
+    details["mcq_complete"] = True
+    details["mcq_score"] = score
+    save_details(details)
+
 
 # ---------------------------------------------------------------------------
 # Banner, name, samplesheet, challenge
@@ -202,15 +234,25 @@ def print_banner():
 """, CYAN, BOLD))
 
 
-def get_name():
+def get_name(details):
+    if details.get("name"):
+        print(c(f"\n  Welcome back, {details['name']}!\n", GREEN))
+        return details["name"]
+
     name = input(c("\n  Please enter your name: ", YELLOW)).strip()
     if not name:
         print(c("  Name cannot be empty.", RED))
         sys.exit(1)
+    details["name"] = name
+    save_details(details)
     return name
 
 
-def validate_samplesheet():
+def validate_samplesheet(details):
+    if details.get("task1_complete"):
+        print(c("\n[ TASK 1 ]", CYAN, BOLD) + c(" Already complete — skipping.\n", DIM))
+        return True
+
     print(c("\n[ TASK 1 ]", CYAN, BOLD) + c(" Validating SampleSheet.csv...", BOLD))
 
     errors = []
@@ -258,6 +300,9 @@ def validate_samplesheet():
           c(f" — {len(samples)} sample(s) found:\n", GREEN))
     for sample_id, sample_name in samples:
         print(c(f"    ✓  {sample_id}", GREEN) + c(f"  ({sample_name})", DIM))
+
+    details["task1_complete"] = True
+    save_details(details)
     return samples
 
 
@@ -292,11 +337,16 @@ def print_challenge():
 
 if __name__ == "__main__":
     print_banner()
-    run_quiz()
-    name = get_name()
-    print(c(f"\n  Hello, {name}! Let's get started.\n", GREEN))
 
-    samples = validate_samplesheet()
+    details = load_details()
+
+    name = get_name(details)
+    if not details.get("mcq_complete"):
+        print(c(f"\n  Hello, {name}! Let's get started.\n", GREEN))
+
+    run_quiz(details)
+
+    samples = validate_samplesheet(details)
     if samples is None:
         sys.exit(1)
 
