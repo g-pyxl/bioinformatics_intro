@@ -1,0 +1,114 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 830 140" width="830" height="140">
+  <title>Bioinformatics Intro Exercise — Clinical Bioinformatics Training</title>
+  <defs>
+    <style>
+      .r1 { animation: scroll 22s  0s   linear infinite }
+      .r2 { animation: scroll 17s -6s   linear infinite }
+      .r3 { animation: scroll 29s -14s  linear infinite }
+      .r4 { animation: scroll 15s -4s   linear infinite }
+      .r5 { animation: scroll 36s -20s  linear infinite }
+      .r6 { animation: scroll 20s -10s  linear infinite }
+      .r7 { animation: scroll 25s -7s   linear infinite }
+      .r8 { animation: scroll 18s -15s  linear infinite }
+      @keyframes scroll {
+        from { transform: translateX(0); }
+        to   { transform: translateX(-1200px); }
+      }
+      .t1 { animation: rise 1s 0.3s ease-out both }
+      .t2 { animation: rise 1s 0.7s ease-out both }
+      @keyframes rise {
+        from { opacity: 0; transform: translateY(6px); }
+        to   { opacity: 1; transform: translateY(0);   }
+      }
+    </style>
+
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0%"   stop-color="#0d1117"/>
+      <stop offset="100%" stop-color="#1c2128"/>
+    </linearGradient>
+
+    <linearGradient id="ac" x1="0" y1="0" x2="1" y2="0" gradientUnits="objectBoundingBox">
+      <stop offset="0%"   stop-color="#238636"/>
+      <stop offset="40%"  stop-color="#1f6feb"/>
+      <stop offset="100%" stop-color="#8957e5"/>
+    </linearGradient>
+
+    <clipPath id="outer">
+      <rect width="830" height="140" rx="8"/>
+    </clipPath>
+  </defs>
+
+  <g clip-path="url(#outer)">
+    <!-- Background -->
+    <rect width="830" height="140" fill="url(#bg)"/>
+
+    <!-- Scrolling DNA rows — each has two identical copies side by side for seamless looping -->
+    <g font-family="'Courier New',Courier,monospace" font-size="11">
+
+      <!-- y=14 · blue · 22s -->
+      <g class="r1" opacity=".20" fill="#58a6ff">
+        <text y="14">ATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCG</text>
+        <text x="1200" y="14">ATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCG</text>
+      </g>
+
+      <!-- y=28 · green · 17s -->
+      <g class="r2" opacity=".15" fill="#3fb950">
+        <text y="28">GCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTA</text>
+        <text x="1200" y="28">GCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTA</text>
+      </g>
+
+      <!-- y=42 · amber · 29s -->
+      <g class="r3" opacity=".13" fill="#d29922">
+        <text y="42">TTAACCGGTTAACCGGTTAACCGGTTAACCGGTTAACCGGTTAACCGGTTAACCGGTTAACCGGTTAACCGGTTAACCGGTTAACCGGTTAACCGGTTAACCGGTTAACCGGTTAACCGGTTAACCGGTTAACCGGTTAACCGGTTAACCGGTTAACCGGTTAACCGGTTAACCGGTTAACCGGTTAACCGGTTAACCGG</text>
+        <text x="1200" y="42">TTAACCGGTTAACCGGTTAACCGGTTAACCGGTTAACCGGTTAACCGGTTAACCGGTTAACCGGTTAACCGGTTAACCGGTTAACCGGTTAACCGGTTAACCGGTTAACCGGTTAACCGGTTAACCGGTTAACCGGTTAACCGGTTAACCGGTTAACCGGTTAACCGGTTAACCGGTTAACCGGTTAACCGGTTAACCGG</text>
+      </g>
+
+      <!-- y=56 · purple · 15s -->
+      <g class="r4" opacity=".15" fill="#bc8cff">
+        <text y="56">CGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGAT</text>
+        <text x="1200" y="56">CGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGAT</text>
+      </g>
+
+      <!-- y=70 · blue · 36s · very dim (overlaps title) -->
+      <g class="r5" opacity=".06" fill="#58a6ff">
+        <text y="70">TAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGC</text>
+        <text x="1200" y="70">TAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGC</text>
+      </g>
+
+      <!-- y=84 · green · 20s · dim (overlaps subtitle) -->
+      <g class="r6" opacity=".08" fill="#3fb950">
+        <text y="84">AAGCTTAAGCTTAAGCTTAAGCTTAAGCTTAAGCTTAAGCTTAAGCTTAAGCTTAAGCTTAAGCTTAAGCTTAAGCTTAAGCTTAAGCTTAAGCTTAAGCTTAAGCTTAAGCTTAAGCTTAAGCTTAAGCTTAAGCTTAAGCTTAAGCTTAAGCTTAAGCTTAAGCTTAAGCTTAAGCTTAAGCTTAAGCTTAAGCTTAA</text>
+        <text x="1200" y="84">AAGCTTAAGCTTAAGCTTAAGCTTAAGCTTAAGCTTAAGCTTAAGCTTAAGCTTAAGCTTAAGCTTAAGCTTAAGCTTAAGCTTAAGCTTAAGCTTAAGCTTAAGCTTAAGCTTAAGCTTAAGCTTAAGCTTAAGCTTAAGCTTAAGCTTAAGCTTAAGCTTAAGCTTAAGCTTAAGCTTAAGCTTAAGCTTAAGCTTAA</text>
+      </g>
+
+      <!-- y=98 · purple · 25s -->
+      <g class="r7" opacity=".13" fill="#bc8cff">
+        <text y="98">CGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGAT</text>
+        <text x="1200" y="98">CGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGAT</text>
+      </g>
+
+      <!-- y=112 · blue · 18s -->
+      <g class="r8" opacity=".17" fill="#58a6ff">
+        <text y="112">GCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTA</text>
+        <text x="1200" y="112">GCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTA</text>
+      </g>
+    </g>
+
+    <!-- Bottom accent bar -->
+    <rect y="134" width="830" height="6" fill="url(#ac)"/>
+  </g>
+
+  <!-- Title text — rendered after clip group so always sharp -->
+  <text class="t1" x="415" y="66"
+        text-anchor="middle" fill="#e6edf3"
+        font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif"
+        font-size="26" font-weight="700">
+    Bioinformatics Intro Exercise
+  </text>
+  <text class="t2" x="415" y="92"
+        text-anchor="middle" fill="#7d8590"
+        font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif"
+        font-size="12" letter-spacing="2.5">
+    CLINICAL BIOINFORMATICS TRAINING
+  </text>
+</svg>

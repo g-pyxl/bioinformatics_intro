@@ -1,8 +1,15 @@
-# Bioinformatics Intro Exercise - Find the variant 🧬
+<p align="center">
+  <img src="assets/header.svg" alt="Bioinformatics Intro Exercise — Clinical Bioinformatics Training"/>
+</p>
 
-> A hands-on introduction to clinical bioinformatics concepts for prospective applicants. No prior bioinformatics knowledge required.
+<p align="center">
+  A hands-on introduction to clinical bioinformatics concepts for prospective applicants.<br/>
+  No prior bioinformatics knowledge required.
+</p>
 
----
+<p align="center">
+  <img src="assets/divider.svg" width="100%" alt=""/>
+</p>
 
 ## Contents
 
@@ -12,7 +19,9 @@
 - [Task 1 — Fix the SampleSheet](#task-1--fix-the-samplesheet)
 - [Task 2 — Inspect the VCF](#task-2--inspect-the-vcf)
 
----
+<p align="center">
+  <img src="assets/divider.svg" width="100%" alt=""/>
+</p>
 
 ## Prerequisites
 
@@ -41,7 +50,9 @@ Most clinical bioinformatics teams use GitHub (or a similar platform such as Git
 
 [↑ Back to top](#contents)
 
----
+<p align="center">
+  <img src="assets/divider.svg" width="100%" alt=""/>
+</p>
 
 ## Setup
 
@@ -54,9 +65,11 @@ Most clinical bioinformatics teams use GitHub (or a similar platform such as Git
 
 [↑ Back to top](#contents)
 
----
+<p align="center">
+  <img src="assets/divider.svg" width="100%" alt=""/>
+</p>
 
-## BACKGROUND 📖
+## Background
 
 <details>
 <summary><strong>The Illumina Run Folder</strong></summary>
@@ -108,9 +121,11 @@ SampleSheet errors are a common cause of pipeline failures. A single typo in a s
 
 [↑ Back to top](#contents)
 
----
+<p align="center">
+  <img src="assets/divider.svg" width="100%" alt=""/>
+</p>
 
-## TASK 1 — Fix the SampleSheet 🟩
+## Task 1 — Fix the SampleSheet
 
 The `SampleSheet.csv` in the run folder contains a deliberate error — the kind of mistake that is easy to make and quick to miss.
 
@@ -125,7 +140,7 @@ The `SampleSheet.csv` in the run folder contains a deliberate error — the kind
 python pipeline.py
 ```
 
-The script will ask you to confirm you have read the README, then ask for your name. It will then validate the SampleSheet and **fail with an error message** telling you exactly which line is wrong.
+The script will ask for your name, then quiz you on the run folder background before proceeding. It will then validate the SampleSheet and **fail with an error message** telling you exactly which line is wrong.
 
 ---
 
@@ -153,9 +168,11 @@ The validation should now pass and the script will list the samples found in the
 
 [↑ Back to top](#contents)
 
----
+<p align="center">
+  <img src="assets/divider.svg" width="100%" alt=""/>
+</p>
 
-## Task 2 — Inspect the VCF 🟩
+## Task 2 — Inspect the VCF
 
 The file `output/variants.vcf` contains pre-computed variant calls for the samples in this run. This is a [Variant Call Format (VCF)](https://samtools.github.io/hts-specs/VCFv4.2.pdf) file — the standard format for representing genetic variants identified from sequencing data.
 
