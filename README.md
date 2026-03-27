@@ -17,7 +17,8 @@
 - [Setup](#setup)
 - [📚 Background Reading](#background-reading)
 - [🟩 Task 1 — Fix the SampleSheet](#task-1--fix-the-samplesheet)
-- [🟩 Task 2 — Inspect the VCF](#task-2--inspect-the-vcf)
+- [🟩 Task 2 — Run Demultiplexing](#task-2--run-demultiplexing)
+- [🟩 Task 3 — Inspect the VCF](#task-3--inspect-the-vcf)
 
 <p align="center">
   <img src="assets/divider.svg" width="100%" alt=""/>
@@ -37,18 +38,45 @@ This exercise is hosted on **GitHub** and runs entirely in the browser — no lo
 
 ## Setup
 
-1. **Fork this repository** — click the **Fork** button in the top-right corner of this page. This creates your own copy of the repo under your GitHub account.
+1. **Fork this repository** — click the **Fork** button in the top-right corner of this page, then click **Create Fork** on the following page. This creates your own copy of this repository under your GitHub account.
+
+| Fork Screenshot |
+|---|
+| ![GitHub fork button screenshot](assets/fork.png) |
 
 2. **Open a Codespace** — on your forked repo, click the green **Code** button, select the **Codespaces** tab, and click **Create codespace on main**.
    Alternatively, navigate directly to: `https://codespaces.new/<your-username>/bioinformatics_intro`
 
-3. **Start the exercise** — in the terminal that opens with your Codespace, run [`pipeline.py`](pipeline.py):
+3. **Start the exercise** — Once your Codespace loads, in the terminal, run [`pipeline.py`](pipeline.py):
+
+| Codespace Screenshot |
+|---|
+| ![GitHub Codespace terminal screenshot](assets/codespace.png) |
 
 ```bash
 python pipeline.py
 ```
 
 Then follow the on-screen prompts and complete each exercise in this README.
+
+Optional (assessment admins): send checkpoint events to an external webhook.
+
+```bash
+export PIPELINE_CHECKPOINT_WEBHOOK="https://your-service.example/webhook"
+export PIPELINE_CHECKPOINT_TOKEN="your-shared-token"
+python pipeline.py
+```
+
+If `PIPELINE_CHECKPOINT_WEBHOOK` is not set, no external notifications are sent.  
+Events include milestones such as pipeline start, quiz completion, SampleSheet validation pass/fail, demultiplex completion, and challenge display.
+
+If you want to restart from scratch at any point, run:
+
+```bash
+python reset.py
+```
+
+This clears progress/output files and restores `SampleSheet.csv` to the original training state (including the intentional Task 1 error).
 
 [↑ Back to top](#contents)
 
@@ -109,6 +137,39 @@ Most clinical bioinformatics teams use GitHub (or a similar platform such as Git
 | Q score | A Phred quality score representing confidence in each base call (e.g. Q30 means 1 in 1000 error probability). |
 
 NGS underpins modern clinical genomics because it can process many samples and many genomic targets efficiently, while still supporting traceability and quality control throughout the pipeline.
+
+</details>
+
+<details>
+<summary><strong>FASTQ Files</strong></summary>
+
+<br>
+
+A **FASTQ** file stores sequencing reads along with per-base quality scores. It is the standard output format after demultiplexing.
+
+Each read is represented by **4 lines**:
+
+| Line | Contents |
+|---|---|
+| 1 | Read header (starts with `@`) |
+| 2 | Nucleotide sequence (`A/C/G/T/N`) |
+| 3 | Separator line (starts with `+`) |
+| 4 | Quality string (ASCII-encoded Phred quality scores) |
+
+In **paired-end** sequencing, each sample usually has two FASTQ files:
+
+| File | Meaning |
+|---|---|
+| `R1` | Forward read (read 1) |
+| `R2` | Reverse read (read 2) |
+
+FASTQ files are often compressed as `.fastq.gz` because they are large.
+
+Common naming components include:
+
+- sample identifier
+- lane identifier (for example `L001`)
+- read identifier (`R1` or `R2`)
 
 </details>
 
@@ -193,7 +254,7 @@ Navigate to the `[Data]` section at the bottom. Look carefully at the `Sample_ID
 
 **Step 3** — Save the file.
 
-The next run will validate the SampleSheet and list the samples found in the run.
+The next run will validate the SampleSheet, list the samples found in the run, and continue to demultiplexing.
 
 </details>
 
@@ -203,7 +264,42 @@ The next run will validate the SampleSheet and list the samples found in the run
   <img src="assets/divider.svg" width="100%" alt=""/>
 </p>
 
-## 🟩 Task 2 — Inspect the VCF
+## 🟩 Task 2 — Run Demultiplexing
+
+Once Task 1 passes, the next stage is demultiplexing the run folder with **bcl2fastq2**.
+
+<details>
+<summary><strong>Show instructions</strong></summary>
+
+<br>
+
+Construct the full command from this template:
+
+```bash
+bcl2fastq --runfolder-dir {run_folder} --sample-sheet {sample_sheet} --output-dir {output_dir} --no-lane-splitting
+```
+
+Replace placeholders with the correct values for this exercise:
+
+- `{run_folder}` = `240315_M00123_0042_000000000-ABCDE`
+- `{sample_sheet}` = `240315_M00123_0042_000000000-ABCDE/SampleSheet.csv`
+- `{output_dir}` = `output/fastq`
+
+Because this repository uses a simulated run folder, the script will create **simulated FASTQ files** in `output/fastq/` if `bcl2fastq2` is unavailable or cannot process the run folder directly.
+
+The script will prompt you to paste your completed command before Task 2 runs.
+
+After demultiplexing, the script will ask a short MCQ about FASTQ files before continuing to Task 3.
+
+</details>
+
+[↑ Back to top](#contents)
+
+<p align="center">
+  <img src="assets/divider.svg" width="100%" alt=""/>
+</p>
+
+## 🟩 Task 3 — Inspect the VCF
 
 The file `output/variants.vcf` contains pre-computed variant calls for the samples in this run. This is a [Variant Call Format (VCF)](https://samtools.github.io/hts-specs/VCFv4.2.pdf) file — the standard format for representing genetic variants identified from sequencing data.
 
