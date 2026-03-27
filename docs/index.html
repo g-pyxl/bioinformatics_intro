@@ -7,39 +7,73 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+    :root {
+      --bg:         #080b12;
+      --surface:    #0f1318;
+      --border:     #1e2530;
+      --border-hi:  #2d3748;
+      --text:       #e2e8f0;
+      --muted:      #4a5568;
+      --accent:     #4f8ef7;
+      --accent-dim: rgba(79, 142, 247, 0.12);
+      --green:      #34d399;
+      --green-dim:  rgba(52, 211, 153, 0.10);
+      --red:        #f87171;
+      --red-dim:    rgba(248, 113, 113, 0.10);
+      --gold:       #fbbf24;
+    }
+
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-      background: #0d1117;
-      color: #e6edf3;
+      background: var(--bg);
+      background-image:
+        radial-gradient(ellipse 80% 40% at 50% -10%, rgba(79,142,247,0.08) 0%, transparent 70%);
+      color: var(--text);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 2.5rem 1rem 4rem;
+      padding: 3rem 1rem 5rem;
     }
 
     .container {
       width: 100%;
-      max-width: 660px;
+      max-width: 620px;
     }
 
+    /* ── Header ── */
     header {
       text-align: center;
       margin-bottom: 2.5rem;
     }
 
-    header .eyebrow {
-      font-size: 0.75rem;
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.72rem;
+      font-weight: 600;
       text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: #7d8590;
-      margin-bottom: 0.6rem;
+      letter-spacing: 0.14em;
+      color: var(--accent);
+      background: rgba(79,142,247,0.1);
+      border: 1px solid rgba(79,142,247,0.2);
+      border-radius: 99px;
+      padding: 0.3rem 0.85rem;
+      margin-bottom: 1rem;
     }
 
     header h1 {
-      font-size: 1.6rem;
+      font-size: 1.75rem;
       font-weight: 700;
-      color: #e6edf3;
+      letter-spacing: -0.02em;
+      color: var(--text);
+    }
+
+    header p {
+      margin-top: 0.4rem;
+      font-size: 0.875rem;
+      color: var(--muted);
     }
 
     /* ── Screens ── */
@@ -48,294 +82,433 @@
 
     /* ── Card ── */
     .card {
-      background: #161b22;
-      border: 1px solid #30363d;
-      border-radius: 12px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
       padding: 2rem;
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.02), 0 20px 60px rgba(0,0,0,0.5);
+    }
+
+    /* ── Animations ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes shake {
+      0%,100% { transform: translateX(0); }
+      20%     { transform: translateX(-5px); }
+      40%     { transform: translateX(5px); }
+      60%     { transform: translateX(-3px); }
+      80%     { transform: translateX(3px); }
+    }
+
+    @keyframes pop {
+      0%   { transform: scale(1); }
+      40%  { transform: scale(1.03); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes expandHeight {
+      from { opacity: 0; transform: translateY(-6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .animate-in {
+      animation: fadeUp 0.35s cubic-bezier(0.4,0,0.2,1) both;
     }
 
     /* ── Name screen ── */
-    #screen-name .card h2 {
-      font-size: 1.1rem;
-      font-weight: 600;
-      margin-bottom: 0.4rem;
+    #screen-name .card {
+      animation: fadeUp 0.4s cubic-bezier(0.4,0,0.2,1) both;
     }
 
-    #screen-name .card p {
-      font-size: 0.9rem;
-      color: #7d8590;
-      margin-bottom: 1.5rem;
-      line-height: 1.5;
+    #screen-name h2 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.35rem;
+    }
+
+    #screen-name .subtitle {
+      font-size: 0.875rem;
+      color: var(--muted);
+      line-height: 1.55;
+      margin-bottom: 1.75rem;
     }
 
     .field label {
       display: block;
-      font-size: 0.85rem;
-      font-weight: 500;
-      color: #7d8590;
-      margin-bottom: 0.4rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin-bottom: 0.45rem;
     }
 
     .field input {
       width: 100%;
-      background: #0d1117;
-      border: 1px solid #30363d;
-      border-radius: 6px;
-      color: #e6edf3;
+      background: var(--bg);
+      border: 1px solid var(--border-hi);
+      border-radius: 8px;
+      color: var(--text);
       font-size: 1rem;
-      padding: 0.55rem 0.75rem;
+      padding: 0.65rem 0.85rem;
       outline: none;
-      transition: border-color 0.15s;
+      transition: border-color 0.2s, box-shadow 0.2s;
     }
 
     .field input:focus {
-      border-color: #58a6ff;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(79,142,247,0.15);
     }
 
-    .field input::placeholder {
-      color: #484f58;
-    }
+    .field input::placeholder { color: #2d3748; }
 
     /* ── Buttons ── */
-    .btn {
-      display: inline-block;
-      font-size: 0.9rem;
-      font-weight: 600;
-      padding: 0.55rem 1.25rem;
-      border-radius: 6px;
-      border: none;
-      cursor: pointer;
-      transition: background 0.15s, opacity 0.15s;
-    }
-
-    .btn-primary {
-      background: #238636;
-      color: #fff;
+    .btn-start {
       width: 100%;
       margin-top: 1.25rem;
-      padding: 0.65rem;
+      padding: 0.75rem;
       font-size: 0.95rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      background: linear-gradient(135deg, #4f8ef7, #6366f1);
+      color: #fff;
+      transition: opacity 0.2s, transform 0.15s, box-shadow 0.2s;
+      box-shadow: 0 4px 20px rgba(79,142,247,0.25);
     }
 
-    .btn-primary:hover:not(:disabled) { background: #2ea043; }
-    .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
+    .btn-start:hover:not(:disabled) {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 24px rgba(79,142,247,0.35);
+    }
+
+    .btn-start:active:not(:disabled) { transform: translateY(0); }
+    .btn-start:disabled { opacity: 0.3; cursor: not-allowed; box-shadow: none; }
 
     .btn-next {
-      background: #21262d;
-      color: #e6edf3;
-      border: 1px solid #30363d;
+      display: none;
       margin-top: 1.25rem;
+      padding: 0.6rem 1.2rem;
+      font-size: 0.875rem;
+      font-weight: 600;
+      border: 1px solid var(--border-hi);
+      border-radius: 8px;
+      cursor: pointer;
+      background: var(--bg);
+      color: var(--text);
+      transition: background 0.15s, border-color 0.15s, transform 0.15s;
+      animation: fadeDown 0.25s cubic-bezier(0.4,0,0.2,1) both;
     }
 
-    .btn-next:hover { background: #30363d; }
+    .btn-next:hover {
+      background: var(--border);
+      border-color: var(--muted);
+    }
+
+    .btn-next:active { transform: scale(0.98); }
 
     /* ── Progress ── */
-    .progress-row {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
+    .progress-wrap {
       margin-bottom: 1.5rem;
+      animation: fadeUp 0.3s cubic-bezier(0.4,0,0.2,1) both;
+    }
+
+    .progress-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 0.5rem;
     }
 
     .progress-label {
-      font-size: 0.8rem;
-      color: #7d8590;
-      white-space: nowrap;
-      min-width: 6rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
     }
 
-    .progress-bar {
-      flex: 1;
-      height: 4px;
-      background: #21262d;
+    .progress-frac {
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    .progress-track {
+      height: 3px;
+      background: var(--border);
       border-radius: 2px;
       overflow: hidden;
     }
 
     .progress-fill {
       height: 100%;
-      background: #238636;
+      background: linear-gradient(90deg, var(--accent), #818cf8);
       border-radius: 2px;
-      transition: width 0.4s ease;
+      transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
     }
 
-    /* ── Question ── */
-    .question-text {
+    /* ── Question card ── */
+    .q-number {
+      font-size: 3.5rem;
+      font-weight: 800;
+      line-height: 1;
+      color: var(--border-hi);
+      letter-spacing: -0.04em;
+      margin-bottom: 0.5rem;
+      user-select: none;
+    }
+
+    .q-text {
       font-size: 1.05rem;
       font-weight: 600;
-      line-height: 1.5;
-      margin-bottom: 1.25rem;
+      line-height: 1.55;
+      color: var(--text);
+      margin-bottom: 1.5rem;
     }
 
     /* ── Options ── */
     .options {
       display: flex;
       flex-direction: column;
-      gap: 0.6rem;
+      gap: 0.55rem;
     }
 
     .option {
+      position: relative;
       display: flex;
-      align-items: flex-start;
-      gap: 0.75rem;
-      padding: 0.75rem 1rem;
-      border: 1px solid #30363d;
-      border-radius: 8px;
+      align-items: center;
+      gap: 0.9rem;
+      padding: 0.85rem 1rem;
+      border: 1px solid var(--border);
+      border-radius: 10px;
       cursor: pointer;
-      transition: border-color 0.15s, background 0.15s;
-      user-select: none;
+      transition: border-color 0.18s, background 0.18s, transform 0.15s;
+      overflow: hidden;
     }
 
-    .option:hover:not(.disabled) {
-      border-color: #58a6ff;
-      background: #1c2128;
+    .option::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: transparent;
+      transition: background 0.18s;
+      border-radius: inherit;
+      pointer-events: none;
+    }
+
+    .option:hover:not(.locked) {
+      border-color: var(--border-hi);
+      background: rgba(255,255,255,0.02);
+      transform: translateX(3px);
+    }
+
+    .option:hover:not(.locked) .opt-key {
+      border-color: var(--accent);
+      color: var(--accent);
     }
 
     .option.selected {
-      border-color: #58a6ff;
-      background: #1c2128;
+      border-color: var(--accent);
+      background: var(--accent-dim);
+      transform: translateX(3px);
+    }
+
+    .option.selected .opt-key {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
     }
 
     .option.correct {
-      border-color: #3fb950;
-      background: #0d2a14;
+      border-color: var(--green);
+      background: var(--green-dim);
+      animation: pop 0.3s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    .option.correct .opt-key {
+      background: var(--green);
+      border-color: var(--green);
+      color: #000;
     }
 
     .option.incorrect {
-      border-color: #f85149;
-      background: #2d1215;
+      border-color: var(--red);
+      background: var(--red-dim);
+      animation: shake 0.35s cubic-bezier(0.4,0,0.2,1);
     }
 
-    .option.reveal-correct {
-      border-color: #3fb950;
-      background: #0d2a14;
+    .option.incorrect .opt-key {
+      background: var(--red);
+      border-color: var(--red);
+      color: #fff;
     }
 
-    .option.disabled { cursor: default; }
+    .option.reveal {
+      border-color: var(--green);
+      background: var(--green-dim);
+    }
 
-    .option-marker {
+    .option.reveal .opt-key {
+      background: var(--green);
+      border-color: var(--green);
+      color: #000;
+    }
+
+    .option.locked { cursor: default; transform: none !important; }
+
+    .opt-key {
       flex-shrink: 0;
-      width: 1.4rem;
-      height: 1.4rem;
-      border-radius: 50%;
-      border: 2px solid #30363d;
+      width: 1.75rem;
+      height: 1.75rem;
+      border-radius: 6px;
+      border: 1px solid var(--border-hi);
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 0.7rem;
       font-weight: 700;
-      color: #7d8590;
-      margin-top: 0.05rem;
-      transition: border-color 0.15s, background 0.15s, color 0.15s;
+      font-family: ui-monospace, 'Cascadia Code', monospace;
+      color: var(--muted);
+      transition: background 0.18s, border-color 0.18s, color 0.18s;
     }
 
-    .option.selected .option-marker {
-      border-color: #58a6ff;
-      color: #58a6ff;
-    }
-
-    .option.correct .option-marker,
-    .option.reveal-correct .option-marker {
-      border-color: #3fb950;
-      background: #3fb950;
-      color: #0d1117;
-    }
-
-    .option.incorrect .option-marker {
-      border-color: #f85149;
-      background: #f85149;
-      color: #0d1117;
-    }
-
-    .option-text {
-      font-size: 0.9rem;
-      line-height: 1.45;
+    .opt-text {
+      font-size: 0.875rem;
+      line-height: 1.5;
       color: #c9d1d9;
     }
 
     /* ── Explanation ── */
     .explanation {
-      display: none;
-      margin-top: 1.25rem;
+      margin-top: 1.1rem;
       padding: 0.9rem 1rem;
-      border-radius: 8px;
-      font-size: 0.875rem;
-      line-height: 1.55;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      line-height: 1.6;
+      animation: expandHeight 0.25s cubic-bezier(0.4,0,0.2,1) both;
+      display: none;
     }
 
-    .explanation.correct {
-      background: #0d2a14;
-      border: 1px solid #3fb950;
-      color: #aff4c6;
+    .explanation.show { display: block; }
+
+    .explanation.correct-exp {
+      background: var(--green-dim);
+      border: 1px solid rgba(52,211,153,0.25);
+      color: #a7f3d0;
     }
 
-    .explanation.incorrect {
-      background: #2d1215;
-      border: 1px solid #f85149;
-      color: #ffa198;
+    .explanation.incorrect-exp {
+      background: var(--red-dim);
+      border: 1px solid rgba(248,113,113,0.25);
+      color: #fecaca;
     }
 
-    .explanation .verdict {
+    .exp-verdict {
       font-weight: 700;
-      margin-bottom: 0.35rem;
+      margin-bottom: 0.3rem;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
     }
-
-    .explanation.active { display: block; }
 
     /* ── Results screen ── */
     #screen-results .card {
       text-align: center;
+      animation: fadeUp 0.4s cubic-bezier(0.4,0,0.2,1) both;
     }
 
-    .score-circle {
-      width: 110px;
-      height: 110px;
-      border-radius: 50%;
-      border: 4px solid #238636;
+    .score-ring {
+      margin: 0 auto 1.5rem;
+      position: relative;
+      width: 130px;
+      height: 130px;
+    }
+
+    .score-ring svg {
+      transform: rotate(-90deg);
+    }
+
+    .score-ring-track {
+      fill: none;
+      stroke: var(--border);
+      stroke-width: 6;
+    }
+
+    .score-ring-fill {
+      fill: none;
+      stroke-width: 6;
+      stroke-linecap: round;
+      transition: stroke-dashoffset 1.2s cubic-bezier(0.4,0,0.2,1),
+                  stroke 0.3s;
+    }
+
+    .score-center {
+      position: absolute;
+      inset: 0;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      margin: 0 auto 1.5rem;
     }
 
-    .score-circle .score-num {
-      font-size: 2rem;
-      font-weight: 700;
+    .score-num {
+      font-size: 2.2rem;
+      font-weight: 800;
       line-height: 1;
-      color: #3fb950;
+      letter-spacing: -0.04em;
     }
 
-    .score-circle .score-denom {
-      font-size: 0.8rem;
-      color: #7d8590;
+    .score-denom {
+      font-size: 0.75rem;
+      color: var(--muted);
       margin-top: 0.15rem;
     }
 
-    #screen-results h2 {
-      font-size: 1.2rem;
-      font-weight: 700;
+    .result-name {
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
       margin-bottom: 0.4rem;
     }
 
-    #screen-results .result-msg {
-      font-size: 0.9rem;
-      color: #7d8590;
-      line-height: 1.5;
-      margin-bottom: 1.75rem;
+    #result-heading {
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
     }
 
-    .result-breakdown {
+    #result-msg {
+      font-size: 0.875rem;
+      color: var(--muted);
+      line-height: 1.6;
+      max-width: 420px;
+      margin: 0 auto 1.75rem;
+    }
+
+    .breakdown {
       text-align: left;
-      border-top: 1px solid #21262d;
+      border-top: 1px solid var(--border);
       padding-top: 1.25rem;
     }
 
-    .result-breakdown h3 {
-      font-size: 0.8rem;
+    .breakdown-title {
+      font-size: 0.72rem;
+      font-weight: 600;
       text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: #7d8590;
+      letter-spacing: 0.1em;
+      color: var(--muted);
       margin-bottom: 0.75rem;
     }
 
@@ -343,80 +516,111 @@
       display: flex;
       align-items: flex-start;
       gap: 0.6rem;
-      margin-bottom: 0.5rem;
+      padding: 0.4rem 0;
       font-size: 0.85rem;
       line-height: 1.4;
+      border-bottom: 1px solid var(--border);
+      animation: fadeUp 0.3s cubic-bezier(0.4,0,0.2,1) both;
     }
 
-    .breakdown-icon {
+    .breakdown-item:last-child { border-bottom: none; }
+
+    .bd-icon {
       flex-shrink: 0;
       font-size: 0.75rem;
       margin-top: 0.15rem;
+      font-weight: 700;
     }
 
-    .breakdown-item.pass .breakdown-icon { color: #3fb950; }
-    .breakdown-item.fail .breakdown-icon { color: #f85149; }
-    .breakdown-item.pass .breakdown-q { color: #c9d1d9; }
-    .breakdown-item.fail .breakdown-q { color: #7d8590; }
+    .breakdown-item.pass .bd-icon { color: var(--green); }
+    .breakdown-item.fail .bd-icon { color: var(--red); }
+    .breakdown-item.pass .bd-q { color: var(--text); }
+    .breakdown-item.fail .bd-q { color: var(--muted); }
 
     .back-link {
       display: inline-block;
       margin-top: 1.5rem;
-      font-size: 0.85rem;
-      color: #58a6ff;
+      font-size: 0.825rem;
+      color: var(--accent);
       text-decoration: none;
+      opacity: 0.8;
+      transition: opacity 0.15s;
     }
 
-    .back-link:hover { text-decoration: underline; }
+    .back-link:hover { opacity: 1; }
+
+    /* ── Hint ── */
+    .key-hint {
+      font-size: 0.72rem;
+      color: var(--muted);
+      margin-top: 1rem;
+      text-align: center;
+      opacity: 0.6;
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <header>
-      <div class="eyebrow">Bioinformatics Intro — Lesson 1</div>
-      <h1>GitHub Basics Quiz</h1>
+      <div class="eyebrow">Bioinformatics Intro · Lesson 1</div>
+      <h1>GitHub Basics</h1>
+      <p>5 questions · ~3 minutes</p>
     </header>
 
-    <!-- Name screen -->
+    <!-- ── Name screen ── -->
     <div id="screen-name" class="screen active">
       <div class="card">
         <h2>Before you begin</h2>
-        <p>Enter your name so your result can be attributed correctly, then click Start.</p>
+        <p class="subtitle">Enter your name, then click Start. Your result will be shown at the end.</p>
         <div class="field">
           <label for="name-input">Your name</label>
-          <input id="name-input" type="text" placeholder="e.g. Jane Smith" autocomplete="off" />
+          <input id="name-input" type="text" placeholder="e.g. Jane Smith" autocomplete="off" spellcheck="false" />
         </div>
-        <button class="btn btn-primary" id="btn-start" disabled>Start quiz</button>
+        <button class="btn-start" id="btn-start" disabled>Start quiz →</button>
       </div>
     </div>
 
-    <!-- Question screen -->
+    <!-- ── Question screen ── -->
     <div id="screen-question" class="screen">
-      <div class="progress-row">
-        <span class="progress-label" id="progress-label">Question 1 of 5</span>
-        <div class="progress-bar">
-          <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+      <div class="progress-wrap">
+        <div class="progress-meta">
+          <span class="progress-label">Progress</span>
+          <span class="progress-frac" id="progress-frac">1 / 5</span>
+        </div>
+        <div class="progress-track">
+          <div class="progress-fill" id="progress-fill" style="width:0%"></div>
         </div>
       </div>
-      <div class="card">
-        <p class="question-text" id="question-text"></p>
+      <div class="card" id="q-card">
+        <div class="q-number" id="q-number">01</div>
+        <p class="q-text" id="q-text"></p>
         <div class="options" id="options-list"></div>
         <div class="explanation" id="explanation"></div>
-        <button class="btn btn-next" id="btn-next" style="display:none">Next question →</button>
+        <button class="btn-next" id="btn-next">Next →</button>
+        <p class="key-hint" id="key-hint">Press <kbd>A</kbd> <kbd>B</kbd> <kbd>C</kbd> <kbd>D</kbd> to select · <kbd>Enter</kbd> to continue</p>
       </div>
     </div>
 
-    <!-- Results screen -->
+    <!-- ── Results screen ── -->
     <div id="screen-results" class="screen">
       <div class="card">
-        <div class="score-circle">
-          <span class="score-num" id="result-score"></span>
-          <span class="score-denom" id="result-denom"></span>
+        <div class="score-ring">
+          <svg width="130" height="130" viewBox="0 0 130 130">
+            <circle class="score-ring-track" cx="65" cy="65" r="55"/>
+            <circle class="score-ring-fill" id="ring-fill" cx="65" cy="65" r="55"
+              stroke-dasharray="345.4"
+              stroke-dashoffset="345.4"/>
+          </svg>
+          <div class="score-center">
+            <span class="score-num" id="result-score">0</span>
+            <span class="score-denom" id="result-denom">out of 5</span>
+          </div>
         </div>
+        <p class="result-name" id="result-name"></p>
         <h2 id="result-heading"></h2>
-        <p class="result-msg" id="result-msg"></p>
-        <div class="result-breakdown">
-          <h3>Breakdown</h3>
+        <p id="result-msg"></p>
+        <div class="breakdown">
+          <p class="breakdown-title">Question breakdown</p>
           <div id="breakdown-list"></div>
         </div>
         <a class="back-link" href="https://github.com/g-pyxl/bioinformatics_intro/tree/main/lessons/01_github_basics">
@@ -429,66 +633,69 @@
   <script>
     const QUESTIONS = [
       {
-        question: "What is a fork on GitHub?",
-        options: [
+        q: "What is a fork on GitHub?",
+        opts: [
           "A branch that can only be merged via pull request",
           "A copy of a repository under your own GitHub account",
           "A commit that introduces a breaking change",
           "A snapshot of a repository at a specific point in time"
         ],
         correct: 1,
-        explanation: "A fork creates an independent copy of the repository under your own account. You can freely experiment without affecting the original — and when you're ready, propose your changes back via a pull request."
+        exp: "A fork creates an independent copy of a repository under your own account. You can freely experiment without affecting the original, and propose your changes back via a pull request when you're ready."
       },
       {
-        question: "Why should you create a branch before making changes?",
-        options: [
+        q: "Why should you create a branch before making changes?",
+        opts: [
           "GitHub requires it — you cannot commit to a forked repo otherwise",
           "It compresses your commits to save storage space",
           "It isolates your work so the main branch stays unaffected",
           "It automatically syncs your changes with the original repository"
         ],
         correct: 2,
-        explanation: "Branches let you develop in isolation. If something goes wrong, main is untouched. In clinical bioinformatics, direct commits to main are never made — changes always go through a branch and a pull request."
+        exp: "Branches let you develop in isolation. If something goes wrong, main is untouched. In clinical bioinformatics, no one commits directly to main — changes always go through a branch and a pull request."
       },
       {
-        question: "What does opening a pull request do?",
-        options: [
+        q: "What does opening a pull request do?",
+        opts: [
           "Immediately merges your branch into main",
           "Downloads the latest changes from the original repository",
           "Proposes your changes for review before they are merged",
           "Creates a compressed archive of your branch"
         ],
         correct: 2,
-        explanation: "A pull request opens a discussion around your proposed changes. Collaborators can review line by line, leave comments, and approve or request changes — providing a full, traceable audit trail before anything is merged."
+        exp: "A pull request opens a discussion around your proposed changes. Collaborators can review line by line, leave comments, and approve before anything is merged — providing a permanent, traceable audit trail."
       },
       {
-        question: "What was the bug in gc_content.py?",
-        options: [
+        q: "What was the bug in gc_content.py?",
+        opts: [
           "The function forgot to convert the sequence to uppercase",
-          "GC count was divided by the AT count instead of the total number of bases",
+          "GC count was divided by the AT count instead of total bases",
           "G and C were counted separately and never added together",
           "The result was multiplied by 10 instead of 100"
         ],
         correct: 1,
-        explanation: "The denominator was (a_count + t_count) instead of len(sequence). For all-GC sequences this caused a ZeroDivisionError; for mixed sequences it inflated the result — ATGCATGC gave 100% instead of 50%."
+        exp: "The denominator was (a_count + t_count) instead of len(sequence). For all-GC sequences this caused a ZeroDivisionError; for mixed sequences it inflated results — ATGCATGC returned 100% instead of 50%."
       },
       {
-        question: "Why are pull requests particularly important in clinical bioinformatics?",
-        options: [
+        q: "Why are pull requests particularly important in clinical bioinformatics?",
+        opts: [
           "They are required by GitHub's terms of service for medical repositories",
           "They automatically run regulatory validation checks on pipeline code",
           "They ensure every change is reviewed before it can affect patient results",
           "They create a regulatory submission package from the pipeline code"
         ],
         correct: 2,
-        explanation: "Clinical pipelines must be auditable and validated. The PR review step provides a second pair of eyes and a permanent, traceable record of who approved each change — an essential part of clinical quality management."
+        exp: "Clinical pipelines must be auditable and validated. The PR review step provides a second pair of eyes and a permanent record of who approved each change — essential for clinical quality management."
       }
     ];
 
+    const LABELS = ["A","B","C","D"];
+    const CIRC   = 2 * Math.PI * 55; // 345.4
+
     let userName = "";
-    let current = 0;
+    let current  = 0;
     let answered = false;
-    let results = [];
+    let results  = [];
 
     // ── Name screen ──
     const nameInput = document.getElementById("name-input");
@@ -507,34 +714,32 @@
     function startQuiz() {
       userName = nameInput.value.trim();
       showScreen("screen-question");
-      renderQuestion();
+      renderQuestion(true);
     }
 
     // ── Question screen ──
-    function renderQuestion() {
+    function renderQuestion(first = false) {
       const q = QUESTIONS[current];
       answered = false;
 
-      document.getElementById("progress-label").textContent =
-        `Question ${current + 1} of ${QUESTIONS.length}`;
-      document.getElementById("progress-fill").style.width =
-        `${(current / QUESTIONS.length) * 100}%`;
+      const pct = (current / QUESTIONS.length) * 100;
+      document.getElementById("progress-fill").style.width = pct + "%";
+      document.getElementById("progress-frac").textContent = `${current + 1} / ${QUESTIONS.length}`;
 
-      document.getElementById("question-text").textContent = q.question;
+      const pad = n => String(n).padStart(2, "0");
+      document.getElementById("q-number").textContent = pad(current + 1);
+      document.getElementById("q-text").textContent   = q.q;
 
       const list = document.getElementById("options-list");
       list.innerHTML = "";
-      const labels = ["A", "B", "C", "D"];
-
-      q.options.forEach((text, i) => {
+      q.opts.forEach((text, i) => {
         const div = document.createElement("div");
         div.className = "option";
-        div.dataset.index = i;
-        div.innerHTML = `
-          <div class="option-marker">${labels[i]}</div>
-          <span class="option-text">${text}</span>
-        `;
-        div.addEventListener("click", () => selectOption(i));
+        div.dataset.i = i;
+        div.style.animationDelay = `${i * 0.05}s`;
+        div.classList.add("animate-in");
+        div.innerHTML = `<div class="opt-key">${LABELS[i]}</div><span class="opt-text">${text}</span>`;
+        div.addEventListener("click", () => pick(i));
         list.appendChild(div);
       });
 
@@ -542,102 +747,146 @@
       exp.className = "explanation";
       exp.innerHTML = "";
 
-      document.getElementById("btn-next").style.display = "none";
+      const btnNext = document.getElementById("btn-next");
+      btnNext.style.display = "none";
+      btnNext.classList.remove("animate-in");
     }
 
-    function selectOption(index) {
+    function pick(index) {
       if (answered) return;
       answered = true;
 
-      const q = QUESTIONS[current];
+      const q       = QUESTIONS[current];
       const correct = index === q.correct;
-      results.push({ question: q.question, correct });
+      results.push({ q: q.q, correct });
 
-      const options = document.querySelectorAll(".option");
-      options.forEach(opt => {
-        opt.classList.add("disabled");
-        const i = parseInt(opt.dataset.index);
-        if (i === q.correct) opt.classList.add(correct ? "correct" : "reveal-correct");
+      document.querySelectorAll(".option").forEach(opt => {
+        opt.classList.add("locked");
+        const i = parseInt(opt.dataset.i);
+        if (i === q.correct) opt.classList.add(correct ? "correct" : "reveal");
         if (i === index && !correct) opt.classList.add("incorrect");
       });
 
       const exp = document.getElementById("explanation");
-      exp.className = `explanation ${correct ? "correct" : "incorrect"} active`;
-      exp.innerHTML = `
-        <div class="verdict">${correct ? "Correct" : "Incorrect"}</div>
-        ${q.explanation}
-      `;
+      exp.className = `explanation show ${correct ? "correct-exp" : "incorrect-exp"}`;
+      exp.innerHTML = `<div class="exp-verdict">${correct ? "Correct" : "Incorrect"}</div>${q.exp}`;
 
       const btnNext = document.getElementById("btn-next");
       btnNext.style.display = "inline-block";
-      btnNext.textContent = current < QUESTIONS.length - 1 ? "Next question →" : "See results";
+      void btnNext.offsetWidth; // reflow
+      btnNext.classList.add("animate-in");
+      btnNext.textContent = current < QUESTIONS.length - 1 ? "Next →" : "See results →";
     }
 
-    document.getElementById("btn-next").addEventListener("click", () => {
+    document.getElementById("btn-next").addEventListener("click", advance);
+
+    function advance() {
       current++;
       if (current < QUESTIONS.length) {
-        renderQuestion();
+        animateCardOut(() => renderQuestion());
       } else {
         showResults();
       }
+    }
+
+    function animateCardOut(cb) {
+      const card = document.getElementById("q-card");
+      card.style.transition = "opacity 0.18s, transform 0.18s";
+      card.style.opacity    = "0";
+      card.style.transform  = "translateY(-8px)";
+      setTimeout(() => {
+        cb();
+        card.style.opacity   = "1";
+        card.style.transform = "translateY(0)";
+      }, 200);
+    }
+
+    // ── Keyboard ──
+    document.addEventListener("keydown", e => {
+      const screen = document.querySelector(".screen.active")?.id;
+
+      if (screen === "screen-question") {
+        const keyMap = { a:0, b:1, c:2, d:3, 1:0, 2:1, 3:2, 4:3 };
+        const key    = e.key.toLowerCase();
+        if (!answered && key in keyMap) {
+          pick(keyMap[key]);
+          return;
+        }
+        if (answered && (e.key === "Enter" || e.key === " ")) {
+          e.preventDefault();
+          advance();
+        }
+      }
     });
 
-    // ── Results screen ──
+    // ── Results ──
     function showResults() {
+      document.getElementById("progress-fill").style.width = "100%";
+      showScreen("screen-results");
+
       const score = results.filter(r => r.correct).length;
       const total = QUESTIONS.length;
       const pct   = score / total;
 
-      document.getElementById("result-score").textContent = score;
-      document.getElementById("result-denom").textContent = `out of ${total}`;
+      // Ring
+      const ring  = document.getElementById("ring-fill");
+      const color = pct === 1 ? "#34d399" : pct >= 0.6 ? "#fbbf24" : "#f87171";
+      ring.style.stroke = color;
 
-      const circle = document.querySelector(".score-circle");
-      const scoreNum = document.querySelector(".score-circle .score-num");
-      if (pct === 1) {
-        circle.style.borderColor = "#3fb950";
-        scoreNum.style.color = "#3fb950";
-      } else if (pct >= 0.6) {
-        circle.style.borderColor = "#d29922";
-        scoreNum.style.color = "#d29922";
-      } else {
-        circle.style.borderColor = "#f85149";
-        scoreNum.style.color = "#f85149";
-      }
+      setTimeout(() => {
+        const offset = CIRC * (1 - pct);
+        ring.style.strokeDashoffset = offset;
+      }, 100);
+
+      // Count-up
+      const numEl = document.getElementById("result-score");
+      numEl.style.color = color;
+      let n = 0;
+      const target  = score;
+      const step    = () => {
+        if (n < target) {
+          n++;
+          numEl.textContent = n;
+          setTimeout(step, 120);
+        }
+      };
+      setTimeout(step, 400);
+
+      document.getElementById("result-denom").textContent = `out of ${total}`;
+      document.getElementById("result-name").textContent  = userName;
 
       const headings = {
-        1:   "Perfect score!",
+        1: "Perfect score!",
         0.8: "Great work!",
         0.6: "Good effort.",
-        0:   "Keep at it."
+        0: "Keep at it."
       };
       const messages = {
-        1:   `Well done, ${userName}. You have a solid grasp of the GitHub workflow covered in Lesson 1.`,
-        0.8: `Nice work, ${userName}. Review the questions you missed and re-read the relevant background sections.`,
-        0.6: `Good start, ${userName}. It's worth revisiting the lesson before moving on.`,
-        0:   `That's okay, ${userName}. Work back through Lesson 1 and try again — it takes a couple of reads to click.`
+        1: "You have a solid grasp of the GitHub workflow covered in Lesson 1. Ready for Lesson 2.",
+        0.8: "Nearly there — revisit the questions you missed and re-read the relevant background sections before moving on.",
+        0.6: "A decent start. Work back through the lesson and try again to make sure the concepts are solid.",
+        0: "No problem — work back through Lesson 1 and try again. It takes a couple of reads for these ideas to click."
       };
 
       const key = pct === 1 ? 1 : pct >= 0.8 ? 0.8 : pct >= 0.6 ? 0.6 : 0;
       document.getElementById("result-heading").textContent = headings[key];
-      document.getElementById("result-msg").textContent = messages[key];
+      document.getElementById("result-msg").textContent     = messages[key];
 
-      const breakdownList = document.getElementById("breakdown-list");
-      breakdownList.innerHTML = "";
-      results.forEach(r => {
+      const list = document.getElementById("breakdown-list");
+      list.innerHTML = "";
+      results.forEach((r, i) => {
         const div = document.createElement("div");
         div.className = `breakdown-item ${r.correct ? "pass" : "fail"}`;
+        div.style.animationDelay = `${0.4 + i * 0.07}s`;
+        div.classList.add("animate-in");
         div.innerHTML = `
-          <span class="breakdown-icon">${r.correct ? "✓" : "✗"}</span>
-          <span class="breakdown-q">${r.question}</span>
+          <span class="bd-icon">${r.correct ? "✓" : "✗"}</span>
+          <span class="bd-q">${r.q}</span>
         `;
-        breakdownList.appendChild(div);
+        list.appendChild(div);
       });
-
-      document.getElementById("progress-fill").style.width = "100%";
-      showScreen("screen-results");
     }
 
-    // ── Utilities ──
     function showScreen(id) {
       document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
       document.getElementById(id).classList.add("active");
