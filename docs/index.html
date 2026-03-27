@@ -537,9 +537,50 @@
     .breakdown-item.pass .bd-q { color: var(--text); }
     .breakdown-item.fail .bd-q { color: var(--muted); }
 
+    .submit-row {
+      margin-top: 1.75rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .btn-submit {
+      width: 100%;
+      padding: 0.75rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      background: linear-gradient(135deg, #4f8ef7, #6366f1);
+      color: #fff;
+      transition: opacity 0.2s, transform 0.15s, box-shadow 0.2s;
+      box-shadow: 0 4px 20px rgba(79,142,247,0.25);
+    }
+
+    .btn-submit:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 24px rgba(79,142,247,0.35);
+    }
+
+    .btn-submit:active { transform: translateY(0); }
+
+    .btn-submit.submitted {
+      background: linear-gradient(135deg, #34d399, #059669);
+      box-shadow: 0 4px 20px rgba(52,211,153,0.25);
+      cursor: default;
+      transform: none;
+    }
+
+    .submit-hint {
+      margin-top: 0.6rem;
+      font-size: 0.775rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
     .back-link {
       display: inline-block;
-      margin-top: 1.5rem;
+      margin-top: 1.25rem;
       font-size: 0.825rem;
       color: var(--accent);
       text-decoration: none;
@@ -622,6 +663,10 @@
         <div class="breakdown">
           <p class="breakdown-title">Question breakdown</p>
           <div id="breakdown-list"></div>
+        </div>
+        <div class="submit-row">
+          <button class="btn-submit" id="btn-submit">Submit your score →</button>
+          <p class="submit-hint">Opens a pre-filled GitHub Issue on the repo — you'll need to be signed in to GitHub.</p>
         </div>
         <a class="back-link" href="https://github.com/g-pyxl/bioinformatics_intro/tree/main/lessons/01_github_basics">
           ← Back to Lesson 1
@@ -891,6 +936,41 @@
       document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
       document.getElementById(id).classList.add("active");
     }
+
+    // ── Submit score as GitHub Issue ──
+    document.getElementById("btn-submit").addEventListener("click", function () {
+      const score = results.filter(r => r.correct).length;
+      const total = QUESTIONS.length;
+      const date  = new Date().toISOString().slice(0, 10);
+
+      const title = `[Lesson 1 Quiz] ${userName} — ${score}/${total}`;
+
+      const rows = results.map(r =>
+        `| ${r.q} | ${r.correct ? "✓" : "✗"} |`
+      ).join("\n");
+
+      const body =
+`**Student:** ${userName}
+**Score:** ${score} / ${total}
+**Date:** ${date}
+
+| Question | Result |
+|---|---|
+${rows}
+
+---
+*Submitted automatically from the [Lesson 1 Quiz](https://g-pyxl.github.io/bioinformatics_intro/).*`;
+
+      const url = `https://github.com/g-pyxl/bioinformatics_intro/issues/new`
+        + `?title=${encodeURIComponent(title)}`
+        + `&body=${encodeURIComponent(body)}`;
+
+      window.open(url, "_blank");
+
+      this.textContent = "Submitted ✓";
+      this.classList.add("submitted");
+      this.disabled = true;
+    });
   </script>
 </body>
 </html>
