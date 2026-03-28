@@ -25,7 +25,6 @@
 | # | Lesson | Topics |
 |---|--------|--------|
 | 1 | [GitHub Basics](lessons/01_github_basics/README.md) | Forking, branching, fixing a bug, committing, opening a pull request |
-| 2 | [NGS Pipeline](lessons/02_ngs_pipeline/README.md) | SampleSheet validation, demultiplexing, FASTQ files, VCF interpretation |
 
 <p align="center">
   <img src="assets/divider.svg" width="100%" alt=""/>
@@ -33,6 +32,4 @@
 
 ## How to use this repo
 
-Each lesson has its own folder under [`lessons/`](lessons/) with a `README.md` that guides you through the exercise. Start with **Lesson 1** and work through them in order.
-
-> **Note for assessment coordinators:** `pipeline.py` supports optional webhook notifications for tracking learner progress. See [`lessons/02_ngs_pipeline/README.md`](lessons/02_ngs_pipeline/README.md) for details.
+Each lesson has its own folder under [`lessons/`](lessons/) with a `README.md` that guides you through the exercise.

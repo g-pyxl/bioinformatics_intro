@@ -317,4 +317,4 @@ Test your understanding with the short quiz before moving on:
 
 **[→ Take the Lesson 1 Quiz](https://g-pyxl.github.io/bioinformatics_intro/)**
 
-[← Back to lessons](../../README.md) | [Next lesson: NGS Pipeline →](../02_ngs_pipeline/README.md)
+[← Back to lessons](../../README.md)
