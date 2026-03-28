@@ -3,8 +3,8 @@
 </p>
 
 <p align="center">
-  A hands-on introduction to clinical bioinformatics — no prior experience required.<br/>
-  Each lesson is self-contained and runs entirely in the browser via GitHub Codespaces.
+  A hands-on introduction to Clinical Bioinformatics in Github — no prior experience required.<br/>
+  This repository provides a series of self-contained lessons, intended to run entirely in the browser via GitHub Codespaces.
 </p>
 
 <p align="center">

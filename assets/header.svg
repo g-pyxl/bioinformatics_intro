@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 830 140" width="830" height="140">
-  <title>Bioinformatics Intro Exercise — Clinical Bioinformatics Training</title>
+  <title>Intro to Clinical Bioinformatics — Interactive GitHub Training Platform</title>
   <defs>
     <style>
       .r1 { animation: scroll 22s  0s   linear infinite }
@@ -103,12 +103,12 @@
         text-anchor="middle" fill="#e6edf3"
         font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif"
         font-size="26" font-weight="700">
-    Bioinformatics Intro Exercise
+    Intro to Clinical Bioinformatics
   </text>
   <text class="t2" x="415" y="92"
         text-anchor="middle" fill="#7d8590"
         font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif"
         font-size="12" letter-spacing="2.5">
-    CLINICAL BIOINFORMATICS TRAINING
+    INTERACTIVE GITHUB TRAINING PLATFORM
   </text>
 </svg>
