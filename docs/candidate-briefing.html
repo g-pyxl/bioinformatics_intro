@@ -4,231 +4,903 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Lesson 1 — GitHub Basics · Intro to Clinical Bioinformatics</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --accent:      #1f6feb;
-      --accent-dim:  rgba(31,111,235,0.08);
-      --green:       #1a7f37;
-      --green-dim:   rgba(26,127,55,0.08);
-      --text:        #1a1a2e;
-      --muted:       #57606a;
-      --border:      #d0d7de;
-      --bg:          #ffffff;
-      --bg-alt:      #f6f8fa;
-      --header-h:    64px;
-      --footer-h:    68px;
+      --sidebar-w:    268px;
+      --accent:       #2563eb;
+      --accent-light: rgba(37,99,235,0.10);
+      --accent-mid:   rgba(37,99,235,0.20);
+      --green:        #16a34a;
+      --green-light:  rgba(22,163,74,0.10);
+      --amber:        #d97706;
+      --amber-light:  rgba(217,119,6,0.10);
+      --red:          #dc2626;
+      --sidebar-bg:   #0f172a;
+      --sidebar-sec:  rgba(255,255,255,0.04);
+      --sidebar-bdr:  rgba(255,255,255,0.07);
+      --text:         #0f172a;
+      --text-mid:     #374151;
+      --muted:        #6b7280;
+      --border:       #e5e7eb;
+      --bg:           #f8fafc;
+      --surface:      #ffffff;
     }
 
-    html, body {
-      height: 100%;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-      color: var(--text);
-      background: var(--bg-alt);
-    }
+    html, body { height: 100%; font-family: 'Inter', system-ui, sans-serif; color: var(--text); background: var(--bg); }
 
-    /* ── Layout ── */
+    /* ══════════════════════════════════════════
+       LAYOUT
+    ══════════════════════════════════════════ */
     .app {
       display: flex;
-      flex-direction: column;
       height: 100vh;
+      overflow: hidden;
     }
 
-    /* ── Header ── */
-    .app-header {
+    /* ══════════════════════════════════════════
+       SIDEBAR
+    ══════════════════════════════════════════ */
+    .sidebar {
+      width: var(--sidebar-w);
       flex-shrink: 0;
-      height: var(--header-h);
-      background: #fff;
-      border-bottom: 1px solid var(--border);
+      background: var(--sidebar-bg);
       display: flex;
-      align-items: center;
-      padding: 0 1.5rem;
-      gap: 1.25rem;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+      flex-direction: column;
+      overflow: hidden;
     }
 
-    .app-header .logo {
-      height: 32px;
+    .sidebar-logo {
+      padding: 1.5rem 1.25rem 1.25rem;
+      border-bottom: 1px solid var(--sidebar-bdr);
+      flex-shrink: 0;
+      display: flex;
+      justify-content: center;
+    }
+
+    .sidebar-logo img {
+      height: 52px;
       width: auto;
+      display: block;
+    }
+
+    .sidebar-lesson {
+      padding: 0.9rem 1.25rem;
+      border-bottom: 1px solid var(--sidebar-bdr);
       flex-shrink: 0;
     }
 
-    .header-divider {
-      width: 1px;
-      height: 28px;
-      background: var(--border);
+    .sidebar-lesson .eyebrow {
+      font-size: 0.65rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #64748b;
+      margin-bottom: 0.2rem;
+    }
+
+    .sidebar-lesson .title {
+      font-size: 0.875rem;
+      font-weight: 700;
+      color: #f1f5f9;
+    }
+
+    /* Progress bar in sidebar */
+    .sidebar-progress {
+      padding: 0.75rem 1.25rem;
+      border-bottom: 1px solid var(--sidebar-bdr);
       flex-shrink: 0;
     }
 
-    .progress-wrap {
-      flex: 1;
-      min-width: 0;
-    }
-
-    .progress-meta {
+    .sidebar-progress-row {
       display: flex;
       justify-content: space-between;
-      align-items: baseline;
-      margin-bottom: 5px;
+      align-items: center;
+      margin-bottom: 0.4rem;
     }
 
-    .progress-title {
-      font-size: 0.8rem;
+    .sidebar-progress-label {
+      font-size: 0.7rem;
+      color: #64748b;
+      font-weight: 500;
+    }
+
+    .sidebar-progress-pct {
+      font-size: 0.7rem;
+      color: #94a3b8;
       font-weight: 600;
-      color: var(--text);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      max-width: 60%;
     }
 
-    .progress-counter {
-      font-size: 0.75rem;
-      color: var(--muted);
-      flex-shrink: 0;
-    }
-
-    .progress-track {
-      height: 4px;
-      background: var(--border);
+    .sidebar-progress-track {
+      height: 3px;
+      background: rgba(255,255,255,0.08);
       border-radius: 2px;
       overflow: hidden;
     }
 
-    .progress-fill {
+    .sidebar-progress-fill {
       height: 100%;
-      background: linear-gradient(90deg, var(--accent), #6e91f5);
+      background: linear-gradient(90deg, var(--accent), #818cf8);
       border-radius: 2px;
       transition: width 0.4s cubic-bezier(0.4,0,0.2,1);
     }
 
-    /* ── Content ── */
-    .app-content {
+    /* Nav */
+    .sidebar-nav {
       flex: 1;
       overflow-y: auto;
-      padding: 2rem 1rem 1rem;
+      padding: 0.75rem 0;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(255,255,255,0.1) transparent;
     }
+
+    .nav-section {
+      margin-bottom: 0.25rem;
+    }
+
+    .nav-section-label {
+      font-size: 0.62rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.13em;
+      color: #475569;
+      padding: 0.6rem 1.25rem 0.3rem;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      padding: 0.5rem 1.25rem;
+      cursor: pointer;
+      transition: background 0.15s;
+      border-radius: 0;
+      position: relative;
+    }
+
+    .nav-item:hover { background: rgba(255,255,255,0.05); }
+
+    .nav-item.active {
+      background: var(--accent-light);
+    }
+
+    .nav-item.active::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: var(--accent);
+      border-radius: 0 2px 2px 0;
+    }
+
+    .nav-dot {
+      flex-shrink: 0;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      border: 2px solid #334155;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.6rem;
+      font-weight: 700;
+      transition: all 0.2s;
+      background: transparent;
+    }
+
+    .nav-item.done .nav-dot {
+      background: var(--green);
+      border-color: var(--green);
+      color: #fff;
+    }
+
+    .nav-item.active .nav-dot {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+
+    .nav-label {
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: #94a3b8;
+      line-height: 1.3;
+      transition: color 0.15s;
+    }
+
+    .nav-item.active .nav-label { color: #e2e8f0; font-weight: 600; }
+    .nav-item.done  .nav-label  { color: #64748b; }
+
+    /* ══════════════════════════════════════════
+       MAIN AREA
+    ══════════════════════════════════════════ */
+    .main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      min-width: 0;
+    }
+
+    /* Top bar */
+    .topbar {
+      flex-shrink: 0;
+      height: 52px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      padding: 0 2rem;
+      gap: 0.5rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.8rem;
+      color: var(--muted);
+      min-width: 0;
+    }
+
+    .breadcrumb .sep { opacity: 0.4; }
+    .breadcrumb .current { color: var(--text); font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+    /* Content */
+    .content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 2.5rem 2.5rem 1.5rem;
+      transition: background 0.5s ease;
+    }
+
+    /* Subtle section tints */
+    .content[data-section="Introduction"] { background: #f8fafc; }
+    .content[data-section="The Exercise"] { background: #f0f7ff; }
+    .content[data-section="Finish"]       { background: #f0fdf4; }
 
     .page-inner {
-      max-width: 680px;
-      margin: 0 auto;
+      max-width: 660px;
     }
 
-    /* ── Pages ── */
+    /* Pages */
     .page { display: none; }
     .page.active { display: block; }
 
     @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(10px); }
+      from { opacity: 0; transform: translateY(8px); }
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    .page.active { animation: fadeUp 0.3s cubic-bezier(0.4,0,0.2,1) both; }
+    .page.active { animation: fadeUp 0.28s cubic-bezier(0.4,0,0.2,1) both; }
 
-    /* ── Footer ── */
-    .app-footer {
+    /* Footer nav */
+    .footer-nav {
       flex-shrink: 0;
-      height: var(--footer-h);
-      background: #fff;
+      height: 64px;
+      background: var(--surface);
       border-top: 1px solid var(--border);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 1.5rem;
-      gap: 1rem;
+      padding: 0 2.5rem;
     }
 
+    /* ══════════════════════════════════════════
+       BUTTONS
+    ══════════════════════════════════════════ */
     .btn {
       display: inline-flex;
       align-items: center;
       gap: 0.4rem;
-      font-size: 0.875rem;
+      font-size: 0.85rem;
       font-weight: 600;
+      font-family: 'Inter', sans-serif;
       padding: 0.55rem 1.1rem;
-      border-radius: 6px;
+      border-radius: 8px;
       border: 1px solid var(--border);
       cursor: pointer;
-      transition: background 0.15s, border-color 0.15s, transform 0.1s, box-shadow 0.15s;
-      background: #fff;
+      background: var(--surface);
       color: var(--text);
+      transition: all 0.15s;
     }
 
-    .btn:hover { background: var(--bg-alt); border-color: #999; }
+    .btn:hover  { background: var(--bg); border-color: #d1d5db; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
     .btn:active { transform: scale(0.98); }
-    .btn:disabled { opacity: 0.3; cursor: not-allowed; transform: none; }
+    .btn:disabled { opacity: 0.35; cursor: not-allowed; transform: none !important; box-shadow: none; }
 
     .btn-primary {
       background: var(--accent);
       border-color: var(--accent);
       color: #fff;
-      box-shadow: 0 2px 8px rgba(31,111,235,0.2);
+      box-shadow: 0 2px 8px rgba(37,99,235,0.25);
     }
 
-    .btn-primary:hover { background: #1a5ecb; border-color: #1a5ecb; box-shadow: 0 4px 12px rgba(31,111,235,0.3); }
+    .btn-primary:hover { background: #1d4ed8; border-color: #1d4ed8; box-shadow: 0 4px 14px rgba(37,99,235,0.35); }
 
-    .step-indicator {
-      font-size: 0.8rem;
-      color: var(--muted);
-    }
+    .page-counter { font-size: 0.78rem; color: var(--muted); font-weight: 500; }
 
-    /* ── Typography ── */
+    /* ══════════════════════════════════════════
+       TYPOGRAPHY
+    ══════════════════════════════════════════ */
     .page-eyebrow {
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.14em;
       color: var(--accent);
-      margin-bottom: 0.4rem;
+      margin-bottom: 0.5rem;
     }
 
     .page-title {
-      font-size: 1.6rem;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      line-height: 1.2;
+      font-size: 1.75rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
       color: var(--text);
       margin-bottom: 0.5rem;
     }
 
-    .page-subtitle {
-      font-size: 0.925rem;
-      color: var(--muted);
-      line-height: 1.55;
-      margin-bottom: 1.5rem;
+    .page-lead {
+      font-size: 0.975rem;
+      line-height: 1.65;
+      color: var(--text-mid);
+      margin-bottom: 1.75rem;
     }
 
     h3 {
-      font-size: 0.95rem;
+      font-size: 1rem;
       font-weight: 700;
       color: var(--text);
-      margin: 1.25rem 0 0.5rem;
+      margin: 1.5rem 0 0.6rem;
     }
 
-    h3:first-child { margin-top: 0; }
+    h3:first-of-type { margin-top: 0; }
+
+    h4 {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--text);
+      margin: 1.2rem 0 0.4rem;
+    }
 
     p {
       font-size: 0.9rem;
-      line-height: 1.65;
-      color: var(--text);
-      margin-bottom: 0.75rem;
+      line-height: 1.7;
+      color: var(--text-mid);
+      margin-bottom: 0.8rem;
     }
 
     p:last-child { margin-bottom: 0; }
 
-    /* ── Step badge ── */
+    strong { color: var(--text); }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    ul, ol {
+      padding-left: 1.4rem;
+      font-size: 0.9rem;
+      line-height: 1.75;
+      color: var(--text-mid);
+      margin: 0.4rem 0;
+    }
+
+    li { margin-bottom: 0.15rem; }
+
+    /* ══════════════════════════════════════════
+       STEP BADGE
+    ══════════════════════════════════════════ */
     .step-badge {
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
-      background: var(--accent-dim);
-      border: 1px solid rgba(31,111,235,0.2);
+      background: var(--accent-light);
+      border: 1px solid var(--accent-mid);
       border-radius: 99px;
-      padding: 0.3rem 0.85rem 0.3rem 0.4rem;
+      padding: 0.3rem 0.9rem 0.3rem 0.35rem;
       margin-bottom: 1rem;
     }
 
     .step-badge-num {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .step-badge-text {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    /* ══════════════════════════════════════════
+       CARDS & BOXES
+    ══════════════════════════════════════════ */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 1rem;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+    }
+
+    .info-box {
+      background: var(--accent-light);
+      border: 1px solid var(--accent-mid);
+      border-left: 4px solid var(--accent);
+      border-radius: 8px;
+      padding: 0.9rem 1.1rem;
+      margin: 1rem 0;
+      font-size: 0.875rem;
+      line-height: 1.65;
+      color: var(--text-mid);
+    }
+
+    .success-box {
+      background: var(--green-light);
+      border: 1px solid rgba(22,163,74,0.25);
+      border-left: 4px solid var(--green);
+      border-radius: 8px;
+      padding: 0.9rem 1.1rem;
+      margin: 1rem 0;
+      font-size: 0.875rem;
+      line-height: 1.65;
+      color: var(--text-mid);
+    }
+
+    .warn-box {
+      background: var(--amber-light);
+      border: 1px solid rgba(217,119,6,0.25);
+      border-left: 4px solid var(--amber);
+      border-radius: 8px;
+      padding: 0.9rem 1.1rem;
+      margin: 1rem 0;
+      font-size: 0.875rem;
+      line-height: 1.65;
+      color: var(--text-mid);
+    }
+
+    /* ══════════════════════════════════════════
+       TABLE
+    ══════════════════════════════════════════ */
+    .table-wrap {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 0.75rem 0;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+
+    table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+
+    thead { background: var(--bg); }
+
+    th {
+      text-align: left;
+      padding: 0.65rem 1rem;
+      font-weight: 600;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+      border-bottom: 1px solid var(--border);
+    }
+
+    td {
+      padding: 0.65rem 1rem;
+      border-bottom: 1px solid var(--border);
+      line-height: 1.55;
+      vertical-align: top;
+      color: var(--text-mid);
+    }
+
+    tr:last-child td { border-bottom: none; }
+    tbody tr:hover td { background: var(--bg); }
+
+    /* ══════════════════════════════════════════
+       CODE
+    ══════════════════════════════════════════ */
+    code {
+      font-family: 'Fira Code', ui-monospace, monospace;
+      font-size: 0.8em;
+      background: #f1f5f9;
+      border: 1px solid #e2e8f0;
+      border-radius: 5px;
+      padding: 0.15em 0.45em;
+      color: #be185d;
+    }
+
+    .code-block {
+      position: relative;
+      background: #0f172a;
+      border-radius: 10px;
+      padding: 1.1rem 1.25rem;
+      font-family: 'Fira Code', ui-monospace, monospace;
+      font-size: 0.825rem;
+      line-height: 1.7;
+      margin: 0.75rem 0;
+      overflow-x: auto;
+      white-space: pre;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.05);
+      color: #e2e8f0;
+    }
+
+    .code-block .cm  { color: #64748b; }
+    .code-block .g   { color: #4ade80; }
+    .code-block .r   { color: #f87171; }
+    .code-block .y   { color: #fbbf24; }
+    .code-block .b   { color: #60a5fa; }
+    .code-block .p   { color: #c084fc; }
+
+    .code-label {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .code-label span {
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+    }
+
+    .code-label .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--border);
+    }
+
+    /* ══════════════════════════════════════════
+       REVEAL / EXPANDABLE
+    ══════════════════════════════════════════ */
+    .reveal {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      margin: 0.75rem 0;
+      overflow: hidden;
+      background: var(--surface);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+
+    .reveal-trigger {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.85rem 1.1rem;
+      cursor: pointer;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--text);
+      user-select: none;
+      transition: background 0.15s;
+      background: var(--bg);
+    }
+
+    .reveal-trigger:hover { background: #f1f5f9; }
+
+    .reveal-icon { transition: transform 0.22s cubic-bezier(0.4,0,0.2,1); color: var(--muted); font-style: normal; font-size: 0.8rem; }
+    .reveal.open .reveal-icon { transform: rotate(180deg); }
+
+    .reveal-body {
+      display: none;
+      padding: 1.1rem 1.25rem;
+      font-size: 0.875rem;
+      line-height: 1.7;
+      color: var(--text-mid);
+      border-top: 1px solid var(--border);
+    }
+
+    .reveal.open .reveal-body { display: block; }
+
+    /* ══════════════════════════════════════════
+       LINK BUTTON
+    ══════════════════════════════════════════ */
+    .link-btn {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem 1.25rem;
+      background: var(--surface);
+      border: 1.5px solid var(--accent-mid);
+      border-radius: 12px;
+      text-decoration: none;
+      transition: all 0.18s;
+      margin: 1rem 0;
+      box-shadow: 0 2px 8px rgba(37,99,235,0.08);
+    }
+
+    .link-btn:hover {
+      background: var(--accent-light);
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(37,99,235,0.15);
+      text-decoration: none;
+    }
+
+    .link-btn-icon { font-size: 1.5rem; flex-shrink: 0; }
+
+    .link-btn-body .lbl {
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+      margin-bottom: 3px;
+    }
+
+    .link-btn-body .url {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.85rem;
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    /* ══════════════════════════════════════════
+       TWO COL
+    ══════════════════════════════════════════ */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.85rem;
+      margin: 0.75rem 0;
+    }
+
+    .col-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1rem 1.1rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+
+    .col-card h4 {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin-bottom: 0.65rem;
+    }
+
+    .col-card ul { font-size: 0.85rem; }
+
+    /* ══════════════════════════════════════════
+       SCREENSHOT
+    ══════════════════════════════════════════ */
+    /* ── YouTube thumbnail card ── */
+    .yt-wrap {
+      display: block;
+      position: relative;
+      margin: 1rem 0 1.5rem;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      border: 1px solid var(--border);
+      text-decoration: none;
+      background: #000;
+    }
+
+    .yt-wrap img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+      opacity: 0.85;
+      transition: opacity 0.2s;
+    }
+
+    .yt-wrap:hover img { opacity: 1; }
+
+    .yt-play {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .yt-play svg {
+      width: 68px;
+      height: 68px;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.5));
+      transition: transform 0.2s;
+    }
+
+    .yt-wrap:hover .yt-play svg { transform: scale(1.1); }
+
+    .yt-play span {
+      color: #fff;
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      opacity: 0.85;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.6);
+    }
+
+    .screenshot-wrap {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      margin: 1rem 0;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+      cursor: zoom-in;
+      transition: box-shadow 0.2s, transform 0.15s;
+    }
+
+    .screenshot-wrap:hover {
+      box-shadow: 0 6px 24px rgba(0,0,0,0.15);
+      transform: translateY(-1px);
+    }
+
+    .screenshot-wrap img { width: 100%; display: block; }
+
+    /* ── Lightbox ── */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      background: rgba(0,0,0,0.85);
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      cursor: zoom-out;
+      backdrop-filter: blur(4px);
+    }
+
+    .lightbox.open { display: flex; animation: lbIn 0.2s ease both; }
+
+    @keyframes lbIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    .lightbox img {
+      max-width: 100%;
+      max-height: 100%;
+      border-radius: 10px;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.6);
+      animation: lbImgIn 0.22s cubic-bezier(0.4,0,0.2,1) both;
+      cursor: default;
+    }
+
+    @keyframes lbImgIn {
+      from { opacity: 0; transform: scale(0.94); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+
+    .lightbox-close {
+      position: fixed;
+      top: 1.25rem;
+      right: 1.5rem;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: #fff;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    .lightbox-close:hover { background: rgba(255,255,255,0.22); }
+
+    /* ══════════════════════════════════════════
+       WELCOME PAGE
+    ══════════════════════════════════════════ */
+    .welcome-hero {
+      background: linear-gradient(135deg, #eff6ff 0%, #f0fdf4 100%);
+      border: 1px solid #bfdbfe;
+      border-radius: 14px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .welcome-hero p { color: var(--text-mid); margin: 0; }
+
+    .req-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.85rem;
+      padding: 0.85rem 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.875rem;
+      line-height: 1.6;
+      color: var(--text-mid);
+    }
+
+    .req-row:last-child { border-bottom: none; }
+
+    .req-check {
+      flex-shrink: 0;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--green-light);
+      border: 1.5px solid rgba(22,163,74,0.3);
+      color: var(--green);
+      font-size: 0.65rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 1px;
+    }
+
+    /* ══════════════════════════════════════════
+       DIAGRAM
+    ══════════════════════════════════════════ */
+    .diagram {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.1rem 1.25rem;
+      font-family: 'Fira Code', ui-monospace, monospace;
+      font-size: 0.8rem;
+      line-height: 1.9;
+      color: var(--text-mid);
+      margin: 0.75rem 0;
+      white-space: pre;
+    }
+
+    /* ══════════════════════════════════════════
+       FINISH PAGE
+    ══════════════════════════════════════════ */
+    .finish-hero {
+      text-align: center;
+      padding: 1.5rem 0 0.5rem;
+    }
+
+    .finish-icon { font-size: 3.5rem; margin-bottom: 0.75rem; }
+
+    /* ══════════════════════════════════════════
+       NUMBERED STEPS (inline list)
+    ══════════════════════════════════════════ */
+    .step-list { list-style: none; padding: 0; margin: 0.75rem 0; }
+
+    .step-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.85rem;
+      padding: 0.65rem 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.875rem;
+      line-height: 1.5;
+      color: var(--text-mid);
+    }
+
+    .step-list li:last-child { border-bottom: none; }
+
+    .sn {
+      flex-shrink: 0;
       width: 22px;
       height: 22px;
       border-radius: 50%;
@@ -239,755 +911,638 @@
       display: flex;
       align-items: center;
       justify-content: center;
-    }
-
-    .step-badge-label {
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: var(--accent);
-    }
-
-    /* ── Cards ── */
-    .card {
-      background: #fff;
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 1.25rem;
-      margin-bottom: 1rem;
-    }
-
-    .info-box {
-      background: var(--accent-dim);
-      border: 1px solid rgba(31,111,235,0.2);
-      border-left: 4px solid var(--accent);
-      border-radius: 6px;
-      padding: 0.9rem 1rem;
-      margin: 1rem 0;
-      font-size: 0.875rem;
-      line-height: 1.6;
-      color: var(--text);
-    }
-
-    .success-box {
-      background: var(--green-dim);
-      border: 1px solid rgba(26,127,55,0.2);
-      border-left: 4px solid var(--green);
-      border-radius: 6px;
-      padding: 0.9rem 1rem;
-      margin: 1rem 0;
-      font-size: 0.875rem;
-      line-height: 1.6;
-      color: var(--text);
-    }
-
-    .warn-box {
-      background: #fff8e1;
-      border: 1px solid #f0c060;
-      border-left: 4px solid #d29922;
-      border-radius: 6px;
-      padding: 0.9rem 1rem;
-      margin: 1rem 0;
-      font-size: 0.875rem;
-      line-height: 1.6;
-      color: var(--text);
-    }
-
-    /* ── Table ── */
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.85rem;
-      margin: 0.75rem 0;
-    }
-
-    th {
-      background: var(--bg-alt);
-      text-align: left;
-      padding: 0.5rem 0.75rem;
-      font-weight: 600;
-      border: 1px solid var(--border);
-      color: var(--muted);
-      font-size: 0.78rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-    td {
-      padding: 0.5rem 0.75rem;
-      border: 1px solid var(--border);
-      line-height: 1.5;
-      vertical-align: top;
-    }
-
-    tr:nth-child(even) td { background: var(--bg-alt); }
-
-    /* ── Code ── */
-    code {
-      font-family: ui-monospace, 'Cascadia Code', 'Fira Code', monospace;
-      font-size: 0.82em;
-      background: var(--bg-alt);
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 0.1em 0.4em;
-      color: #c7254e;
-    }
-
-    .code-block {
-      background: #1e1e2e;
-      color: #cdd6f4;
-      border-radius: 8px;
-      padding: 1rem 1.1rem;
-      font-family: ui-monospace, 'Cascadia Code', 'Fira Code', monospace;
-      font-size: 0.82rem;
-      line-height: 1.6;
-      margin: 0.75rem 0;
-      overflow-x: auto;
-      white-space: pre;
-    }
-
-    .code-block .dim    { color: #6c7086; }
-    .code-block .green  { color: #a6e3a1; }
-    .code-block .red    { color: #f38ba8; }
-    .code-block .yellow { color: #f9e2af; }
-
-    /* ── Expandable hint ── */
-    .reveal {
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      margin: 0.75rem 0;
-      overflow: hidden;
-    }
-
-    .reveal-trigger {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0.75rem 1rem;
-      cursor: pointer;
-      background: var(--bg-alt);
-      font-size: 0.875rem;
-      font-weight: 600;
-      color: var(--text);
-      user-select: none;
-      transition: background 0.15s;
-    }
-
-    .reveal-trigger:hover { background: #eef1f4; }
-
-    .reveal-arrow {
-      font-size: 0.75rem;
-      transition: transform 0.2s;
-      color: var(--muted);
-    }
-
-    .reveal.open .reveal-arrow { transform: rotate(180deg); }
-
-    .reveal-body {
-      display: none;
-      padding: 1rem;
-      font-size: 0.875rem;
-      line-height: 1.65;
-      border-top: 1px solid var(--border);
-      background: #fff;
-    }
-
-    .reveal.open .reveal-body { display: block; }
-
-    /* ── List ── */
-    ul, ol {
-      padding-left: 1.25rem;
-      margin: 0.5rem 0;
-      font-size: 0.9rem;
-      line-height: 1.7;
-    }
-
-    li { margin-bottom: 0.25rem; }
-
-    /* ── Link ── */
-    a { color: var(--accent); text-decoration: none; }
-    a:hover { text-decoration: underline; }
-
-    /* ── Big link button ── */
-    .link-btn {
-      display: flex;
-      align-items: center;
-      gap: 0.85rem;
-      padding: 1rem 1.25rem;
-      background: var(--accent-dim);
-      border: 1.5px solid rgba(31,111,235,0.3);
-      border-radius: 10px;
-      text-decoration: none;
-      transition: background 0.15s, border-color 0.15s, transform 0.1s;
-      margin: 1rem 0;
-    }
-
-    .link-btn:hover {
-      background: rgba(31,111,235,0.13);
-      border-color: var(--accent);
-      transform: translateY(-1px);
-      text-decoration: none;
-    }
-
-    .link-btn-icon { font-size: 1.4rem; flex-shrink: 0; }
-
-    .link-btn-text .label {
-      font-size: 0.72rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--accent);
-      margin-bottom: 2px;
-    }
-
-    .link-btn-text .url {
-      font-family: ui-monospace, monospace;
-      font-size: 0.875rem;
-      color: var(--text);
-    }
-
-    /* ── Two col ── */
-    .two-col {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.75rem;
-      margin: 0.75rem 0;
-    }
-
-    .col-card {
-      background: #fff;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 1rem;
-    }
-
-    .col-card h4 {
-      font-size: 0.78rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--muted);
-      margin-bottom: 0.6rem;
-    }
-
-    .col-card ul { font-size: 0.85rem; }
-
-    /* ── Screenshot ── */
-    .screenshot {
-      width: 100%;
-      border-radius: 8px;
-      border: 1px solid var(--border);
-      margin: 0.75rem 0;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    }
-
-    /* ── Welcome specific ── */
-    .welcome-intro {
-      background: #fff;
-      border: 1px solid var(--border);
-      border-left: 4px solid var(--accent);
-      border-radius: 6px;
-      padding: 1.1rem 1.25rem;
-      margin-bottom: 1.25rem;
-      font-size: 0.9rem;
-      line-height: 1.65;
-    }
-
-    .req-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 0.75rem;
-      padding: 0.65rem 0;
-      border-bottom: 1px solid var(--border);
-      font-size: 0.875rem;
-      line-height: 1.55;
-    }
-
-    .req-item:last-child { border-bottom: none; }
-
-    .req-check {
-      flex-shrink: 0;
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      background: var(--green-dim);
-      border: 1.5px solid rgba(26,127,55,0.3);
-      color: var(--green);
-      font-size: 0.65rem;
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      justify-content: center;
       margin-top: 1px;
-    }
-
-    /* ── Done page ── */
-    .done-icon {
-      font-size: 3rem;
-      text-align: center;
-      margin: 1rem 0 0.5rem;
-    }
-
-    /* ── Diagram ── */
-    .diagram {
-      background: var(--bg-alt);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 1rem 1.25rem;
-      font-family: ui-monospace, monospace;
-      font-size: 0.8rem;
-      line-height: 1.8;
-      color: var(--text);
-      margin: 0.75rem 0;
-      white-space: pre;
     }
   </style>
 </head>
 <body>
 <div class="app">
 
-  <!-- Header -->
-  <header class="app-header">
-    <img src="../assets/logo.png" class="logo" alt="Company logo" />
-    <div class="header-divider"></div>
-    <div class="progress-wrap">
-      <div class="progress-meta">
-        <span class="progress-title" id="progress-title">Welcome</span>
-        <span class="progress-counter" id="progress-counter">1 / 14</span>
+  <!-- ══════ SIDEBAR ══════ -->
+  <nav class="sidebar">
+    <div class="sidebar-logo">
+      <img src="../assets/logo.png" alt="Company logo" />
+    </div>
+
+    <div class="sidebar-lesson">
+      <div class="eyebrow">Intro to Clinical Bioinformatics</div>
+      <div class="title">Lesson 1 — GitHub Basics</div>
+    </div>
+
+    <div class="sidebar-progress">
+      <div class="sidebar-progress-row">
+        <span class="sidebar-progress-label">Overall progress</span>
+        <span class="sidebar-progress-pct" id="sb-pct">7%</span>
       </div>
-      <div class="progress-track">
-        <div class="progress-fill" id="progress-fill" style="width:7%"></div>
+      <div class="sidebar-progress-track">
+        <div class="sidebar-progress-fill" id="sb-fill" style="width:7%"></div>
       </div>
     </div>
-  </header>
 
-  <!-- Content -->
-  <main class="app-content">
-    <div class="page-inner">
+    <div class="sidebar-nav" id="sidebar-nav">
+      <!-- Populated by JS -->
+    </div>
+  </nav>
 
-      <!-- ── Page 1: Welcome ── -->
-      <div class="page active" id="page-0" data-title="Welcome">
-        <div class="page-eyebrow">Intro to Clinical Bioinformatics · Lesson 1</div>
-        <h1 class="page-title">Pre-Interview Exercise</h1>
-        <p class="page-subtitle">GitHub Basics — estimated 45–60 minutes · Beginner</p>
-
-        <div class="welcome-intro">
-          <strong>Welcome.</strong> This short exercise gives you a hands-on introduction to the GitHub workflow used in Clinical Bioinformatics teams every day. You will fix a bug in a Python script, commit your change, and open a Pull Request — all through the browser with no local software required.
-          <br><br>
-          There are no trick questions and the task does not require previous knowledge or experience. We are looking for clear thinking, attention to detail, and the ability to follow technical instructions.
-        </div>
-
-        <h3>What you need</h3>
-        <div class="card" style="padding: 0.25rem 1rem;">
-          <div class="req-item">
-            <div class="req-check">✓</div>
-            <div>A free <strong>GitHub account</strong> — create one at <a href="https://github.com/signup" target="_blank">github.com/signup</a> if you don't already have one. Please use your real name so we can identify your submission.</div>
-          </div>
-          <div class="req-item">
-            <div class="req-check">✓</div>
-            <div>A modern web browser (Chrome, Firefox, Edge, or Safari). No local installation is required — the exercise runs entirely in the browser via GitHub Codespaces.</div>
-          </div>
-        </div>
-
-        <h3>What you will do</h3>
-        <div class="two-col">
-          <div class="col-card">
-            <h4>The task</h4>
-            <ul>
-              <li>Accept the assignment</li>
-              <li>Create a branch</li>
-              <li>Find and fix a bug</li>
-              <li>Commit your fix</li>
-              <li>Open a Pull Request</li>
-              <li>Complete a short quiz</li>
-            </ul>
-          </div>
-          <div class="col-card">
-            <h4>What we assess</h4>
-            <ul>
-              <li>Following instructions</li>
-              <li>Debugging approach</li>
-              <li>Commit message quality</li>
-              <li>PR description</li>
-              <li>Attention to detail</li>
-            </ul>
-          </div>
-        </div>
+  <!-- ══════ MAIN ══════ -->
+  <div class="main">
+    <div class="topbar">
+      <div class="breadcrumb">
+        <span>Lesson 1</span>
+        <span class="sep">/</span>
+        <span class="current" id="bc-current">Welcome</span>
       </div>
+    </div>
 
-      <!-- ── Page 2: Background — Git & GitHub ── -->
-      <div class="page" id="page-1" data-title="Background: Git & GitHub">
-        <div class="page-eyebrow">Background Reading</div>
-        <h1 class="page-title">Git & GitHub</h1>
-        <p class="page-subtitle">Read through this before starting the exercise. You can refer back at any time.</p>
+    <div class="content">
+      <div class="page-inner">
 
-        <h3>What is Git?</h3>
-        <p><strong>Git</strong> is a version control system — software that tracks every change made to a set of files over time. Think of it as an unlimited undo history for an entire codebase, with the added benefit that you can see exactly who changed what, when, and why.</p>
+        <!-- ── PAGE 1: Welcome ── -->
+        <div class="page active" id="page-0" data-title="Welcome" data-section="Introduction">
+          <div class="page-eyebrow">Intro to Clinical Bioinformatics · Lesson 1</div>
+          <h1 class="page-title">Pre-Interview Exercise</h1>
+          <p class="page-lead">GitHub Basics &nbsp;·&nbsp; Estimated 45–60 minutes &nbsp;·&nbsp; Beginner</p>
 
-        <table>
-          <tr><th>Term</th><th>Meaning</th></tr>
-          <tr><td><strong>Repository (repo)</strong></td><td>A folder whose entire history is tracked by Git.</td></tr>
-          <tr><td><strong>Commit</strong></td><td>A saved snapshot of your changes, with a message describing what you did.</td></tr>
-          <tr><td><strong>Branch</strong></td><td>An isolated copy of the code where you can make changes without affecting the main version.</td></tr>
-          <tr><td><strong>Merge</strong></td><td>Bringing changes from one branch into another.</td></tr>
-        </table>
+          <div class="welcome-hero">
+            <p><strong>Welcome.</strong> This short exercise introduces the GitHub workflow used by Clinical Bioinformatics teams every day. You will fix a bug in a Python script, commit your change, and open a Pull Request — all through the browser with no local software required.</p>
+            <p style="margin-top:0.6rem">There are no trick questions and the task requires no prior bioinformatics knowledge. We are looking for clear thinking, attention to detail, and the ability to follow technical instructions.</p>
+          </div>
 
-        <h3>What is GitHub?</h3>
-        <p><strong>GitHub</strong> is a web platform that hosts Git repositories and adds collaboration features on top. In a clinical bioinformatics team it is used to:</p>
+          <h3>What you need</h3>
+          <div class="card" style="padding:0.25rem 1.25rem">
+            <div class="req-row">
+              <div class="req-check">✓</div>
+              <div>A free <strong>GitHub account</strong> — create one at <a href="https://github.com/signup" target="_blank" rel="noopener">github.com/signup</a> if you don't already have one. Please use your real name so we can identify your submission.</div>
+            </div>
+            <div class="req-row">
+              <div class="req-check">✓</div>
+              <div>A modern web browser (Chrome, Firefox, Edge, or Safari). No local installation required — everything runs in the browser via GitHub Codespaces.</div>
+            </div>
+          </div>
 
-        <table>
-          <tr><th>Use</th><th>Why it matters</th></tr>
-          <tr><td><strong>Store pipeline code</strong></td><td>Every version of the pipeline is preserved and can be reproduced exactly.</td></tr>
-          <tr><td><strong>Review changes</strong></td><td>Before new code affects patient results, it is reviewed by a colleague via a Pull Request.</td></tr>
-          <tr><td><strong>Track issues</strong></td><td>Bugs and feature requests are logged as GitHub Issues, keeping work organised and auditable.</td></tr>
-          <tr><td><strong>Automate checks</strong></td><td>Automated tests run on every change, catching problems before they reach production.</td></tr>
-        </table>
+          <div class="two-col" style="margin-top:1rem">
+            <div class="col-card">
+              <h4>The task</h4>
+              <ul>
+                <li>Accept the assignment</li>
+                <li>Create a branch</li>
+                <li>Find and fix a bug</li>
+                <li>Commit your fix</li>
+                <li>Open a Pull Request</li>
+                <li>Complete a short quiz</li>
+              </ul>
+            </div>
+            <div class="col-card">
+              <h4>What we assess</h4>
+              <ul>
+                <li>Following instructions</li>
+                <li>Debugging approach</li>
+                <li>Commit message quality</li>
+                <li>PR description</li>
+                <li>Attention to detail</li>
+              </ul>
+            </div>
+          </div>
+        </div>
 
-        <h3>What is a Pull Request?</h3>
-        <p>A <strong>Pull Request (PR)</strong> is a proposal to merge changes from one branch into another. It opens a discussion thread where collaborators can review your code line by line, leave comments, and approve or request further changes before merging.</p>
-        <p>In clinical bioinformatics, the PR review step is essential — it ensures that no change reaches a validated pipeline without a second pair of eyes.</p>
-      </div>
+        <!-- ── PAGE 2: Background — Git & GitHub ── -->
+        <div class="page" id="page-1" data-title="Git & GitHub" data-section="Introduction">
+          <div class="page-eyebrow">Background Reading</div>
+          <h1 class="page-title">Git & GitHub</h1>
+          <p class="page-lead">Read through this before starting the exercise — you can return to it at any time using the sidebar.</p>
 
-      <!-- ── Page 3: Background — GitHub Classroom & GC Content ── -->
-      <div class="page" id="page-2" data-title="Background: GitHub Classroom & GC Content">
-        <div class="page-eyebrow">Background Reading</div>
-        <h1 class="page-title">GitHub Classroom & GC Content</h1>
+          <a class="yt-wrap" href="https://www.youtube.com/watch?v=pBy1zgt0XPc" target="_blank" rel="noopener" aria-label="Watch Git and GitHub Explained on YouTube">
+            <img src="https://img.youtube.com/vi/pBy1zgt0XPc/maxresdefault.jpg" alt="Git and GitHub Explained — YouTube thumbnail" onerror="this.src='https://img.youtube.com/vi/pBy1zgt0XPc/hqdefault.jpg'"/>
+            <div class="yt-play">
+              <svg viewBox="0 0 68 48" xmlns="http://www.w3.org/2000/svg">
+                <rect width="68" height="48" rx="10" fill="#FF0000"/>
+                <polygon points="27,14 27,34 46,24" fill="#fff"/>
+              </svg>
+              <span>Watch on YouTube</span>
+            </div>
+          </a>
 
-        <h3>What is GitHub Classroom?</h3>
-        <p><strong>GitHub Classroom</strong> automates the setup of coding assignments on GitHub. When you accept the assignment, Classroom creates a <strong>private repository</strong> for you — only you and the instructor can see it.</p>
+          <h3>What is Git?</h3>
+          <p><strong>Git</strong> is a version control system that tracks every change made to a set of files over time. Think of it as an unlimited undo history for an entire codebase, with the added benefit that you can see exactly who changed what, when, and why.</p>
 
-        <div class="diagram">Accept invite link
-      │
-      ▼
-GitHub creates your private repo  ◄── you work here
-      │
-      ▼
-Open a Pull Request within your repo
-      │
-      ▼
-Instructor reviews your PR</div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Term</th><th>Meaning</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Repository (repo)</strong></td><td>A folder whose entire history is tracked by Git.</td></tr>
+                <tr><td><strong>Commit</strong></td><td>A saved snapshot of your changes, along with a message describing what you did.</td></tr>
+                <tr><td><strong>Branch</strong></td><td>An isolated copy of the code where you can make changes without affecting the main version.</td></tr>
+                <tr><td><strong>Merge</strong></td><td>Bringing changes from one branch into another.</td></tr>
+              </tbody>
+            </table>
+          </div>
 
-        <h3>What is GC content?</h3>
-        <p><strong>GC content</strong> is the percentage of bases in a DNA sequence that are either Guanine (G) or Cytosine (C).</p>
+          <h3>What is GitHub?</h3>
+          <p><strong>GitHub</strong> is a web platform that hosts Git repositories and adds collaboration features on top. In a clinical bioinformatics team it is used to:</p>
 
-        <div class="code-block"><span class="dim"># Formula</span>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Use</th><th>Why it matters</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Store pipeline code</strong></td><td>Every version of the pipeline is preserved and can be reproduced exactly.</td></tr>
+                <tr><td><strong>Review changes</strong></td><td>Before new code affects patient results, it is reviewed via a Pull Request.</td></tr>
+                <tr><td><strong>Track issues</strong></td><td>Bugs and feature requests are logged as GitHub Issues — auditable and searchable.</td></tr>
+                <tr><td><strong>Automate checks</strong></td><td>Automated tests run on every change, catching problems before they reach production.</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3>What is a Pull Request?</h3>
+          <p>A <strong>Pull Request (PR)</strong> is a proposal to merge changes from one branch into another. It opens a review thread where collaborators can inspect your code line by line, leave comments, and approve or request changes before anything is merged — providing a full, traceable audit trail.</p>
+
+        </div>
+
+        <!-- ── PAGE: Introduction to Python ── -->
+        <div class="page" id="page-2b" data-title="Introduction to Python" data-section="Introduction">
+          <div class="page-eyebrow">Background Reading</div>
+          <h1 class="page-title">Introduction to Python</h1>
+
+          <p class="page-lead">The exercise involves reading and fixing a Python script. This page covers what you need to know.</p>
+
+          <a class="yt-wrap" href="https://youtu.be/Y8Tko2YC5hA" target="_blank" rel="noopener" aria-label="Watch Introduction to Python on YouTube">
+            <img src="https://img.youtube.com/vi/Y8Tko2YC5hA/maxresdefault.jpg" alt="Introduction to Python — YouTube thumbnail" onerror="this.src='https://img.youtube.com/vi/Y8Tko2YC5hA/hqdefault.jpg'"/>
+            <div class="yt-play">
+              <svg viewBox="0 0 68 48" xmlns="http://www.w3.org/2000/svg">
+                <rect width="68" height="48" rx="10" fill="#FF0000"/>
+                <polygon points="27,14 27,34 46,24" fill="#fff"/>
+              </svg>
+              <span>Watch on YouTube</span>
+            </div>
+          </a>
+
+          <h3>What is Python?</h3>
+          <p><strong>Python</strong> is a programming language widely used in bioinformatics because it is readable, expressive, and has a rich ecosystem of scientific libraries. You will see it used for everything from parsing sequencing files to running machine learning pipelines.</p>
+
+          <h3>Key concepts for this exercise</h3>
+
+          <h4>Variables and counts</h4>
+          <p>Python stores values in named variables. In the script you will inspect, each nucleotide base is counted separately:</p>
+          <div class="code-block">g_count = sequence.count(<span class="g">"G"</span>)   <span class="cm"># number of G bases</span>
+c_count = sequence.count(<span class="g">"C"</span>)   <span class="cm"># number of C bases</span>
+a_count = sequence.count(<span class="g">"A"</span>)   <span class="cm"># number of A bases</span>
+t_count = sequence.count(<span class="g">"T"</span>)   <span class="cm"># number of T bases</span></div>
+
+          <h4>Arithmetic</h4>
+          <p>Python arithmetic uses standard operators. Division with <code>/</code> always returns a decimal:</p>
+          <div class="code-block">result = (g_count + c_count) / len(sequence) * 100</div>
+          <p><code>len(sequence)</code> returns the total number of characters (bases) in the string.</p>
+
+          <h4>Functions</h4>
+          <p>A <strong>function</strong> is a named, reusable block of code. It is defined with <code>def</code> and called by name:</p>
+          <div class="code-block"><span class="y">def</span> calculate_gc_content(sequence):
+    <span class="cm"># ... logic here ...</span>
+    <span class="y">return</span> result
+
+gc = calculate_gc_content(<span class="g">"ATGCATGC"</span>)   <span class="cm"># → 50.0</span></div>
+
+          <h4>Running a script</h4>
+          <p>Python scripts are plain text files ending in <code>.py</code>. You run them from the terminal:</p>
+          <div class="code-block">python lessons/01_github_basics/gc_content.py</div>
+          <p>The output is printed directly to the terminal. If the script crashes, Python prints an error message telling you exactly which line failed and why.</p>
+
+          <div class="info-box"><strong>You do not need to write any new code.</strong> The fix is a single line — your job is to read the existing code and understand what it is doing wrong.</div>
+        </div>
+
+        <!-- ── PAGE 3: Background — GC Content ── -->
+        <div class="page" id="page-2" data-title="GC Content" data-section="Introduction">
+          <div class="page-eyebrow">Background Reading</div>
+          <h1 class="page-title">GC Content</h1>
+
+          <p class="page-lead">Read through this before starting the exercise — you can return to it at any time using the sidebar.</p>
+
+          <a class="yt-wrap" href="https://www.youtube.com/watch?v=wdEb3chYFOw" target="_blank" rel="noopener" aria-label="Watch GC Content explained on YouTube">
+            <img src="https://img.youtube.com/vi/wdEb3chYFOw/maxresdefault.jpg" alt="GC Content explained — YouTube thumbnail" onerror="this.src='https://img.youtube.com/vi/wdEb3chYFOw/hqdefault.jpg'"/>
+            <div class="yt-play">
+              <svg viewBox="0 0 68 48" xmlns="http://www.w3.org/2000/svg">
+                <rect width="68" height="48" rx="10" fill="#FF0000"/>
+                <polygon points="27,14 27,34 46,24" fill="#fff"/>
+              </svg>
+              <span>Watch on YouTube</span>
+            </div>
+          </a>
+
+          <h3>What is GC content?</h3>
+          <p><strong>GC content</strong> is the percentage of bases in a DNA sequence that are Guanine (G) or Cytosine (C).</p>
+
+          <div class="code-block"><span class="cm"># Formula</span>
 GC content (%) = (G + C) / total bases × 100
 
-<span class="dim"># Example: ATGCATGC has 8 bases, 4 of which are G or C</span>
-GC content = 4 / 8 × 100 = <span class="green">50%</span></div>
+<span class="cm"># Example: ATGCATGC has 8 bases, 4 of which are G or C</span>
+GC content = 4 / 8 × 100 = <span class="g">50%</span></div>
 
-        <p>GC content matters in bioinformatics because:</p>
-        <ul>
-          <li>It affects the melting temperature of DNA (higher GC → higher Tm)</li>
-          <li>Genomic regions vary in GC content, which can affect sequencing quality</li>
-          <li>Some sequencing technologies produce fewer reads in very high or very low GC regions</li>
-        </ul>
+          <p>GC content matters in bioinformatics because:</p>
+          <ul>
+            <li>It affects the melting temperature of DNA (higher GC → higher Tm)</li>
+            <li>Genomic regions vary in GC content, affecting sequencing quality</li>
+            <li>Some sequencing technologies produce fewer reads in very high or low GC regions</li>
+          </ul>
 
-        <div class="info-box">
-          <strong>Keep this formula in mind.</strong> The bug you will fix in this exercise is directly related to it.
-        </div>
-      </div>
-
-      <!-- ── Page 4: Your Task ── -->
-      <div class="page" id="page-3" data-title="Your Task">
-        <div class="page-eyebrow">Exercise Overview</div>
-        <h1 class="page-title">Your Task</h1>
-        <p class="page-subtitle">There is a bug in a Python script. Your job is to find it, fix it, and submit your fix via a Pull Request.</p>
-
-        <div class="card">
-          <p>The script <strong>gc_content.py</strong> is supposed to calculate the GC content of DNA sequences, but it produces wrong answers — and for some sequences it crashes entirely.</p>
-          <p style="margin-top:0.5rem">When you run it, you should see a mix of <code>FAIL</code> results and at least one error. Your task is to read the output carefully, understand why it's failing, and make the fix.</p>
+          <div class="info-box"><strong>Keep this formula in mind.</strong> The bug you will fix in this exercise is directly related to it.</div>
         </div>
 
-        <h3>Steps at a glance</h3>
-        <ol style="line-height:2">
-          <li>Accept the assignment via the invite link</li>
-          <li>Open a Codespace (browser-based editor)</li>
-          <li>Create a new branch for your fix</li>
-          <li>Run the script and reproduce the bug</li>
-          <li>Find and fix the bug in <code>gc_content.py</code></li>
-          <li>Verify all tests pass</li>
-          <li>Commit your change with a clear message</li>
-          <li>Push your branch</li>
-          <li>Open a Pull Request — this is your submission</li>
-        </ol>
+        <!-- ── PAGE 4: Your Task ── -->
+        <div class="page" id="page-3" data-title="Your Task" data-section="Introduction">
+          <div class="page-eyebrow">Exercise Overview</div>
+          <h1 class="page-title">Your Task</h1>
+          <p class="page-lead">A Python script that calculates GC content is broken. Find the bug, fix it, and submit your fix via a Pull Request.</p>
 
-        <div class="info-box">
-          The fix is a <strong>single line change</strong>. Focus on understanding the bug before touching the code.
-        </div>
-      </div>
-
-      <!-- ── Page 5: Step 1 ── -->
-      <div class="page" id="page-4" data-title="Step 1 — Accept the Assignment">
-        <div class="step-badge"><div class="step-badge-num">1</div><span class="step-badge-label">Accept the Assignment</span></div>
-        <h1 class="page-title">Accept the assignment</h1>
-        <p>Click the link below and sign in with your GitHub account. GitHub Classroom will automatically create a private repository for you.</p>
-
-        <a class="link-btn" href="https://classroom.github.com/a/rym7cYqo" target="_blank" rel="noopener">
-          <div class="link-btn-icon">🔗</div>
-          <div class="link-btn-text">
-            <div class="label">Assignment link</div>
-            <div class="url">classroom.github.com/a/rym7cYqo</div>
+          <div class="card">
+            <p>The script <strong>gc_content.py</strong> produces wrong answers for most sequences, and crashes entirely for others. Your job is to run it, read the output carefully, understand why it's failing, and make the fix.</p>
+            <p style="margin-top:0.5rem">The fix is a <strong>single line change</strong>. Focus on understanding the bug before touching the code.</p>
           </div>
-        </a>
 
-        <div class="warn-box">
-          <strong>Team name:</strong> When prompted, create a new team and use your own name. This is how we identify your submission.
-        </div>
-
-        <p>Once you have accepted, GitHub Classroom will show a confirmation page. Click the <strong>repository link</strong> that appears to open your private repo — it will be named something like <code>lesson-1-github-basics-your-username</code>.</p>
-
-        <div class="info-box">
-          Your repository is private. Only you and the instructor can see it.
-        </div>
-      </div>
-
-      <!-- ── Page 6: Step 2 ── -->
-      <div class="page" id="page-5" data-title="Step 2 — Open a Codespace">
-        <div class="step-badge"><div class="step-badge-num">2</div><span class="step-badge-label">Open a Codespace</span></div>
-        <h1 class="page-title">Open a Codespace</h1>
-        <p>A <strong>Codespace</strong> is a full development environment that runs in the browser — no local installation needed.</p>
-
-        <p>On your assignment repository, click the green <strong>Code</strong> button, select the <strong>Codespaces</strong> tab, and click <strong>Create codespace on main</strong>.</p>
-
-        <img src="../assets/codespace.png" class="screenshot" alt="GitHub Codespace setup" />
-
-        <p>Wait for the Codespace to finish loading. You will see a file explorer on the left and a terminal panel at the bottom. All remaining steps happen inside this environment.</p>
-
-        <div class="info-box">
-          If the Codespace takes more than a minute to load, try refreshing the page. If it still doesn't work, close it and create a new one.
-        </div>
-      </div>
-
-      <!-- ── Page 7: Step 3 ── -->
-      <div class="page" id="page-6" data-title="Step 3 — Create a Branch">
-        <div class="step-badge"><div class="step-badge-num">3</div><span class="step-badge-label">Create a Branch</span></div>
-        <h1 class="page-title">Create a branch</h1>
-        <p>In the Codespace terminal, create a new branch for your fix:</p>
-
-        <div class="code-block">git checkout -b fix/gc-content-bug</div>
-
-        <p>You should see:</p>
-        <div class="code-block"><span class="green">Switched to a new branch 'fix/gc-content-bug'</span></div>
-
-        <div class="info-box">
-          <strong>Why a branch?</strong> Branches let you isolate your work. If something goes wrong, <code>main</code> is unaffected. In clinical bioinformatics, no one ever commits directly to <code>main</code> — changes always go through a branch and a Pull Request.
-        </div>
-      </div>
-
-      <!-- ── Page 8: Step 4 ── -->
-      <div class="page" id="page-7" data-title="Step 4 — Reproduce the Bug">
-        <div class="step-badge"><div class="step-badge-num">4</div><span class="step-badge-label">Reproduce the Bug</span></div>
-        <h1 class="page-title">Reproduce the bug</h1>
-        <p>Run the script in the terminal to see the failing tests:</p>
-
-        <div class="code-block">python lessons/01_github_basics/gc_content.py</div>
-
-        <p>You should see output like this:</p>
-
-        <div class="code-block">GC Content Calculator
-============================================================
-
-Sequence           Expected        Got  Result
----------------------------------------------------------------------------
-ATGCATGC              50.0%     <span class="red">100.0%  FAIL</span>
-GGGGAAAA              50.0%     <span class="red">100.0%  FAIL</span>
-ATCGATCG              50.0%     <span class="red">100.0%  FAIL</span>
-GCGCGCGC             100.0%      <span class="red">ERROR  ZeroDivisionError</span>
-ATATATATAT             0.0%     <span class="green">  0.0%  PASS</span></div>
-
-        <p>Read the output carefully before touching the code. Ask yourself:</p>
-        <ul>
-          <li>Which cases fail, and which passes?</li>
-          <li>What do the failing sequences have in common?</li>
-          <li>What is special about <code>ATATATATAT</code> that makes it pass?</li>
-          <li>What causes a <code>ZeroDivisionError</code> for <code>GCGCGCGC</code>?</li>
-        </ul>
-      </div>
-
-      <!-- ── Page 9: Step 5 ── -->
-      <div class="page" id="page-8" data-title="Step 5 — Find & Fix the Bug">
-        <div class="step-badge"><div class="step-badge-num">5</div><span class="step-badge-label">Find & Fix the Bug</span></div>
-        <h1 class="page-title">Find & fix the bug</h1>
-        <p>Open <code>lessons/01_github_basics/gc_content.py</code> in the editor. Read through the <code>calculate_gc_content()</code> function carefully.</p>
-        <p>Compare the code to the GC content formula from the background reading:</p>
-        <div class="code-block">GC content (%) = (G + C) / <span class="yellow">total bases</span> × 100</div>
-
-        <div class="reveal">
-          <div class="reveal-trigger" onclick="toggleReveal(this)">
-            <span>💡 Hint</span>
-            <span class="reveal-arrow">▼</span>
-          </div>
-          <div class="reveal-body">
-            Look at the denominator of the division in <code>calculate_gc_content()</code>. What is it actually dividing by? Is that the same as "total bases"?
-          </div>
-        </div>
-
-        <div class="reveal">
-          <div class="reveal-trigger" onclick="toggleReveal(this)">
-            <span>🔍 Reveal the fix</span>
-            <span class="reveal-arrow">▼</span>
-          </div>
-          <div class="reveal-body">
-            <p>The bug is on this line:</p>
-            <div class="code-block"><span class="red">gc_content = (g_count + c_count) / (a_count + t_count) * 100</span></div>
-            <p>It divides by the AT count instead of the total number of bases. Fix it:</p>
-            <div class="code-block"><span class="green">gc_content = (g_count + c_count) / len(sequence) * 100</span></div>
-            <p style="margin-top:0.5rem">For <code>GCGCGCGC</code>, the AT count is zero — hence the <code>ZeroDivisionError</code>. For all other sequences, the result is inflated because the denominator is too small.</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- ── Page 10: Step 6 ── -->
-      <div class="page" id="page-9" data-title="Step 6 — Verify Your Fix">
-        <div class="step-badge"><div class="step-badge-num">6</div><span class="step-badge-label">Verify Your Fix</span></div>
-        <h1 class="page-title">Verify your fix</h1>
-        <p>Save your changes (<strong>Ctrl+S</strong>), then run the script again:</p>
-
-        <div class="code-block">python lessons/01_github_basics/gc_content.py</div>
-
-        <p>All five tests should now show <code>PASS</code>:</p>
-
-        <div class="code-block">GC Content Calculator
-============================================================
-
-Sequence           Expected        Got  Result
----------------------------------------------------------------------------
-ATGCATGC              50.0%     <span class="green"> 50.0%  PASS</span>
-GGGGAAAA              50.0%     <span class="green"> 50.0%  PASS</span>
-ATCGATCG              50.0%     <span class="green"> 50.0%  PASS</span>
-GCGCGCGC             100.0%     <span class="green">100.0%  PASS</span>
-ATATATATAT             0.0%     <span class="green">  0.0%  PASS</span>
-
-<span class="green">All tests passed!</span></div>
-
-        <div class="warn-box">
-          If you still see failures, make sure you saved the file before re-running. Use <strong>Ctrl+S</strong> or File → Save.
-        </div>
-      </div>
-
-      <!-- ── Page 11: Step 7 ── -->
-      <div class="page" id="page-10" data-title="Step 7 — Commit Your Change">
-        <div class="step-badge"><div class="step-badge-num">7</div><span class="step-badge-label">Commit Your Change</span></div>
-        <h1 class="page-title">Commit your change</h1>
-        <p>Stage the file you edited and write a clear commit message:</p>
-
-        <div class="code-block">git add lessons/01_github_basics/gc_content.py
-git commit -m "fix: divide by total bases not AT count in calculate_gc_content"</div>
-
-        <div class="info-box">
-          <strong>Commit message tips:</strong>
-          <ul style="margin-top:0.4rem">
-            <li>Use the imperative mood — "fix bug" not "fixed bug"</li>
-            <li>Be specific about <em>what</em> you changed and <em>why</em></li>
-            <li>In clinical bioinformatics, commit messages form part of the audit trail for validated software</li>
+          <h3>Steps at a glance</h3>
+          <ul class="step-list">
+            <li><div class="sn">1</div><div>Accept the assignment via the invite link</div></li>
+            <li><div class="sn">2</div><div>Open a Codespace — your browser-based development environment</div></li>
+            <li><div class="sn">3</div><div>Create a new branch for your fix</div></li>
+            <li><div class="sn">4</div><div>Run the script and study the failing output</div></li>
+            <li><div class="sn">5</div><div>Find and fix the bug in <code>gc_content.py</code></div></li>
+            <li><div class="sn">6</div><div>Verify all tests pass</div></li>
+            <li><div class="sn">7</div><div>Commit your change with a clear, descriptive message</div></li>
+            <li><div class="sn">8</div><div>Push your branch to GitHub</div></li>
+            <li><div class="sn">9</div><div>Open a Pull Request — this is your submission</div></li>
           </ul>
         </div>
 
-        <p>Feel free to write your own commit message — the one above is a suggestion. What matters is that it clearly describes the change.</p>
-      </div>
+        <!-- ── PAGE 5: Step 1 ── -->
+        <div class="page" id="page-4" data-title="Step 1 — Accept the Assignment" data-section="The Exercise">
+          <div class="step-badge"><div class="step-badge-num">1</div><span class="step-badge-text">Accept the Assignment</span></div>
+          <h1 class="page-title">Accept the assignment</h1>
+          <p class="page-lead">Click the link below to claim your private repository on GitHub Classroom.</p>
 
-      <!-- ── Page 12: Step 8 ── -->
-      <div class="page" id="page-11" data-title="Step 8 — Push Your Branch">
-        <div class="step-badge"><div class="step-badge-num">8</div><span class="step-badge-label">Push Your Branch</span></div>
-        <h1 class="page-title">Push your branch</h1>
-        <p>Upload your branch to GitHub:</p>
+          <a class="link-btn" href="https://classroom.github.com/a/rym7cYqo" target="_blank" rel="noopener">
+            <div class="link-btn-icon">🔗</div>
+            <div class="link-btn-body">
+              <div class="lbl">Assignment link — click to open</div>
+              <div class="url">classroom.github.com/a/rym7cYqo</div>
+            </div>
+          </a>
 
-        <div class="code-block">git push origin fix/gc-content-bug</div>
+          <p>Once you have accepted, GitHub Classroom shows a confirmation page. Click the <strong>repository link</strong> that appears — it will be named something like <code>lesson-1-github-basics-your-username</code>. This is <b>your private repository</b> for this exercise, so please make sure you keep the URL safe.</p>
 
-        <p>You should see output ending with something like:</p>
-        <div class="code-block"><span class="green"> * [new branch]      fix/gc-content-bug -> fix/gc-content-bug</span></div>
-
-        <p>Your code is now on GitHub and ready for a Pull Request.</p>
-      </div>
-
-      <!-- ── Page 13: Step 9 ── -->
-      <div class="page" id="page-12" data-title="Step 9 — Open a Pull Request">
-        <div class="step-badge"><div class="step-badge-num">9</div><span class="step-badge-label">Open a Pull Request</span></div>
-        <h1 class="page-title">Open a Pull Request</h1>
-
-        <ol style="line-height:2.2">
-          <li>Go back to your assignment repository on GitHub</li>
-          <li>You should see a banner — <strong>"fix/gc-content-bug had recent pushes"</strong> — click <strong>Compare & pull request</strong></li>
-          <li>Make sure the PR merges your <code>fix/gc-content-bug</code> branch into <strong>your own <code>main</code></strong> — both within your repository</li>
-          <li>Write a short description of the bug you found and how you fixed it</li>
-          <li>Click <strong>Create pull request</strong></li>
-        </ol>
-
-        <div class="success-box">
-          <strong>Opening the Pull Request is your submission.</strong> Your instructor will be notified automatically and will review your fix directly in GitHub Classroom.
-        </div>
-      </div>
-
-      <!-- ── Page 14: Done / Quiz ── -->
-      <div class="page" id="page-13" data-title="Knowledge Check">
-        <div class="page-eyebrow">Almost done</div>
-        <h1 class="page-title">Knowledge Check</h1>
-        <p class="page-subtitle">Complete a short quiz to finish the exercise.</p>
-
-        <div class="done-icon">🎉</div>
-
-        <p style="text-align:center; margin: 0.5rem 0 1.5rem">You've accepted the assignment, fixed the bug, committed your change, and opened a Pull Request. One last step — a short multiple-choice quiz to test your understanding of what you've just done.</p>
-
-        <a class="link-btn" href="./index.html" target="_blank" rel="noopener">
-          <div class="link-btn-icon">📝</div>
-          <div class="link-btn-text">
-            <div class="label">Final step</div>
-            <div class="url">Take the Lesson 1 Quiz →</div>
+          <div class="screenshot-wrap">
+            <img src="../assets/user_repo.png" alt="GitHub Classroom confirmation page showing the repository link" />
           </div>
-        </a>
-
-        <div class="info-box" style="margin-top:1.25rem">
-          The quiz opens in a new tab. At the end, you will be prompted to submit your score as a GitHub Issue — please do so as it forms part of your assessment.
+          <div class="info-box"><b>Your repository is private. Only you and the instructor can see it.</b></div>
         </div>
-      </div>
 
-    </div><!-- /page-inner -->
-  </main>
+        <!-- ── PAGE 6: Step 2 ── -->
+        <div class="page" id="page-5" data-title="Step 2 — Open a Codespace" data-section="The Exercise">
+          <div class="step-badge"><div class="step-badge-num">2</div><span class="step-badge-text">Open a Codespace</span></div>
+          <h1 class="page-title">Open a Codespace</h1>
+          <p class="page-lead">A Codespace is a full development environment that runs entirely in your browser — no local software needed.</p>
 
-  <!-- Footer -->
-  <footer class="app-footer">
-    <button class="btn" id="btn-back" onclick="navigate(-1)" disabled>← Back</button>
-    <span class="step-indicator" id="step-indicator">1 of 14</span>
-    <button class="btn btn-primary" id="btn-next" onclick="navigate(1)">Next →</button>
-  </footer>
+          <a class="yt-wrap" href="https://www.youtube.com/watch?v=sYJ3CHtT6WM" target="_blank" rel="noopener" aria-label="Watch GitHub Codespaces overview on YouTube">
+            <img src="https://img.youtube.com/vi/sYJ3CHtT6WM/maxresdefault.jpg" alt="GitHub Codespaces overview — YouTube thumbnail" onerror="this.src='https://img.youtube.com/vi/sYJ3CHtT6WM/hqdefault.jpg'"/>
+            <div class="yt-play">
+              <svg viewBox="0 0 68 48" xmlns="http://www.w3.org/2000/svg">
+                <rect width="68" height="48" rx="10" fill="#FF0000"/>
+                <polygon points="27,14 27,34 46,24" fill="#fff"/>
+              </svg>
+              <span>Watch on YouTube</span>
+            </div>
+          </a>
+
+          <p>On your assignment repository, click the green <strong>Code</strong> button, select the <strong>Codespaces</strong> tab, then click <strong>Create codespace on main</strong>.</p>
+
+          <div class="screenshot-wrap">
+            <img src="../assets/create_codespace.png" alt="Creating a GitHub Codespace" />
+          </div>
+
+          <p>Wait for the Codespace to finish loading. You will see a file explorer on the left and a terminal panel at the bottom, like this:</p>
+
+          <div class="info-box">If the Codespace takes more than a minute to load, try refreshing the page. If it still won't load, close it and create a new one.</div>
+        </div>
+
+        <!-- ── PAGE 7: Step 3 ── -->
+        <div class="page" id="page-6" data-title="Step 3 — Create a Branch" data-section="The Exercise">
+          <div class="step-badge"><div class="step-badge-num">3</div><span class="step-badge-text">Create a Branch</span></div>
+          <h1 class="page-title">Create a branch</h1>
+          <p class="page-lead">Before making any changes, create an isolated branch for your fix. Type the following command into the terminal at the bottom of your Codespace.</p>
+
+          <div class="code-label"><div class="dot"></div><span>Terminal</span></div>
+          <div class="code-block">git checkout -b fix/gc-content-bug</div>
+
+          <p>You should see the confirmation message in the terminal, and the branch name will appear in the bottom-left status bar of the editor:</p>
+
+          <div class="screenshot-wrap">
+            <img src="../assets/branch.png" alt="Branch created — terminal confirmation and status bar showing fix/gc-content-bug" />
+          </div>
+
+          <div class="info-box"><strong>Why a branch?</strong> Branches let you work in isolation — if something goes wrong, <code>main</code> is unaffected. In clinical bioinformatics, no one ever commits directly to <code>main</code>. Changes always go through a branch and a Pull Request.</div>
+        </div>
+
+        <!-- ── PAGE 8: Step 4 ── -->
+        <div class="page" id="page-7" data-title="Step 4 — Reproduce the Bug" data-section="The Exercise">
+          <div class="step-badge"><div class="step-badge-num">4</div><span class="step-badge-text">Reproduce the Bug</span></div>
+          <h1 class="page-title">Reproduce the bug</h1>
+          <p class="page-lead">Run the script first. Understand the failure before touching any code.</p>
+
+          <div class="code-label"><div class="dot"></div><span>Terminal</span></div>
+          <div class="code-block">python lessons/01_github_basics/gc_content.py</div>
+
+          <div class="screenshot-wrap">
+            <img src="../assets/codespace.png" alt="Terminal showing the python command being run" />
+          </div>
+
+          <p>The script will run its test cases and print the results. You should see:</p>
+          <div class="code-block">GC Content Calculator
+============================================================
+
+Sequence           Expected        Got  Result
+───────────────────────────────────────────────────────────
+ATGCATGC              50.0%     <span class="r">100.0%  FAIL</span>
+GGGGAAAA              50.0%     <span class="r">100.0%  FAIL</span>
+ATCGATCG              50.0%     <span class="r">100.0%  FAIL</span>
+GCGCGCGC             100.0%      <span class="r">ERROR  ZeroDivisionError</span>
+ATATATATAT             0.0%       <span class="g">0.0%  PASS</span></div>
+
+          <p>Before looking at the code, think about what the output is telling you:</p>
+          <ul>
+            <li>Which sequences fail, and which passes?</li>
+            <li>What is special about <code>ATATATATAT</code> that makes it pass?</li>
+            <li>Why does <code>GCGCGCGC</code> (all G and C) produce a <code>ZeroDivisionError</code>?</li>
+          </ul>
+        </div>
+
+        <!-- ── PAGE 9: Step 5 ── -->
+        <div class="page" id="page-8" data-title="Step 5 — Find & Fix the Bug" data-section="The Exercise">
+          <div class="step-badge"><div class="step-badge-num">5</div><span class="step-badge-text">Find & Fix the Bug</span></div>
+          <h1 class="page-title">Find & fix the bug</h1>
+          <p class="page-lead">In the file explorer on the left, navigate to <strong>lessons → 01_github_basics → gc_content.py</strong> and click to open it. You should see the script in the editor and your failing test output still visible in the terminal below:</p>
+
+          <div class="screenshot-wrap">
+            <img src="../assets/open_script.png" alt="gc_content.py open in editor with failing test output in terminal" />
+          </div>
+
+          <p>Read through <code>calculate_gc_content()</code> carefully, then compare it to the GC content formula:</p>
+          <div class="code-block">GC content (%) = (G + C) / <span class="y">total bases</span> × 100</div>
+
+          <div class="reveal">
+            <div class="reveal-trigger" onclick="toggleReveal(this)">
+              <span>💡 &nbsp;Hint</span>
+              <i class="reveal-icon">▼</i>
+            </div>
+            <div class="reveal-body">
+              Look carefully at the <strong>denominator</strong> of the division in <code>calculate_gc_content()</code>. What is it actually dividing by? Is that the same as "total bases"?
+            </div>
+          </div>
+
+          <div class="reveal">
+            <div class="reveal-trigger" onclick="toggleReveal(this)">
+              <span>🔍 &nbsp;Reveal the fix</span>
+              <i class="reveal-icon">▼</i>
+            </div>
+            <div class="reveal-body">
+              <p>The bug is on this line:</p>
+              <div class="code-block"><span class="r">gc_content = (g_count + c_count) / (a_count + t_count) * 100</span></div>
+              <p>It divides by the AT count instead of total bases. Fix it to:</p>
+              <div class="code-block"><span class="g">gc_content = (g_count + c_count) / len(sequence) * 100</span></div>
+              <p style="margin-top:0.5rem">For <code>GCGCGCGC</code>, AT count is zero — hence the <code>ZeroDivisionError</code>. For mixed sequences the result is inflated because the denominator is too small.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── PAGE 10: Step 6 ── -->
+        <div class="page" id="page-9" data-title="Step 6 — Verify Your Fix" data-section="The Exercise">
+          <div class="step-badge"><div class="step-badge-num">6</div><span class="step-badge-text">Verify Your Fix</span></div>
+          <h1 class="page-title">Verify your fix</h1>
+          <p class="page-lead">Save the file (<strong>Ctrl+S</strong>), then run the script again to confirm all tests pass.</p>
+
+          <div class="code-label"><div class="dot"></div><span>Terminal</span></div>
+          <div class="code-block">python lessons/01_github_basics/gc_content.py</div>
+
+          <p>Expected output:</p>
+          <div class="code-block">GC Content Calculator
+============================================================
+
+Sequence           Expected        Got  Result
+───────────────────────────────────────────────────────────
+ATGCATGC              50.0%      <span class="g">50.0%  PASS</span>
+GGGGAAAA              50.0%      <span class="g">50.0%  PASS</span>
+ATCGATCG              50.0%      <span class="g">50.0%  PASS</span>
+GCGCGCGC             100.0%     <span class="g">100.0%  PASS</span>
+ATATATATAT             0.0%       <span class="g">0.0%  PASS</span>
+
+<span class="g">All tests passed!</span></div>
+
+          <div class="warn-box">If you still see failures, make sure the file is saved before re-running. Use <strong>Ctrl+S</strong> or File → Save.</div>
+        </div>
+
+        <!-- ── PAGE 11: Step 7 ── -->
+        <div class="page" id="page-10" data-title="Step 7 — Commit Your Change" data-section="The Exercise">
+          <div class="step-badge"><div class="step-badge-num">7</div><span class="step-badge-text">Commit Your Change</span></div>
+          <h1 class="page-title">Commit your change</h1>
+          <p class="page-lead">Stage the file and save your fix as a commit with a clear, descriptive message.</p>
+
+          <div class="code-label"><div class="dot"></div><span>Terminal</span></div>
+          <div class="code-block">git add lessons/01_github_basics/gc_content.py
+git commit -m "fix: divide by total bases not AT count in calculate_gc_content"</div>
+
+          <div class="info-box">
+            <strong>Commit message tips:</strong>
+            <ul style="margin-top:0.4rem">
+              <li>Use the imperative mood — "fix bug" not "fixed bug"</li>
+              <li>Be specific about <em>what</em> you changed and <em>why</em></li>
+              <li>In clinical bioinformatics, commit messages form part of the audit trail for validated software</li>
+            </ul>
+          </div>
+
+          <p>The message above is a suggestion — feel free to write your own. What matters is that it clearly describes the change.</p>
+        </div>
+
+        <!-- ── PAGE 12: Step 8 ── -->
+        <div class="page" id="page-11" data-title="Step 8 — Push Your Branch" data-section="The Exercise">
+          <div class="step-badge"><div class="step-badge-num">8</div><span class="step-badge-text">Push Your Branch</span></div>
+          <h1 class="page-title">Push your branch</h1>
+          <p class="page-lead">Upload your branch to GitHub so it can be reviewed.</p>
+
+          <div class="code-label"><div class="dot"></div><span>Terminal</span></div>
+          <div class="code-block">git push origin fix/gc-content-bug</div>
+
+          <p>You should see a success message confirming the branch was created on GitHub:</p>
+
+          <div class="screenshot-wrap">
+            <img src="../assets/push_success.png" alt="Terminal showing successful git push with new branch created" />
+          </div>
+
+          <p>Your code is now on GitHub and ready for a Pull Request.</p>
+        </div>
+
+        <!-- ── PAGE 13: Step 9 ── -->
+        <div class="page" id="page-12" data-title="Step 9 — Open a Pull Request" data-section="The Exercise">
+          <div class="step-badge"><div class="step-badge-num">9</div><span class="step-badge-text">Open a Pull Request</span></div>
+          <h1 class="page-title">Open a Pull Request</h1>
+          <p class="page-lead">A Pull Request is how you propose your fix for review — and it is your submission.</p>
+
+          <ul class="step-list">
+            <li><div class="sn">1</div><div>Go back to your assignment repository on GitHub</div></li>
+            <li><div class="sn">2</div><div>You should see a yellow banner — <strong>"fix/gc-content-bug had recent pushes"</strong> — click <strong>Compare & pull request</strong></div></li>
+            <li><div class="sn">3</div><div>Confirm the PR merges <code>fix/gc-content-bug</code> into <strong>your own <code>main</code></strong> branch — both within your private repository</div></li>
+            <li><div class="sn">4</div><div>Write a short description of the bug you found and how you fixed it</div></li>
+            <li><div class="sn">5</div><div>Click <strong>Create pull request</strong></div></li>
+          </ul>
+
+          <p>After pushing, go back to your repository on GitHub. You will see a yellow banner like this — click <strong>Compare & pull request</strong>:</p>
+
+          <div class="screenshot-wrap">
+            <img src="../assets/pull_request.png" alt="GitHub showing the Compare & pull request banner" />
+          </div>
+
+          <div class="success-box"><strong>Opening the Pull Request is your submission.</strong> Your instructor will be notified automatically and will review your fix in GitHub Classroom.</div>
+        </div>
+
+        <!-- ── PAGE 14: Knowledge Check ── -->
+        <div class="page" id="page-13" data-title="Knowledge Check" data-section="Finish">
+          <div class="page-eyebrow">Almost done</div>
+          <h1 class="page-title">Knowledge Check</h1>
+          <p class="page-lead">One final step — a short multiple-choice quiz to test your understanding.</p>
+
+          <div class="finish-hero">
+            <div class="finish-icon">🎉</div>
+          </div>
+
+          <p style="text-align:center; color:var(--text-mid); margin-bottom:1.5rem">You have accepted the assignment, fixed the bug, committed your change, and opened a Pull Request. Complete the short quiz below to finish the exercise.</p>
+
+          <a class="link-btn" href="./index.html" target="_blank" rel="noopener">
+            <div class="link-btn-icon">📝</div>
+            <div class="link-btn-body">
+              <div class="lbl">Final step — opens in a new tab</div>
+              <div class="url">Take the Lesson 1 Quiz →</div>
+            </div>
+          </a>
+
+          <div class="info-box" style="margin-top:1.25rem">At the end of the quiz you will be asked to submit your score as a GitHub Issue. Please do so — it forms part of your assessment.</div>
+        </div>
+
+      </div><!-- /page-inner -->
+    </div><!-- /content -->
+
+    <!-- Footer nav -->
+    <div class="footer-nav">
+      <button class="btn" id="btn-back" onclick="navigate(-1)" disabled>← Back</button>
+      <span class="page-counter" id="page-counter">1 of 14</span>
+      <button class="btn btn-primary" id="btn-next" onclick="navigate(1)">Next →</button>
+    </div>
+  </div><!-- /main -->
 
 </div><!-- /app -->
 
 <script>
-  const pages   = document.querySelectorAll('.page');
-  const total   = pages.length;
-  let   current = 0;
+  const pages = Array.from(document.querySelectorAll('.page'));
+  const total  = pages.length;
+  let current  = 0;
 
+  // ── Build sidebar nav ──
+  const NAV_SECTIONS = {};
+  pages.forEach((p, i) => {
+    const sec = p.dataset.section || 'Other';
+    if (!NAV_SECTIONS[sec]) NAV_SECTIONS[sec] = [];
+    NAV_SECTIONS[sec].push({ index: i, title: p.dataset.title || '' });
+  });
+
+  const nav = document.getElementById('sidebar-nav');
+  Object.entries(NAV_SECTIONS).forEach(([sec, items]) => {
+    const secEl = document.createElement('div');
+    secEl.className = 'nav-section';
+    secEl.innerHTML = `<div class="nav-section-label">${sec}</div>`;
+    items.forEach(({ index, title }) => {
+      const el = document.createElement('div');
+      el.className = 'nav-item';
+      el.id = `nav-${index}`;
+      el.dataset.index = index;
+      el.innerHTML = `<div class="nav-dot"></div><span class="nav-label">${title}</span>`;
+      el.addEventListener('click', () => goTo(index));
+      secEl.appendChild(el);
+    });
+    nav.appendChild(secEl);
+  });
+
+  // Set initial section tint
+  document.querySelector('.content').dataset.section = pages[0].dataset.section || 'Introduction';
+
+  // ── Navigate ──
   function navigate(dir) {
+    goTo(Math.max(0, Math.min(total - 1, current + dir)));
+  }
+
+  function goTo(index) {
     pages[current].classList.remove('active');
-    current = Math.max(0, Math.min(total - 1, current + dir));
+    document.getElementById(`nav-${current}`)?.classList.remove('active');
+    current = index;
     pages[current].classList.add('active');
+    const contentEl = document.querySelector('.content');
+    contentEl.dataset.section = pages[current].dataset.section || 'Introduction';
     updateUI();
-    document.querySelector('.app-content').scrollTop = 0;
+    contentEl.scrollTop = 0;
   }
 
   function updateUI() {
     const title = pages[current].dataset.title || '';
-    document.getElementById('progress-title').textContent  = title;
-    document.getElementById('progress-counter').textContent = `${current + 1} / ${total}`;
-    document.getElementById('progress-fill').style.width   = `${((current + 1) / total) * 100}%`;
-    document.getElementById('step-indicator').textContent  = `${current + 1} of ${total}`;
-    document.getElementById('btn-back').disabled = current === 0;
-    document.getElementById('btn-next').textContent = current === total - 1 ? 'Finish' : 'Next →';
-    document.getElementById('btn-next').disabled = false;
+    const pct   = Math.round(((current + 1) / total) * 100);
+
+    document.getElementById('bc-current').textContent    = title;
+    document.getElementById('sb-pct').textContent        = pct + '%';
+    document.getElementById('sb-fill').style.width       = pct + '%';
+    document.getElementById('page-counter').textContent  = `${current + 1} of ${total}`;
+    document.getElementById('btn-back').disabled         = current === 0;
+    document.getElementById('btn-next').textContent      = current === total - 1 ? 'Finish' : 'Next →';
+
+    // Sidebar items
+    document.querySelectorAll('.nav-item').forEach(el => {
+      const i = parseInt(el.dataset.index);
+      el.classList.remove('active', 'done');
+      if (i === current) el.classList.add('active');
+      else if (i < current) el.classList.add('done');
+    });
+
+    // Checkmarks on done items
+    document.querySelectorAll('.nav-item.done .nav-dot').forEach(dot => { dot.textContent = '✓'; });
+    document.querySelectorAll('.nav-item:not(.done) .nav-dot').forEach(dot => { dot.textContent = ''; });
+    document.querySelectorAll('.nav-item.active .nav-dot').forEach(dot => { dot.textContent = (current + 1).toString(); });
+
+    // Scroll active nav item into view
+    document.getElementById(`nav-${current}`)?.scrollIntoView({ block: 'nearest' });
   }
 
   function toggleReveal(trigger) {
     trigger.closest('.reveal').classList.toggle('open');
   }
 
-  // Keyboard navigation
+  // Screenshot lightbox
+  document.querySelectorAll('.screenshot-wrap').forEach(wrap => {
+    wrap.addEventListener('click', () => {
+      const img = wrap.querySelector('img');
+      document.getElementById('lightbox-img').src = img.src;
+      document.getElementById('lightbox-img').alt = img.alt;
+      document.getElementById('lightbox').classList.add('open');
+    });
+  });
+
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+  }
+
+  // Keyboard nav
   document.addEventListener('keydown', e => {
-    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') navigate(1);
-    if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   navigate(-1);
+    if (e.key === 'Escape') closeLightbox();
+    if (['ArrowRight','ArrowDown'].includes(e.key) && !e.target.matches('input,textarea') && !document.getElementById('lightbox').classList.contains('open')) navigate(1);
+    if (['ArrowLeft','ArrowUp'].includes(e.key)   && !e.target.matches('input,textarea') && !document.getElementById('lightbox').classList.contains('open')) navigate(-1);
   });
 
   updateUI();
 </script>
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <div class="lightbox-close" onclick="closeLightbox()">✕</div>
+  <img id="lightbox-img" src="" alt="" onclick="event.stopPropagation()" />
+</div>
+
 </body>
 </html>
