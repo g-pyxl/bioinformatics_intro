@@ -164,7 +164,7 @@ Your job is to:
 
 Click the link below and sign in with your GitHub account. GitHub Classroom will automatically create a private repository for you — it will be named something like `lesson-1-github-basics-<your-username>`.
 
-**[→ Accept the Lesson 1 assignment](https://classroom.github.com/a/5IiMENZS)**
+**[→ Accept the Lesson 1 assignment](https://classroom.github.com/a/Km_EpdEv)**
 
 > **Note:** Your repository is private. Only you and the instructor can see it.
 
