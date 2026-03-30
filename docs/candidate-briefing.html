@@ -38,14 +38,33 @@
     /* ── Header ── */
     .header {
       display: flex;
-      align-items: flex-start;
+      align-items: center;
       justify-content: space-between;
       padding-bottom: 14px;
       border-bottom: 3px solid var(--accent);
       margin-bottom: 22px;
     }
 
-    .header-left .org {
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .header-logo {
+      height: 48px;
+      width: auto;
+      flex-shrink: 0;
+    }
+
+    .header-divider {
+      width: 1px;
+      height: 48px;
+      background: var(--border);
+      flex-shrink: 0;
+    }
+
+    .header-text .org {
       font-size: 8pt;
       font-weight: 600;
       text-transform: uppercase;
@@ -54,7 +73,7 @@
       margin-bottom: 4px;
     }
 
-    .header-left h1 {
+    .header-text h1 {
       font-size: 18pt;
       font-weight: 700;
       letter-spacing: -0.02em;
@@ -62,7 +81,7 @@
       color: var(--text);
     }
 
-    .header-left .subtitle {
+    .header-text .subtitle {
       font-size: 9.5pt;
       color: var(--muted);
       margin-top: 4px;
@@ -73,6 +92,7 @@
       font-size: 8.5pt;
       color: var(--muted);
       line-height: 1.7;
+      flex-shrink: 0;
     }
 
     .header-right .label {
@@ -204,6 +224,15 @@
       word-break: break-all;
     }
 
+    .link-box .link-url a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .link-box .link-url a:hover {
+      text-decoration: underline;
+    }
+
     .link-icon {
       flex-shrink: 0;
       font-size: 20px;
@@ -276,9 +305,13 @@
     <!-- Header -->
     <div class="header">
       <div class="header-left">
-        <div class="org">Intro to Clinical Bioinformatics</div>
-        <h1>Pre-Interview Exercise</h1>
-        <div class="subtitle">GitHub Basics — Lesson 1</div>
+        <img src="../assets/logo.png" class="header-logo" alt="Company logo" />
+        <div class="header-divider"></div>
+        <div class="header-text">
+          <div class="org">Intro to Clinical Bioinformatics</div>
+          <h1>Pre-Interview Exercise</h1>
+          <div class="subtitle">GitHub Basics — Lesson 1</div>
+        </div>
       </div>
       <div class="header-right">
         <div><span class="label">Estimated time</span></div>
@@ -290,8 +323,8 @@
 
     <!-- Intro -->
     <div class="intro-box">
-      <strong>Welcome.</strong> This short exercise gives you a hands-on introduction to the GitHub workflow used in clinical bioinformatics teams every day. You will fix a bug in a Python script, commit your change, and open a Pull Request — all through the browser with no local software required.
-      There are no trick questions. We are looking for clear thinking, attention to detail, and the ability to follow technical instructions.
+      <strong>Welcome.</strong> This short exercise gives you a hands-on introduction to the GitHub workflow used in Clinical Bioinformatics teams every day. You will fix a bug in a Python script, commit your change, and open a Pull Request — all through the browser with no local software required.
+      There are no trick questions and the task does not require previous knowledge or experience. We are looking for clear thinking, attention to detail, and the ability to follow technical instructions.
     </div>
 
     <!-- What you need -->
@@ -318,11 +351,11 @@
         <div class="link-icon">🔗</div>
         <div>
           <div class="link-label">Assignment link</div>
-          <div class="link-url">https://classroom.github.com/a/rym7cYqo</div>
+          <div class="link-url"><a href="https://classroom.github.com/a/rym7cYqo" target="_blank" rel="noopener">https://classroom.github.com/a/rym7cYqo</a></div>
         </div>
       </div>
 
-      <p>Once you have accepted, click the repository link that appears. Your full step-by-step instructions are inside the repository at <strong>lessons/01_github_basics/README.md</strong>.</p>
+      <p><b>Please create a new team (use your own name) and accept the assignment.</b> Once you have accepted, click the repository link that appears. Your full step-by-step instructions are inside the repository at <strong>lessons/01_github_basics/README.md</strong>.</p>
     </section>
 
     <!-- What you will do -->
@@ -400,7 +433,7 @@
     <!-- Footer -->
     <div class="footer">
       <div>Intro to Clinical Bioinformatics · Pre-Interview Exercise · Lesson 1</div>
-      <div>Questions? Contact your recruiter.</div>
+      <div>Questions? Contact george.doyle@synnovis.co.uk</div>
     </div>
 
   </div>
