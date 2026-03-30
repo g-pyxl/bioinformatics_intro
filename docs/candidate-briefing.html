@@ -401,33 +401,42 @@
     .step-badge {
       display: inline-flex;
       align-items: center;
-      gap: 0.5rem;
       background: var(--accent-light);
       border: 1px solid var(--accent-mid);
       border-radius: 99px;
-      padding: 0.3rem 0.9rem 0.3rem 0.35rem;
+      padding: 0.3rem 0.9rem;
       margin-bottom: 1rem;
-    }
-
-    .step-badge-num {
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
-      background: var(--accent);
-      color: #fff;
-      font-size: 0.72rem;
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .step-badge-text {
       font-size: 0.75rem;
       font-weight: 700;
       color: var(--accent);
       text-transform: uppercase;
       letter-spacing: 0.08em;
+    }
+
+    /* Circled instruction step numbers */
+    .inst-step {
+      display: flex;
+      gap: 0.75rem;
+      align-items: flex-start;
+      margin-bottom: 0.9rem;
+      font-size: 0.9rem;
+      line-height: 1.7;
+      color: var(--text-mid);
+    }
+
+    .inst-num {
+      flex-shrink: 0;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.7rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 3px;
     }
 
     /* ══════════════════════════════════════════
@@ -442,40 +451,71 @@
       box-shadow: 0 1px 4px rgba(0,0,0,0.05);
     }
 
-    .info-box {
-      background: var(--accent-light);
-      border: 1px solid var(--accent-mid);
-      border-left: 4px solid var(--accent);
+    .info-box, .success-box, .warn-box {
+      position: relative;
       border-radius: 8px;
-      padding: 0.9rem 1.1rem;
+      padding: 0.9rem 1.1rem 0.9rem 2.6rem;
       margin: 1rem 0;
       font-size: 0.875rem;
       line-height: 1.65;
       color: var(--text-mid);
+    }
+
+    .info-box {
+      background: var(--accent-light);
+      border: 1px solid var(--accent-mid);
+      border-left: 4px solid var(--accent);
     }
 
     .success-box {
       background: var(--green-light);
       border: 1px solid rgba(22,163,74,0.25);
       border-left: 4px solid var(--green);
-      border-radius: 8px;
-      padding: 0.9rem 1.1rem;
-      margin: 1rem 0;
-      font-size: 0.875rem;
-      line-height: 1.65;
-      color: var(--text-mid);
     }
 
     .warn-box {
       background: var(--amber-light);
       border: 1px solid rgba(217,119,6,0.25);
       border-left: 4px solid var(--amber);
-      border-radius: 8px;
-      padding: 0.9rem 1.1rem;
-      margin: 1rem 0;
-      font-size: 0.875rem;
-      line-height: 1.65;
-      color: var(--text-mid);
+    }
+
+    .info-box::before, .success-box::before, .warn-box::before {
+      position: absolute;
+      left: 0.8rem;
+      top: 0.9rem;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      font-size: 0.65rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+
+    .info-box::before {
+      content: 'i';
+      background: var(--accent);
+      color: #fff;
+      font-style: italic;
+      font-family: Georgia, serif;
+      font-size: 0.75rem;
+    }
+
+    .success-box::before {
+      content: '✓';
+      background: var(--green);
+      color: #fff;
+      font-style: normal;
+    }
+
+    .warn-box::before {
+      content: '!';
+      background: var(--amber);
+      color: #fff;
+      font-style: normal;
     }
 
     /* ══════════════════════════════════════════
@@ -913,6 +953,72 @@
       justify-content: center;
       margin-top: 1px;
     }
+
+    /* ══════════════════════════════════════════
+       INLINE QUIZ
+    ══════════════════════════════════════════ */
+    .qz-name-row { display: flex; gap: 0.75rem; margin-top: 0.75rem; align-items: center; }
+    .qz-name-input {
+      flex: 1; padding: 0.55rem 0.9rem; border-radius: 8px;
+      border: 1.5px solid var(--border); font-size: 0.9rem;
+      font-family: inherit; background: var(--surface); color: var(--text);
+      outline: none; transition: border-color 0.15s;
+    }
+    .qz-name-input:focus { border-color: var(--accent); }
+    .qz-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.25rem; }
+    .qz-prog-bar { flex: 1; height: 4px; background: #e5e7eb; border-radius: 2px; overflow: hidden; }
+    .qz-prog-fill { height: 100%; background: var(--accent); border-radius: 2px; transition: width 0.4s cubic-bezier(0.4,0,0.2,1); width: 0%; }
+    .qz-counter { font-size: 0.72rem; color: var(--muted); font-weight: 600; white-space: nowrap; }
+    .qz-question { font-size: 1rem; font-weight: 600; color: var(--text); margin-bottom: 1rem; line-height: 1.5; }
+    .qz-option {
+      display: flex; align-items: flex-start; gap: 0.75rem;
+      padding: 0.75rem 1rem; border-radius: 8px;
+      border: 1.5px solid var(--border); margin-bottom: 0.5rem;
+      cursor: pointer; transition: border-color 0.15s, background 0.15s;
+      font-size: 0.875rem; color: var(--text-mid); user-select: none;
+    }
+    .qz-option:hover:not(.qz-locked) { border-color: var(--accent); background: var(--accent-light); }
+    .qz-option.qz-correct { border-color: #16a34a; background: #f0fdf4; color: #15803d; }
+    .qz-option.qz-wrong   { border-color: #dc2626; background: #fef2f2; color: #b91c1c; }
+    .qz-option.qz-locked  { cursor: default; }
+    .qz-opt-key {
+      flex-shrink: 0; width: 22px; height: 22px; border-radius: 6px;
+      background: #f1f5f9; border: 1px solid #e5e7eb;
+      font-size: 0.7rem; font-weight: 700; font-family: 'Fira Code', monospace;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .qz-option.qz-correct .qz-opt-key { background: #dcfce7; border-color: #16a34a; color: #15803d; }
+    .qz-option.qz-wrong   .qz-opt-key { background: #fee2e2; border-color: #dc2626; color: #b91c1c; }
+    .qz-exp {
+      background: #f8fafc; border: 1px solid var(--border);
+      border-left: 3px solid var(--accent); border-radius: 8px;
+      padding: 0.9rem 1rem; margin: 0.5rem 0 0.75rem;
+      font-size: 0.875rem; color: var(--text-mid); line-height: 1.6;
+    }
+    .qz-next-row { display: flex; justify-content: flex-end; margin-top: 0.5rem; }
+    .qz-score-ring { display: flex; flex-direction: column; align-items: center; margin: 0.5rem 0 1.5rem; }
+    .qz-ring-svg { width: 110px; height: 110px; }
+    .qz-ring-arc { transition: stroke-dashoffset 1s cubic-bezier(0.4,0,0.2,1); }
+    .qz-score-label { font-size: 1.6rem; font-weight: 700; color: var(--text); margin-top: 0.5rem; }
+    .qz-score-sub   { font-size: 0.8rem; color: var(--muted); margin-top: 0.15rem; }
+    .qz-breakdown { margin-bottom: 1.25rem; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+    .qz-row { display: flex; align-items: flex-start; gap: 0.65rem; padding: 0.65rem 0.9rem; border-bottom: 1px solid var(--border); font-size: 0.825rem; }
+    .qz-row:last-child { border-bottom: none; }
+    .qz-row-icon { flex-shrink: 0; font-weight: 700; margin-top: 1px; }
+    .qz-row-icon.pass { color: #16a34a; }
+    .qz-row-icon.fail { color: #dc2626; }
+    .qz-row-q { color: var(--text-mid); line-height: 1.4; }
+
+    /* ══════════════════════════════════════════
+       MOBILE
+    ══════════════════════════════════════════ */
+    @media (max-width: 720px) {
+      .sidebar { display: none; }
+      .content { padding: 1.5rem 1.25rem 1rem; }
+      .footer-nav { padding: 0 1.25rem; }
+      .topbar { padding: 0 1.25rem; }
+      .two-col { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
@@ -980,29 +1086,6 @@
             </div>
           </div>
 
-          <div class="two-col" style="margin-top:1rem">
-            <div class="col-card">
-              <h4>The task</h4>
-              <ul>
-                <li>Accept the assignment</li>
-                <li>Create a branch</li>
-                <li>Find and fix a bug</li>
-                <li>Commit your fix</li>
-                <li>Open a Pull Request</li>
-                <li>Complete a short quiz</li>
-              </ul>
-            </div>
-            <div class="col-card">
-              <h4>What we assess</h4>
-              <ul>
-                <li>Following instructions</li>
-                <li>Debugging approach</li>
-                <li>Commit message quality</li>
-                <li>PR description</li>
-                <li>Attention to detail</li>
-              </ul>
-            </div>
-          </div>
         </div>
 
         <!-- ── PAGE 2: Background — Git & GitHub ── -->
@@ -1172,9 +1255,10 @@ GC content = 4 / 8 × 100 = <span class="g">50%</span></div>
 
         <!-- ── PAGE 5: Step 1 ── -->
         <div class="page" id="page-4" data-title="Step 1 — Accept the Assignment" data-section="The Exercise">
-          <div class="step-badge"><div class="step-badge-num">1</div><span class="step-badge-text">Accept the Assignment</span></div>
+          <div class="step-badge">Step 1</div>
           <h1 class="page-title">Accept the assignment</h1>
-          <p class="page-lead">Click the link below to claim your private repository on GitHub Classroom.</p>
+
+          <div class="inst-step"><div class="inst-num">1</div><div>Click the assignment link below to claim your private repository on GitHub Classroom.</div></div>
 
           <a class="link-btn" href="https://classroom.github.com/a/rym7cYqo" target="_blank" rel="noopener">
             <div class="link-btn-icon">🔗</div>
@@ -1184,7 +1268,7 @@ GC content = 4 / 8 × 100 = <span class="g">50%</span></div>
             </div>
           </a>
 
-          <p>Once you have accepted, GitHub Classroom shows a confirmation page. Click the <strong>repository link</strong> that appears — it will be named something like <code>lesson-1-github-basics-your-username</code>. This is <b>your private repository</b> for this exercise, so please make sure you keep the URL safe.</p>
+          <div class="inst-step"><div class="inst-num">2</div><div>Once you have accepted, GitHub Classroom shows a confirmation page. Click the <strong>repository link</strong> that appears — it will be named something like <code>lesson-1-github-basics-your-username</code>. This is <strong>your private repository</strong> for this exercise.</div></div>
 
           <div class="screenshot-wrap">
             <img src="assets/user_repo.png" alt="GitHub Classroom confirmation page showing the repository link" />
@@ -1194,7 +1278,7 @@ GC content = 4 / 8 × 100 = <span class="g">50%</span></div>
 
         <!-- ── PAGE 6: Step 2 ── -->
         <div class="page" id="page-5" data-title="Step 2 — Open a Codespace" data-section="The Exercise">
-          <div class="step-badge"><div class="step-badge-num">2</div><span class="step-badge-text">Open a Codespace</span></div>
+          <div class="step-badge">Step 2</div>
           <h1 class="page-title">Open a Codespace</h1>
           <p class="page-lead">A Codespace is a full development environment that runs entirely in your browser — no local software needed.</p>
 
@@ -1209,27 +1293,29 @@ GC content = 4 / 8 × 100 = <span class="g">50%</span></div>
             </div>
           </a>
 
-          <p>On your assignment repository, click the green <strong>Code</strong> button, select the <strong>Codespaces</strong> tab, then click <strong>Create codespace on main</strong>.</p>
+          <div class="inst-step"><div class="inst-num">1</div><div>On your assignment repository, click the green <strong>Code</strong> button, select the <strong>Codespaces</strong> tab, then click <strong>Create codespace on main</strong>.</div></div>
 
           <div class="screenshot-wrap">
             <img src="assets/create_codespace.png" alt="Creating a GitHub Codespace" />
           </div>
 
-          <p>Wait for the Codespace to finish loading. You will see a file explorer on the left and a terminal panel at the bottom, like this:</p>
+          <div class="inst-step"><div class="inst-num">2</div><div>Wait for the Codespace to finish loading. You will see a file explorer on the left and a terminal panel at the bottom, like this:</div></div>
 
           <div class="info-box">If the Codespace takes more than a minute to load, try refreshing the page. If it still won't load, close it and create a new one.</div>
         </div>
 
         <!-- ── PAGE 7: Step 3 ── -->
         <div class="page" id="page-6" data-title="Step 3 — Create a Branch" data-section="The Exercise">
-          <div class="step-badge"><div class="step-badge-num">3</div><span class="step-badge-text">Create a Branch</span></div>
+          <div class="step-badge">Step 3</div>
           <h1 class="page-title">Create a branch</h1>
-          <p class="page-lead">Before making any changes, create an isolated branch for your fix. Type the following command into the terminal at the bottom of your Codespace.</p>
+          <p class="page-lead">Before making any changes, create an isolated branch for your fix.</p>
+
+          <div class="inst-step"><div class="inst-num">1</div><div>Type the following command into the terminal at the bottom of your Codespace:</div></div>
 
           <div class="code-label"><div class="dot"></div><span>Terminal</span></div>
           <div class="code-block">git checkout -b fix/gc-content-bug</div>
 
-          <p>You should see the confirmation message in the terminal, and the branch name will appear in the bottom-left status bar of the editor:</p>
+          <div class="inst-step"><div class="inst-num">2</div><div>You should see a confirmation message in the terminal, and the branch name will appear in the bottom-left status bar of the editor:</div></div>
 
           <div class="screenshot-wrap">
             <img src="assets/branch.png" alt="Branch created — terminal confirmation and status bar showing fix/gc-content-bug" />
@@ -1240,9 +1326,11 @@ GC content = 4 / 8 × 100 = <span class="g">50%</span></div>
 
         <!-- ── PAGE 8: Step 4 ── -->
         <div class="page" id="page-7" data-title="Step 4 — Reproduce the Bug" data-section="The Exercise">
-          <div class="step-badge"><div class="step-badge-num">4</div><span class="step-badge-text">Reproduce the Bug</span></div>
+          <div class="step-badge">Step 4</div>
           <h1 class="page-title">Reproduce the bug</h1>
           <p class="page-lead">Run the script first. Understand the failure before touching any code.</p>
+
+          <div class="inst-step"><div class="inst-num">1</div><div>Run the script in the terminal:</div></div>
 
           <div class="code-label"><div class="dot"></div><span>Terminal</span></div>
           <div class="code-block">python lessons/01_github_basics/gc_content.py</div>
@@ -1251,7 +1339,7 @@ GC content = 4 / 8 × 100 = <span class="g">50%</span></div>
             <img src="assets/codespace.png" alt="Terminal showing the python command being run" />
           </div>
 
-          <p>The script will run its test cases and print the results. You should see:</p>
+          <div class="inst-step"><div class="inst-num">2</div><div>The script will run its test cases and print the results. You should see:</div></div>
           <div class="code-block">GC Content Calculator
 ============================================================
 
@@ -1273,15 +1361,17 @@ ATATATATAT             0.0%       <span class="g">0.0%  PASS</span></div>
 
         <!-- ── PAGE 9: Step 5 ── -->
         <div class="page" id="page-8" data-title="Step 5 — Find & Fix the Bug" data-section="The Exercise">
-          <div class="step-badge"><div class="step-badge-num">5</div><span class="step-badge-text">Find & Fix the Bug</span></div>
+          <div class="step-badge">Step 5</div>
           <h1 class="page-title">Find & fix the bug</h1>
-          <p class="page-lead">In the file explorer on the left, navigate to <strong>lessons → 01_github_basics → gc_content.py</strong> and click to open it. You should see the script in the editor and your failing test output still visible in the terminal below:</p>
+          <p class="page-lead">Find the bug by reading the code — the fix is a single line.</p>
+
+          <div class="inst-step"><div class="inst-num">1</div><div>In the file explorer on the left, navigate to <strong>lessons → 01_github_basics → gc_content.py</strong> and click to open it:</div></div>
 
           <div class="screenshot-wrap">
             <img src="assets/open_script.png" alt="gc_content.py open in editor with failing test output in terminal" />
           </div>
 
-          <p>Read through <code>calculate_gc_content()</code> carefully, then compare it to the GC content formula:</p>
+          <div class="inst-step"><div class="inst-num">2</div><div>Read through <code>calculate_gc_content()</code> carefully, then compare it to the GC content formula:</div></div>
           <div class="code-block">GC content (%) = (G + C) / <span class="y">total bases</span> × 100</div>
 
           <div class="reveal">
@@ -1307,18 +1397,21 @@ ATATATATAT             0.0%       <span class="g">0.0%  PASS</span></div>
               <p style="margin-top:0.5rem">For <code>GCGCGCGC</code>, AT count is zero — hence the <code>ZeroDivisionError</code>. For mixed sequences the result is inflated because the denominator is too small.</p>
             </div>
           </div>
+
+          <div class="inst-step"><div class="inst-num">3</div><div>Make the fix in the editor, then save the file with <strong>Ctrl+S</strong>.</div></div>
         </div>
 
         <!-- ── PAGE 10: Step 6 ── -->
         <div class="page" id="page-9" data-title="Step 6 — Verify Your Fix" data-section="The Exercise">
-          <div class="step-badge"><div class="step-badge-num">6</div><span class="step-badge-text">Verify Your Fix</span></div>
+          <div class="step-badge">Step 6</div>
           <h1 class="page-title">Verify your fix</h1>
-          <p class="page-lead">Save the file (<strong>Ctrl+S</strong>), then run the script again to confirm all tests pass.</p>
+
+          <div class="inst-step"><div class="inst-num">1</div><div>Save the file (<strong>Ctrl+S</strong>), then run the script again:</div></div>
 
           <div class="code-label"><div class="dot"></div><span>Terminal</span></div>
           <div class="code-block">python lessons/01_github_basics/gc_content.py</div>
 
-          <p>Expected output:</p>
+          <div class="inst-step"><div class="inst-num">2</div><div>All five tests should now show <strong>PASS</strong>:</div></div>
           <div class="code-block">GC Content Calculator
 ============================================================
 
@@ -1337,9 +1430,10 @@ ATATATATAT             0.0%       <span class="g">0.0%  PASS</span>
 
         <!-- ── PAGE 11: Step 7 ── -->
         <div class="page" id="page-10" data-title="Step 7 — Commit Your Change" data-section="The Exercise">
-          <div class="step-badge"><div class="step-badge-num">7</div><span class="step-badge-text">Commit Your Change</span></div>
+          <div class="step-badge">Step 7</div>
           <h1 class="page-title">Commit your change</h1>
-          <p class="page-lead">Stage the file and save your fix as a commit with a clear, descriptive message.</p>
+
+          <div class="inst-step"><div class="inst-num">1</div><div>Stage the file and commit your fix with a clear, descriptive message:</div></div>
 
           <div class="code-label"><div class="dot"></div><span>Terminal</span></div>
           <div class="code-block">git add lessons/01_github_basics/gc_content.py
@@ -1354,30 +1448,29 @@ git commit -m "fix: divide by total bases not AT count in calculate_gc_content"<
             </ul>
           </div>
 
-          <p>The message above is a suggestion — feel free to write your own. What matters is that it clearly describes the change.</p>
+          <div class="inst-step" style="margin-top:0.9rem"><div class="inst-num">2</div><div>The message above is a suggestion — feel free to write your own. What matters is that it clearly describes the change.</div></div>
         </div>
 
         <!-- ── PAGE 12: Step 8 ── -->
         <div class="page" id="page-11" data-title="Step 8 — Push Your Branch" data-section="The Exercise">
-          <div class="step-badge"><div class="step-badge-num">8</div><span class="step-badge-text">Push Your Branch</span></div>
+          <div class="step-badge">Step 8</div>
           <h1 class="page-title">Push your branch</h1>
-          <p class="page-lead">Upload your branch to GitHub so it can be reviewed.</p>
+
+          <div class="inst-step"><div class="inst-num">1</div><div>Upload your branch to GitHub:</div></div>
 
           <div class="code-label"><div class="dot"></div><span>Terminal</span></div>
           <div class="code-block">git push origin fix/gc-content-bug</div>
 
-          <p>You should see a success message confirming the branch was created on GitHub:</p>
+          <div class="inst-step"><div class="inst-num">2</div><div>You should see a success message confirming the branch was created on GitHub:</div></div>
 
           <div class="screenshot-wrap">
             <img src="assets/push_success.png" alt="Terminal showing successful git push with new branch created" />
           </div>
-
-          <p>Your code is now on GitHub and ready for a Pull Request.</p>
         </div>
 
         <!-- ── PAGE 13: Step 9 ── -->
         <div class="page" id="page-12" data-title="Step 9 — Open a Pull Request" data-section="The Exercise">
-          <div class="step-badge"><div class="step-badge-num">9</div><span class="step-badge-text">Open a Pull Request</span></div>
+          <div class="step-badge">Step 9</div>
           <h1 class="page-title">Open a Pull Request</h1>
           <p class="page-lead">A Pull Request is how you propose your fix for review — and it is your submission.</p>
 
@@ -1385,11 +1478,10 @@ git commit -m "fix: divide by total bases not AT count in calculate_gc_content"<
             <li><div class="sn">1</div><div>Go back to your assignment repository on GitHub</div></li>
             <li><div class="sn">2</div><div>You should see a yellow banner — <strong>"fix/gc-content-bug had recent pushes"</strong> — click <strong>Compare & pull request</strong></div></li>
             <li><div class="sn">3</div><div>Confirm the PR merges <code>fix/gc-content-bug</code> into <strong>your own <code>main</code></strong> branch — both within your private repository</div></li>
-            <li><div class="sn">4</div><div>Write a short description of the bug you found and how you fixed it</div></li>
-            <li><div class="sn">5</div><div>Click <strong>Create pull request</strong></div></li>
+            <li><div class="sn">4</div><div>In the PR title or description, <strong>include your full name</strong> — this is how we identify your submission</div></li>
+            <li><div class="sn">5</div><div>Write a short description of the bug you found and how you fixed it</div></li>
+            <li><div class="sn">6</div><div>Click <strong>Create pull request</strong></div></li>
           </ul>
-
-          <p>After pushing, go back to your repository on GitHub. You will see a yellow banner like this — click <strong>Compare & pull request</strong>:</p>
 
           <div class="screenshot-wrap">
             <img src="assets/pull_request.png" alt="GitHub showing the Compare & pull request banner" />
@@ -1402,23 +1494,53 @@ git commit -m "fix: divide by total bases not AT count in calculate_gc_content"<
         <div class="page" id="page-13" data-title="Knowledge Check" data-section="Finish">
           <div class="page-eyebrow">Almost done</div>
           <h1 class="page-title">Knowledge Check</h1>
-          <p class="page-lead">One final step — a short multiple-choice quiz to test your understanding.</p>
+          <p class="page-lead">Five questions to finish — then submit your score to complete the exercise.</p>
 
-          <div class="finish-hero">
-            <div class="finish-icon">🎉</div>
+          <!-- Name screen -->
+          <div id="qz-name">
+            <p style="color:var(--text-mid);font-size:0.9rem;margin-bottom:0.25rem">Enter your name to begin:</p>
+            <div class="qz-name-row">
+              <input class="qz-name-input" id="qz-name-input" type="text" placeholder="Your full name" autocomplete="name"/>
+              <button class="btn btn-primary" onclick="qzStart()">Begin Quiz →</button>
+            </div>
           </div>
 
-          <p style="text-align:center; color:var(--text-mid); margin-bottom:1.5rem">You have accepted the assignment, fixed the bug, committed your change, and opened a Pull Request. Complete the short quiz below to finish the exercise.</p>
-
-          <a class="link-btn" href="./index.html" target="_blank" rel="noopener">
-            <div class="link-btn-icon">📝</div>
-            <div class="link-btn-body">
-              <div class="lbl">Final step — opens in a new tab</div>
-              <div class="url">Take the Lesson 1 Quiz →</div>
+          <!-- Question screen -->
+          <div id="qz-q" style="display:none">
+            <div class="qz-header">
+              <div class="qz-prog-bar"><div class="qz-prog-fill" id="qz-prog-fill"></div></div>
+              <span class="qz-counter" id="qz-counter">1 / 5</span>
             </div>
-          </a>
+            <div class="qz-question" id="qz-question"></div>
+            <div id="qz-options"></div>
+            <div class="qz-exp" id="qz-exp" style="display:none"></div>
+            <div class="qz-next-row" id="qz-next-row" style="display:none">
+              <button class="btn btn-primary" id="qz-next-btn" onclick="qzAdvance()">Next →</button>
+            </div>
+          </div>
 
-          <div class="info-box" style="margin-top:1.25rem">At the end of the quiz you will be asked to submit your score as a GitHub Issue. Please do so — it forms part of your assessment.</div>
+          <!-- Results screen -->
+          <div id="qz-results" style="display:none">
+            <div class="qz-score-ring">
+              <svg class="qz-ring-svg" viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="40" fill="none" stroke="#e5e7eb" stroke-width="8"/>
+                <circle cx="50" cy="50" r="40" fill="none" stroke="var(--accent)" stroke-width="8"
+                        stroke-linecap="round" stroke-dasharray="251.2" stroke-dashoffset="251.2"
+                        id="qz-ring-arc" class="qz-ring-arc" transform="rotate(-90 50 50)"/>
+              </svg>
+              <div class="qz-score-label" id="qz-score-label">0 / 5</div>
+              <div class="qz-score-sub" id="qz-score-sub"></div>
+            </div>
+            <div class="qz-breakdown" id="qz-breakdown"></div>
+            <a class="link-btn" id="qz-issue-link" href="#" target="_blank" rel="noopener">
+              <div class="link-btn-icon">📝</div>
+              <div class="link-btn-body">
+                <div class="lbl">Final step — click to open GitHub</div>
+                <div class="url">Submit your score as a GitHub Issue →</div>
+              </div>
+            </a>
+            <div class="info-box" style="margin-top:1rem">Submitting the GitHub Issue forms part of your assessment. Please do not skip this step.</div>
+          </div>
         </div>
 
       </div><!-- /page-inner -->
@@ -1532,9 +1654,132 @@ git commit -m "fix: divide by total bases not AT count in calculate_gc_content"<
   // Keyboard nav
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') closeLightbox();
+    const quizActive = document.getElementById('qz-q')?.style.display !== 'none';
+    if (quizActive) {
+      const map = { a: 0, b: 1, c: 2, d: 3, '1': 0, '2': 1, '3': 2, '4': 3 };
+      if (e.key.toLowerCase() in map && !e.target.matches('input,textarea')) qzPick(map[e.key.toLowerCase()]);
+      if ((e.key === 'Enter' || e.key === ' ') && document.getElementById('qz-next-row')?.style.display !== 'none') qzAdvance();
+      return;
+    }
     if (['ArrowRight','ArrowDown'].includes(e.key) && !e.target.matches('input,textarea') && !document.getElementById('lightbox').classList.contains('open')) navigate(1);
     if (['ArrowLeft','ArrowUp'].includes(e.key)   && !e.target.matches('input,textarea') && !document.getElementById('lightbox').classList.contains('open')) navigate(-1);
   });
+
+  // ── Inline Quiz ──
+  const QZ_QUESTIONS = [
+    {
+      q: "What is a fork on GitHub?",
+      opts: ["A branch that can only be merged via pull request","A copy of a repository under your own GitHub account","A commit that introduces a breaking change","A snapshot of a repository at a specific point in time"],
+      correct: 1,
+      exp: "A fork creates an independent copy of a repository under your own account. You can freely experiment without affecting the original, and propose your changes back via a pull request when you're ready."
+    },
+    {
+      q: "Why should you create a branch before making changes?",
+      opts: ["GitHub requires it — you cannot commit to a forked repo otherwise","It compresses your commits to save storage space","It isolates your work so the main branch stays unaffected","It automatically syncs your changes with the original repository"],
+      correct: 2,
+      exp: "Branches let you develop in isolation. If something goes wrong, main is untouched. In clinical bioinformatics, no one commits directly to main — changes always go through a branch and a pull request."
+    },
+    {
+      q: "What does opening a pull request do?",
+      opts: ["Immediately merges your branch into main","Downloads the latest changes from the original repository","Proposes your changes for review before they are merged","Creates a compressed archive of your branch"],
+      correct: 2,
+      exp: "A pull request opens a discussion around your proposed changes. Collaborators can review line by line, leave comments, and approve before anything is merged — providing a permanent, traceable audit trail."
+    },
+    {
+      q: "What was the bug in gc_content.py?",
+      opts: ["The function forgot to convert the sequence to uppercase","GC count was divided by the AT count instead of total bases","G and C were counted separately and never added together","The result was multiplied by 10 instead of 100"],
+      correct: 1,
+      exp: "The denominator was (a_count + t_count) instead of len(sequence). For all-GC sequences this caused a ZeroDivisionError; for mixed sequences it inflated results — ATGCATGC returned 100% instead of 50%."
+    },
+    {
+      q: "Why are pull requests particularly important in clinical bioinformatics?",
+      opts: ["They are required by GitHub's terms of service for medical repositories","They automatically run regulatory validation checks on pipeline code","They ensure every change is reviewed before it can affect patient results","They create a regulatory submission package from the pipeline code"],
+      correct: 2,
+      exp: "Clinical pipelines must be auditable and validated. The PR review step provides a second pair of eyes and a permanent record of who approved each change — essential for clinical quality management."
+    }
+  ];
+
+  let qzCurrent = 0, qzScore = 0, qzUserName = '', qzAnswers = [];
+
+  function qzStart() {
+    qzUserName = document.getElementById('qz-name-input').value.trim();
+    if (!qzUserName) { document.getElementById('qz-name-input').focus(); return; }
+    qzCurrent = 0; qzScore = 0; qzAnswers = [];
+    document.getElementById('qz-name').style.display = 'none';
+    document.getElementById('qz-q').style.display = 'block';
+    qzRender();
+  }
+
+  function qzRender() {
+    const q = QZ_QUESTIONS[qzCurrent];
+    const keys = ['A','B','C','D'];
+    document.getElementById('qz-counter').textContent = `${qzCurrent + 1} / ${QZ_QUESTIONS.length}`;
+    document.getElementById('qz-prog-fill').style.width = `${(qzCurrent / QZ_QUESTIONS.length) * 100}%`;
+    document.getElementById('qz-question').textContent = q.q;
+    document.getElementById('qz-options').innerHTML = q.opts.map((o, i) =>
+      `<div class="qz-option" id="qz-opt-${i}" onclick="qzPick(${i})">
+        <div class="qz-opt-key">${keys[i]}</div><div>${o}</div>
+      </div>`
+    ).join('');
+    document.getElementById('qz-exp').style.display = 'none';
+    document.getElementById('qz-next-row').style.display = 'none';
+  }
+
+  function qzPick(idx) {
+    if (document.getElementById('qz-opt-0')?.classList.contains('qz-locked')) return;
+    const q = QZ_QUESTIONS[qzCurrent];
+    const correct = idx === q.correct;
+    if (correct) qzScore++;
+    qzAnswers.push({ correct });
+    q.opts.forEach((_, i) => {
+      const el = document.getElementById(`qz-opt-${i}`);
+      if (!el) return;
+      el.classList.add('qz-locked');
+      if (i === q.correct) el.classList.add('qz-correct');
+      else if (i === idx)  el.classList.add('qz-wrong');
+    });
+    const exp = document.getElementById('qz-exp');
+    exp.textContent = q.exp;
+    exp.style.display = 'block';
+    const nextBtn = document.getElementById('qz-next-btn');
+    nextBtn.textContent = qzCurrent < QZ_QUESTIONS.length - 1 ? 'Next →' : 'See Results →';
+    document.getElementById('qz-next-row').style.display = 'flex';
+  }
+
+  function qzAdvance() {
+    qzCurrent++;
+    if (qzCurrent < QZ_QUESTIONS.length) {
+      qzRender();
+    } else {
+      qzShowResults();
+    }
+  }
+
+  function qzShowResults() {
+    document.getElementById('qz-q').style.display = 'none';
+    document.getElementById('qz-results').style.display = 'block';
+    const total = QZ_QUESTIONS.length;
+    document.getElementById('qz-score-label').textContent = `${qzScore} / ${total}`;
+    document.getElementById('qz-score-sub').textContent = Math.round((qzScore / total) * 100) + '%';
+    setTimeout(() => {
+      const circ = 2 * Math.PI * 40;
+      document.getElementById('qz-ring-arc').style.strokeDashoffset = circ * (1 - qzScore / total);
+    }, 50);
+    document.getElementById('qz-breakdown').innerHTML = qzAnswers.map((a, i) =>
+      `<div class="qz-row">
+        <div class="qz-row-icon ${a.correct ? 'pass' : 'fail'}">${a.correct ? '✓' : '✗'}</div>
+        <div class="qz-row-q"><strong>Q${i + 1}:</strong> ${QZ_QUESTIONS[i].q}</div>
+      </div>`
+    ).join('');
+    const pct = Math.round((qzScore / total) * 100);
+    const rows = qzAnswers.map((a, i) =>
+      `| Q${i+1} | ${QZ_QUESTIONS[i].q} | ${a.correct ? '✓ Correct' : '✗ Incorrect'} |`
+    ).join('%0A');
+    const body = `**Name:** ${qzUserName}%0A%0A**Score:** ${qzScore} / ${total} (${pct}%25)%0A%0A| # | Question | Result |%0A|---|---|---|%0A${rows}`;
+    const title = encodeURIComponent(`Quiz Result — ${qzUserName} — ${qzScore}/${total}`);
+    document.getElementById('qz-issue-link').href =
+      `https://github.com/g-pyxl/bioinformatics_intro/issues/new?title=${title}&body=${body}&labels=quiz-result`;
+  }
 
   updateUI();
 </script>
