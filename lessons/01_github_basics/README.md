@@ -15,7 +15,7 @@
 
 By the end of this lesson you will be able to:
 
-- Fork a GitHub repository
+- Accept a GitHub Classroom assignment
 - Create a branch for your changes
 - Find and fix a bug in a Python script
 - Commit your changes with a meaningful message
@@ -62,26 +62,40 @@ Key concepts:
 </details>
 
 <details>
+<summary><strong>What is GitHub Classroom?</strong></summary>
+
+<br>
+
+**GitHub Classroom** is a tool that automates the setup of coding assignments on GitHub. When an instructor creates an assignment, each student receives their own **private repository** — an isolated copy of the exercise that only they and the instructor can see.
+
+This is the workflow you will follow:
+
+```
+Instructor creates assignment
+        │
+        ▼
+You click the invite link
+        │
+        ▼
+GitHub creates your private repo  ◄──── you work here
+        │
+        ▼
+You open a Pull Request within your repo
+        │
+        ▼
+Instructor reviews your PR
+```
+
+Because each student has a fully separate private repo, no one can see anyone else's work.
+
+</details>
+
+<details>
 <summary><strong>What is a Fork?</strong></summary>
 
 <br>
 
-A **fork** is your own personal copy of someone else's repository. When you fork a repo, GitHub creates an identical copy under your account. You can make any changes you like to your fork without affecting the original.
-
-This is the standard workflow for contributing to a shared codebase:
-
-```
-Original repo (owned by someone else)
-        │
-        ▼
-   Your fork  ◄──── you work here
-        │
-        ▼
- Pull Request  ◄──── you ask to merge your changes back
-        │
-        ▼
- Original repo (if accepted)
-```
+A **fork** is a copy of a repository under a different account. GitHub Classroom uses this mechanism behind the scenes to create your private assignment repo. In day-to-day bioinformatics work, forks are also used to contribute to shared codebases — you fork a repo, make your changes, then propose them back via a Pull Request.
 
 </details>
 
@@ -134,7 +148,7 @@ There is a bug in [`gc_content.py`](gc_content.py). The script is supposed to ca
 
 Your job is to:
 
-1. Fork this repository
+1. Accept the assignment via the invite link
 2. Create a branch
 3. Find and fix the bug
 4. Commit your fix
@@ -146,21 +160,19 @@ Your job is to:
 
 ## Step-by-Step Instructions
 
-### Step 1 — Fork the repository
+### Step 1 — Accept the assignment
 
-Click the **Fork** button in the top-right corner of the original repository page, then click **Create Fork**.
+Click the link below and sign in with your GitHub account. GitHub Classroom will automatically create a private repository for you — it will be named something like `lesson-1-github-basics-<your-username>`.
 
-| Fork screenshot |
-|---|
-| ![GitHub fork button](../../assets/fork.png) |
+**[→ Accept the Lesson 1 assignment](https://classroom.github.com/a/Km_EpdEv)**
 
-This creates your own copy at `https://github.com/<your-username>/bioinformatics_intro`.
+> **Note:** Your repository is private. Only you and the instructor can see it.
 
 ---
 
 ### Step 2 — Open a Codespace
 
-On your forked repo, click the green **Code** button, select the **Codespaces** tab, and click **Create codespace on main**.
+On your assignment repository, click the green **Code** button, select the **Codespaces** tab, and click **Create codespace on main**.
 
 | Codespace screenshot |
 |---|
@@ -184,7 +196,7 @@ git checkout -b fix/gc-content-bug
 
 ### Step 4 — Reproduce the bug
 
-Run the script to see the failing tests:
+Run the Python script in your terminal to see the failing tests:
 
 ```bash
 python lessons/01_github_basics/gc_content.py
@@ -289,13 +301,13 @@ git push origin fix/gc-content-bug
 
 ### Step 9 — Open a Pull Request
 
-1. Go to your fork on GitHub (`https://github.com/<your-username>/bioinformatics_intro`)
+1. Go to your assignment repository on GitHub
 2. You should see a banner: **"fix/gc-content-bug had recent pushes"** — click **Compare & pull request**
-3. Make sure the **base repository** is the original repo (not your fork) and the **base branch** is `main`
+3. The base branch should already be set to `main` within your repository — leave it as is
 4. Write a short description of the bug you found and how you fixed it
 5. Click **Create pull request**
 
-That's it! The Pull Request will notify the repository maintainer for review.
+That's it! Your instructor will be notified and can review your fix directly in GitHub Classroom.
 
 <p align="center">
   <img src="../../assets/divider.svg" width="100%" alt=""/>
@@ -306,7 +318,7 @@ That's it! The Pull Request will notify the repository maintainer for review.
 You have practised the core GitHub workflow used in clinical bioinformatics:
 
 ```
-Fork → Branch → Fix → Commit → Push → Pull Request
+Accept assignment → Branch → Fix → Commit → Push → Pull Request
 ```
 
 This cycle — sometimes called the **feature branch workflow** — ensures that every change is isolated, reviewed, and traceable before it reaches a shared codebase.
