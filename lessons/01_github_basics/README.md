@@ -176,9 +176,9 @@ Once you have accepted, GitHub Classroom will create a private repository for yo
 
 On your assignment repository, click the green **Code** button, select the **Codespaces** tab, and click **Create codespace on main**.
 
-| Codespace screenshot |
+| Open a codespace |
 |---|
-| ![GitHub Codespace terminal](../../assets/codespace.png) |
+| ![GitHub Codespace terminal](../../assets/create_codespace.png) |
 
 Wait for the Codespace to finish loading — you will see a terminal at the bottom of the screen.
 
@@ -187,6 +187,10 @@ Wait for the Codespace to finish loading — you will see a terminal at the bott
 ### 🟢 Step 3 — Create a branch
 
 In the Codespace terminal, create a new branch for your fix:
+
+| Create a new branch |
+|---|
+| ![GitHub Codespace terminal](../../assets/branch.png) |
 
 ```bash
 git checkout -b fix/gc-content-bug
@@ -199,6 +203,10 @@ git checkout -b fix/gc-content-bug
 ### 🟢 Step 4 — Reproduce the bug
 
 Run the Python script in your terminal to see the failing tests:
+
+| Run the script |
+|---|
+| ![GitHub Codespace terminal](../../assets/codespace.png) |
 
 ```bash
 python lessons/01_github_basics/gc_content.py
@@ -226,6 +234,10 @@ The script is broken. Read the output carefully — what is the pattern? The all
 ### 🟢 Step 5 — Find the bug
 
 Open [`gc_content.py`](gc_content.py) in the editor. Read through the `calculate_gc_content()` function.
+
+| Open the script |
+|---|
+| ![GitHub Codespace terminal](../../assets/open_script.png) |
 
 Compare the code to the GC content formula in the background reading:
 
@@ -305,7 +317,7 @@ git push origin fix/gc-content-bug
 
 ### 🟢 Step 9 — Open a Pull Request
 
-1. Go to your assignment repository on GitHub
+1. Go back to your assignment repository on GitHub
 2. You should see a banner: **"fix/gc-content-bug had recent pushes"** — click **Compare & pull request**
 3. Make sure the PR is set to merge your `fix/gc-content-bug` branch into **your own `main` branch** — both should be within your repository
 4. Write a short description of the bug you found and how you fixed it
