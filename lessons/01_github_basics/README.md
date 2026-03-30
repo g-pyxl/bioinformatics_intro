@@ -25,7 +25,7 @@ By the end of this lesson you will be able to:
   <img src="../../assets/divider.svg" width="100%" alt=""/>
 </p>
 
-## Background
+## 📖 Background
 
 <details>
 <summary><strong>What is Git?</strong></summary>
@@ -142,14 +142,14 @@ GC content matters because:
   <img src="../../assets/divider.svg" width="100%" alt=""/>
 </p>
 
-## Your Task
+## 📋 Your Task
 
 There is a bug in [`gc_content.py`](gc_content.py). The script is supposed to calculate the GC content of DNA sequences, but it produces wrong answers — and for some sequences it crashes entirely.
 
 Your job is to:
 
 1. Accept the assignment via the invite link
-2. Create a branch
+2. Create a new branch
 3. Find and fix the bug
 4. Commit your fix
 5. Open a Pull Request
@@ -160,31 +160,37 @@ Your job is to:
 
 ## Step-by-Step Instructions
 
-### Step 1 — Accept the assignment
+### 🟢 Step 1 — Accept the assignment
 
-Click the link below and sign in with your GitHub account. GitHub Classroom will automatically create a private repository for you — it will be named something like `lesson-1-github-basics-<your-username>`.
+Click the link below and sign in with your GitHub account:
 
 **[→ Accept the Lesson 1 assignment](https://classroom.github.com/a/Km_EpdEv)**
 
-> **Note:** Your repository is private. Only you and the instructor can see it.
+Once you have accepted, GitHub Classroom will create a private repository for you inside the `intro_to_clinical_bioinformatics` organisation. Click the repository link that appears to open it.
+
+> **Note:** Your repository is private. Only you and the instructor can see it. You will be asked to create a "team name". Please use your own name so we are able to recognise who the work belongs to!
 
 ---
 
-### Step 2 — Open a Codespace
+### 🟢 Step 2 — Open a Codespace
 
 On your assignment repository, click the green **Code** button, select the **Codespaces** tab, and click **Create codespace on main**.
 
-| Codespace screenshot |
+| Open a codespace |
 |---|
-| ![GitHub Codespace terminal](../../assets/codespace.png) |
+| ![GitHub Codespace terminal](../../assets/create_codespace.png) |
 
 Wait for the Codespace to finish loading — you will see a terminal at the bottom of the screen.
 
 ---
 
-### Step 3 — Create a branch
+### 🟢 Step 3 — Create a branch
 
 In the Codespace terminal, create a new branch for your fix:
+
+| Create a new branch |
+|---|
+| ![GitHub Codespace terminal](../../assets/branch.png) |
 
 ```bash
 git checkout -b fix/gc-content-bug
@@ -194,9 +200,13 @@ git checkout -b fix/gc-content-bug
 
 ---
 
-### Step 4 — Reproduce the bug
+### 🟢 Step 4 — Reproduce the bug
 
 Run the Python script in your terminal to see the failing tests:
+
+| Run the script |
+|---|
+| ![GitHub Codespace terminal](../../assets/codespace.png) |
 
 ```bash
 python lessons/01_github_basics/gc_content.py
@@ -221,9 +231,13 @@ The script is broken. Read the output carefully — what is the pattern? The all
 
 ---
 
-### Step 5 — Find the bug
+### 🟢 Step 5 — Find the bug
 
 Open [`gc_content.py`](gc_content.py) in the editor. Read through the `calculate_gc_content()` function.
+
+| Open the script |
+|---|
+| ![GitHub Codespace terminal](../../assets/open_script.png) |
 
 Compare the code to the GC content formula in the background reading:
 
@@ -263,7 +277,7 @@ For `GCGCGCGC`, the AT count is zero — hence the `ZeroDivisionError`. For all 
 
 ---
 
-### Step 6 — Verify your fix
+### 🟢 Step 6 — Verify your fix
 
 After making the change, run the script again:
 
@@ -273,9 +287,11 @@ python lessons/01_github_basics/gc_content.py
 
 All five tests should now show `PASS`.
 
+**Note:** You must save your changes before they can be tested. Use Ctrl+S or File > Save before running your amended script.
+
 ---
 
-### Step 7 — Commit your change
+### 🟢 Step 7 — Commit your change
 
 Stage the file you edited and write a clear commit message:
 
@@ -291,7 +307,7 @@ git commit -m "fix: divide by total bases not AT count in calculate_gc_content"
 
 ---
 
-### Step 8 — Push your branch
+### 🟢 Step 8 — Push your branch
 
 ```bash
 git push origin fix/gc-content-bug
@@ -299,11 +315,11 @@ git push origin fix/gc-content-bug
 
 ---
 
-### Step 9 — Open a Pull Request
+### 🟢 Step 9 — Open a Pull Request
 
-1. Go to your assignment repository on GitHub
+1. Go back to your assignment repository on GitHub
 2. You should see a banner: **"fix/gc-content-bug had recent pushes"** — click **Compare & pull request**
-3. The base branch should already be set to `main` within your repository — leave it as is
+3. Make sure the PR is set to merge your `fix/gc-content-bug` branch into **your own `main` branch** — both should be within your repository
 4. Write a short description of the bug you found and how you fixed it
 5. Click **Create pull request**
 

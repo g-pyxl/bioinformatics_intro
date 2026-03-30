@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Candidate Briefing — Intro to Clinical Bioinformatics</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --accent: #1f6feb;
+      --green:  #1a7f37;
+      --text:   #1a1a2e;
+      --muted:  #57606a;
+      --border: #d0d7de;
+      --bg-alt: #f6f8fa;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 10.5pt;
+      color: var(--text);
+      background: #fff;
+      padding: 0;
+      line-height: 1.6;
+    }
+
+    .page {
+      width: 210mm;
+      min-height: 297mm;
+      margin: 0 auto;
+      padding: 18mm 18mm 16mm;
+      background: #fff;
+    }
+
+    /* ── Header ── */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 14px;
+      border-bottom: 3px solid var(--accent);
+      margin-bottom: 22px;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .header-logo {
+      height: 48px;
+      width: auto;
+      flex-shrink: 0;
+    }
+
+    .header-divider {
+      width: 1px;
+      height: 48px;
+      background: var(--border);
+      flex-shrink: 0;
+    }
+
+    .header-text .org {
+      font-size: 8pt;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+      margin-bottom: 4px;
+    }
+
+    .header-text h1 {
+      font-size: 18pt;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      color: var(--text);
+    }
+
+    .header-text .subtitle {
+      font-size: 9.5pt;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    .header-right {
+      text-align: right;
+      font-size: 8.5pt;
+      color: var(--muted);
+      line-height: 1.7;
+      flex-shrink: 0;
+    }
+
+    .header-right .label {
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    /* ── Intro box ── */
+    .intro-box {
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--accent);
+      border-radius: 4px;
+      padding: 12px 14px;
+      margin-bottom: 22px;
+      font-size: 10pt;
+      line-height: 1.65;
+      color: var(--muted);
+    }
+
+    .intro-box strong { color: var(--text); }
+
+    /* ── Sections ── */
+    section { margin-bottom: 20px; }
+
+    h2 {
+      font-size: 10pt;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      margin-bottom: 10px;
+      padding-bottom: 4px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    p { margin-bottom: 8px; }
+    p:last-child { margin-bottom: 0; }
+
+    /* ── Requirements list ── */
+    .req-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .req-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 10pt;
+    }
+
+    .req-icon {
+      flex-shrink: 0;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--bg-alt);
+      border: 1.5px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 9px;
+      margin-top: 1px;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    /* ── Steps ── */
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .step {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .step-num {
+      flex-shrink: 0;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #fff;
+      font-size: 8.5pt;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 1px;
+    }
+
+    .step-body { flex: 1; }
+    .step-body strong { font-weight: 600; }
+    .step-body p { margin: 0; font-size: 10pt; }
+    .step-body .note { font-size: 9pt; color: var(--muted); margin-top: 2px; }
+
+    /* ── Link box ── */
+    .link-box {
+      border: 1.5px solid var(--accent);
+      border-radius: 6px;
+      padding: 12px 16px;
+      margin: 14px 0;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: #f0f6ff;
+    }
+
+    .link-box .link-label {
+      font-size: 8.5pt;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      margin-bottom: 3px;
+    }
+
+    .link-box .link-url {
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 10pt;
+      color: var(--text);
+      word-break: break-all;
+    }
+
+    .link-box .link-url a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .link-box .link-url a:hover {
+      text-decoration: underline;
+    }
+
+    .link-icon {
+      flex-shrink: 0;
+      font-size: 20px;
+    }
+
+    /* ── Two columns ── */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .col-box {
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 12px 14px;
+    }
+
+    .col-box h3 {
+      font-size: 9pt;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .col-box p, .col-box li {
+      font-size: 9.5pt;
+      color: var(--text);
+    }
+
+    .col-box ul {
+      padding-left: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    /* ── Footer ── */
+    .footer {
+      margin-top: auto;
+      padding-top: 14px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 8.5pt;
+      color: var(--muted);
+    }
+
+    .footer a { color: var(--accent); text-decoration: none; }
+
+    /* ── Print ── */
+    @media print {
+      body { background: #fff; }
+      .page { width: 100%; margin: 0; padding: 14mm 16mm 12mm; }
+      @page { size: A4; margin: 0; }
+    }
+
+    @media screen {
+      body { background: #e8eaed; padding: 2rem 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+
+    <!-- Header -->
+    <div class="header">
+      <div class="header-left">
+        <img src="../assets/logo.png" class="header-logo" alt="Company logo" />
+        <div class="header-divider"></div>
+        <div class="header-text">
+          <div class="org">Intro to Clinical Bioinformatics</div>
+          <h1>Pre-Interview Exercise</h1>
+          <div class="subtitle">GitHub Basics — Lesson 1</div>
+        </div>
+      </div>
+      <div class="header-right">
+        <div><span class="label">Estimated time</span></div>
+        <div>45–60 minutes</div>
+        <div style="margin-top:6px"><span class="label">Difficulty</span></div>
+        <div>Beginner</div>
+      </div>
+    </div>
+
+    <!-- Intro -->
+    <div class="intro-box">
+      <strong>Welcome.</strong> This short exercise gives you a hands-on introduction to the GitHub workflow used in Clinical Bioinformatics teams every day. You will fix a bug in a Python script, commit your change, and open a Pull Request — all through the browser with no local software required.
+      There are no trick questions and the task does not require previous knowledge or experience. We are looking for clear thinking, attention to detail, and the ability to follow technical instructions.
+    </div>
+
+    <!-- What you need -->
+    <section>
+      <h2>What you need</h2>
+      <ul class="req-list">
+        <li>
+          <div class="req-icon">✓</div>
+          <div>A free <strong>GitHub account</strong> — create one at <strong>github.com/signup</strong> if you don't already have one. Use your real name so we can identify your submission.</div>
+        </li>
+        <li>
+          <div class="req-icon">✓</div>
+          <div>A modern web browser (Chrome, Firefox, Edge, or Safari). No local installation is required — the exercise runs entirely in the browser via GitHub Codespaces.</div>
+        </li>
+      </ul>
+    </section>
+
+    <!-- Getting started -->
+    <section>
+      <h2>Getting started</h2>
+      <p>Click the assignment link below to accept the exercise. GitHub Classroom will automatically create a private repository for you — only you and the instructor can see it.</p>
+
+      <div class="link-box">
+        <div class="link-icon">🔗</div>
+        <div>
+          <div class="link-label">Assignment link</div>
+          <div class="link-url"><a href="https://classroom.github.com/a/rym7cYqo" target="_blank" rel="noopener">https://classroom.github.com/a/rym7cYqo</a></div>
+        </div>
+      </div>
+
+      <p><b>Please create a new team (use your own name) and accept the assignment.</b> Once you have accepted, click the repository link that appears. Your full step-by-step instructions are inside the repository at <strong>lessons/01_github_basics/README.md</strong>.</p>
+    </section>
+
+    <!-- What you will do -->
+    <section>
+      <h2>What you will do</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <p><strong>Accept the assignment</strong> — GitHub Classroom creates your private repo.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <p><strong>Open a Codespace</strong> — a browser-based development environment loads automatically.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <p><strong>Create a branch</strong> — isolate your work from the main codebase.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <p><strong>Find and fix a bug</strong> — a Python script that calculates GC content of DNA sequences is producing wrong results. Read the output, identify the cause, and fix it.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">5</div>
+          <div class="step-body">
+            <p><strong>Commit and push</strong> — save your fix with a clear, descriptive commit message.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">6</div>
+          <div class="step-body">
+            <p><strong>Open a Pull Request</strong> — propose your fix for review. This is your submission.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">7</div>
+          <div class="step-body">
+            <p><strong>Complete the quiz</strong> — a short multiple-choice quiz is linked at the end of the lesson.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Two columns: assessment + tips -->
+    <div class="two-col" style="margin-bottom:20px">
+      <div class="col-box">
+        <h3>What we are assessing</h3>
+        <ul>
+          <li>Ability to follow technical instructions</li>
+          <li>Logical debugging approach</li>
+          <li>Quality of commit message</li>
+          <li>Pull Request description</li>
+          <li>Attention to detail</li>
+        </ul>
+      </div>
+      <div class="col-box">
+        <h3>Tips</h3>
+        <ul>
+          <li>Read the error output carefully before touching the code</li>
+          <li>The fix is a single line change</li>
+          <li>Write your commit message as if a colleague will read it</li>
+          <li>All instructions are inside the repo — follow them step by step</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <div>Intro to Clinical Bioinformatics · Pre-Interview Exercise · Lesson 1</div>
+      <div>Questions? Contact george.doyle@synnovis.co.uk</div>
+    </div>
+
+  </div>
+</body>
+</html>
