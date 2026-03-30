@@ -323,7 +323,7 @@ git push origin fix/gc-content-bug
 4. Write a short description of the bug you found and how you fixed it
 5. Click **Create pull request**
 
-That's it! Your instructor will be notified and can review your fix directly in GitHub Classroom.
+**Opening the Pull Request is your submission.** Your instructor will be notified automatically and will review your fix directly in GitHub Classroom.
 
 <p align="center">
   <img src="../../assets/divider.svg" width="100%" alt=""/>
