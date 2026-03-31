@@ -352,7 +352,9 @@
       font-size: 0.975rem;
       line-height: 1.65;
       color: var(--text-mid);
+      padding-bottom: 1.5rem;
       margin-bottom: 1.75rem;
+      border-bottom: 1px solid var(--border);
     }
 
     h3 {
@@ -526,34 +528,43 @@
       border-radius: 10px;
       overflow: hidden;
       margin: 0.75rem 0;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.07);
     }
 
-    table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
 
-    thead { background: var(--bg); }
+    thead { background: var(--sidebar-bg); }
 
     th {
       text-align: left;
-      padding: 0.65rem 1rem;
+      padding: 0.75rem 1.1rem;
       font-weight: 600;
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: var(--muted);
-      border-bottom: 1px solid var(--border);
+      letter-spacing: 0.07em;
+      color: rgba(255,255,255,0.65);
     }
 
     td {
-      padding: 0.65rem 1rem;
+      padding: 0.75rem 1.1rem;
       border-bottom: 1px solid var(--border);
-      line-height: 1.55;
+      line-height: 1.6;
       vertical-align: top;
       color: var(--text-mid);
     }
 
+    /* first column — term/label */
+    td:first-child {
+      color: var(--text);
+      white-space: nowrap;
+      width: 1%;
+    }
+
+    /* alternating rows */
+    tbody tr:nth-child(even) td { background: var(--bg); }
+
     tr:last-child td { border-bottom: none; }
-    tbody tr:hover td { background: var(--bg); }
+    tbody tr:hover td { background: #eef2ff; }
 
     /* ══════════════════════════════════════════
        CODE
@@ -972,23 +983,26 @@
     .qz-question { font-size: 1rem; font-weight: 600; color: var(--text); margin-bottom: 1rem; line-height: 1.5; }
     .qz-option {
       display: flex; align-items: flex-start; gap: 0.75rem;
-      padding: 0.75rem 1rem; border-radius: 8px;
-      border: 1.5px solid var(--border); margin-bottom: 0.5rem;
-      cursor: pointer; transition: border-color 0.15s, background 0.15s;
-      font-size: 0.875rem; color: var(--text-mid); user-select: none;
+      padding: 0.8rem 1rem; border-radius: 8px;
+      border: 1.5px solid #cbd5e1; margin-bottom: 0.6rem;
+      background: #fff;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+      cursor: pointer; transition: border-color 0.15s, background 0.15s, box-shadow 0.15s;
+      font-size: 0.875rem; color: var(--text); user-select: none;
     }
-    .qz-option:hover:not(.qz-locked) { border-color: var(--accent); background: var(--accent-light); }
-    .qz-option.qz-correct { border-color: #16a34a; background: #f0fdf4; color: #15803d; }
+    .qz-option:hover:not(.qz-locked) { border-color: var(--accent); background: var(--accent-light); box-shadow: 0 2px 6px rgba(0,0,0,0.09); }
+    .qz-option.qz-correct { border-color: #0d9488; background: #f0fdfa; color: #0f766e; }
     .qz-option.qz-wrong   { border-color: #dc2626; background: #fef2f2; color: #b91c1c; }
-    .qz-option.qz-locked  { cursor: default; }
+    .qz-option.qz-locked  { cursor: default; box-shadow: none; }
     .qz-opt-key {
-      flex-shrink: 0; width: 22px; height: 22px; border-radius: 6px;
-      background: #f1f5f9; border: 1px solid #e5e7eb;
+      flex-shrink: 0; width: 24px; height: 24px; border-radius: 6px;
+      background: #e2e8f0; border: 1px solid #cbd5e1;
       font-size: 0.7rem; font-weight: 700; font-family: 'Fira Code', monospace;
-      display: flex; align-items: center; justify-content: center;
+      display: flex; align-items: center; justify-content: center; color: var(--text);
+      transition: background 0.15s, border-color 0.15s;
     }
-    .qz-option.qz-correct .qz-opt-key { background: #dcfce7; border-color: #16a34a; color: #15803d; }
-    .qz-option.qz-wrong   .qz-opt-key { background: #fee2e2; border-color: #dc2626; color: #b91c1c; }
+    .qz-option.qz-correct .qz-opt-key { background: #0d9488; border-color: #0d9488; color: #fff; }
+    .qz-option.qz-wrong   .qz-opt-key { background: #dc2626; border-color: #dc2626; color: #fff; }
     .qz-exp {
       background: #f8fafc; border: 1px solid var(--border);
       border-left: 3px solid var(--accent); border-radius: 8px;
@@ -1257,6 +1271,7 @@ GC content = 4 / 8 × 100 = <span class="g">50%</span></div>
         <div class="page" id="page-4" data-title="Step 1 — Accept the Assignment" data-section="The Exercise">
           <div class="step-badge">Step 1</div>
           <h1 class="page-title">Accept the assignment</h1>
+          <p class="page-lead">Claim your private repository on GitHub Classroom — this is where all your work will live.</p>
 
           <div class="inst-step"><div class="inst-num">1</div><div>Click the assignment link below to claim your private repository on GitHub Classroom.</div></div>
 
@@ -1300,6 +1315,10 @@ GC content = 4 / 8 × 100 = <span class="g">50%</span></div>
           </div>
 
           <div class="inst-step"><div class="inst-num">2</div><div>Wait for the Codespace to finish loading. You will see a file explorer on the left and a terminal panel at the bottom, like this:</div></div>
+
+          <div class="screenshot-wrap">
+            <img src="assets/codespace_init.png" alt="GitHub Codespace fully loaded — file explorer on the left and terminal panel at the bottom" />
+          </div>
 
           <div class="info-box">If the Codespace takes more than a minute to load, try refreshing the page. If it still won't load, close it and create a new one.</div>
         </div>
@@ -1405,6 +1424,7 @@ ATATATATAT             0.0%       <span class="g">0.0%  PASS</span></div>
         <div class="page" id="page-9" data-title="Step 6 — Verify Your Fix" data-section="The Exercise">
           <div class="step-badge">Step 6</div>
           <h1 class="page-title">Verify your fix</h1>
+          <p class="page-lead">Run the script again to confirm all tests pass before moving on.</p>
 
           <div class="inst-step"><div class="inst-num">1</div><div>Save the file (<strong>Ctrl+S</strong>), then run the script again:</div></div>
 
@@ -1432,6 +1452,7 @@ ATATATATAT             0.0%       <span class="g">0.0%  PASS</span>
         <div class="page" id="page-10" data-title="Step 7 — Commit Your Change" data-section="The Exercise">
           <div class="step-badge">Step 7</div>
           <h1 class="page-title">Commit your change</h1>
+          <p class="page-lead">Save a snapshot of your fix to the Git history with a clear, descriptive message.</p>
 
           <div class="inst-step"><div class="inst-num">1</div><div>Stage the file and commit your fix with a clear, descriptive message:</div></div>
 
@@ -1455,6 +1476,7 @@ git commit -m "fix: divide by total bases not AT count in calculate_gc_content"<
         <div class="page" id="page-11" data-title="Step 8 — Push Your Branch" data-section="The Exercise">
           <div class="step-badge">Step 8</div>
           <h1 class="page-title">Push your branch</h1>
+          <p class="page-lead">Upload your local commits to GitHub so your branch is ready for a Pull Request.</p>
 
           <div class="inst-step"><div class="inst-num">1</div><div>Upload your branch to GitHub:</div></div>
 
@@ -1465,6 +1487,12 @@ git commit -m "fix: divide by total bases not AT count in calculate_gc_content"<
 
           <div class="screenshot-wrap">
             <img src="assets/push_success.png" alt="Terminal showing successful git push with new branch created" />
+          </div>
+
+          <div class="info-box"><strong>What does this command do?</strong><br>
+            <code>git push</code> uploads your local commits to GitHub. The two parts after it tell Git exactly where to send them:<br><br>
+            <strong>origin</strong> — the name Git uses for the remote repository on GitHub (the one you cloned your Codespace from). You can think of it as a shorthand for the full GitHub URL.<br><br>
+            <strong>fix/gc-content-bug</strong> — the name of the branch you are pushing. Git creates that branch on GitHub if it does not exist yet, and uploads only the commits on that branch.
           </div>
         </div>
 
@@ -1477,10 +1505,16 @@ git commit -m "fix: divide by total bases not AT count in calculate_gc_content"<
           <ul class="step-list">
             <li><div class="sn">1</div><div>Go back to your assignment repository on GitHub</div></li>
             <li><div class="sn">2</div><div>You should see a yellow banner — <strong>"fix/gc-content-bug had recent pushes"</strong> — click <strong>Compare & pull request</strong></div></li>
-            <li><div class="sn">3</div><div>Confirm the PR merges <code>fix/gc-content-bug</code> into <strong>your own <code>main</code></strong> branch — both within your private repository</div></li>
-            <li><div class="sn">4</div><div>In the PR title or description, <strong>include your full name</strong> — this is how we identify your submission</div></li>
-            <li><div class="sn">5</div><div>Write a short description of the bug you found and how you fixed it</div></li>
-            <li><div class="sn">6</div><div>Click <strong>Create pull request</strong></div></li>
+            <li><div class="sn">3</div><div><strong>Check the base repository.</strong> GitHub may default to the original template repository — you need to change it to point to <strong>your own repository</strong> so the PR stays within your private copy. Use the <strong>base repository</strong> drop-down at the top of the page to select your own repository:</div></li>
+          </ul>
+
+          <div class="screenshot-wrap">
+            <img src="assets/pr_base.png" alt="GitHub PR page showing the base repository drop-down being changed to the student's own repository" />
+          </div>
+
+          <ul class="step-list">
+            <li><div class="sn">4</div><div>In the <strong>Add a description</strong> box, enter your <strong>full name</strong> — this is how we identify your submission</div></li>
+            <li><div class="sn">5</div><div>Click <strong>Create pull request</strong></div></li>
           </ul>
 
           <div class="screenshot-wrap">
@@ -1490,11 +1524,26 @@ git commit -m "fix: divide by total bases not AT count in calculate_gc_content"<
           <div class="success-box"><strong>Opening the Pull Request is your submission.</strong> Your instructor will be notified automatically and will review your fix in GitHub Classroom.</div>
         </div>
 
+        <!-- ── PAGE 13b: Step 10 ── -->
+        <div class="page" id="page-12b" data-title="Step 10 — Merge your Pull Request" data-section="The Exercise">
+          <div class="step-badge">Step 10</div>
+          <h1 class="page-title">Merge your Pull Request</h1>
+          <p class="page-lead">Once the Pull Request is open, merge it to bring your fix into your <code>main</code> branch.</p>
+
+          <div class="inst-step"><div class="inst-num">1</div><div>On your Pull Request page, click <strong>Merge pull request</strong>, then confirm by clicking <strong>Confirm merge</strong>.</div></div>
+
+          <div class="screenshot-wrap">
+            <img src="assets/merge.png" alt="GitHub Pull Request page showing the Merge pull request button" />
+          </div>
+
+          <div class="success-box"><strong>Your fix is now on <code>main</code>.</strong> The Pull Request will show as <strong>Merged</strong> and your instructor can see the complete history of your branch, commits, and review.</div>
+        </div>
+
         <!-- ── PAGE 14: Knowledge Check ── -->
         <div class="page" id="page-13" data-title="Knowledge Check" data-section="Finish">
           <div class="page-eyebrow">Almost done</div>
           <h1 class="page-title">Knowledge Check</h1>
-          <p class="page-lead">Five questions to finish — then submit your score to complete the exercise.</p>
+          <p class="page-lead">Five quick questions to check your understanding.</p>
 
           <!-- Name screen -->
           <div id="qz-name">
@@ -1532,14 +1581,6 @@ git commit -m "fix: divide by total bases not AT count in calculate_gc_content"<
               <div class="qz-score-sub" id="qz-score-sub"></div>
             </div>
             <div class="qz-breakdown" id="qz-breakdown"></div>
-            <a class="link-btn" id="qz-issue-link" href="#" target="_blank" rel="noopener">
-              <div class="link-btn-icon">📝</div>
-              <div class="link-btn-body">
-                <div class="lbl">Final step — click to open GitHub</div>
-                <div class="url">Submit your score as a GitHub Issue →</div>
-              </div>
-            </a>
-            <div class="info-box" style="margin-top:1rem">Submitting the GitHub Issue forms part of your assessment. Please do not skip this step.</div>
           </div>
         </div>
 
@@ -1731,12 +1772,19 @@ git commit -m "fix: divide by total bases not AT count in calculate_gc_content"<
     const correct = idx === q.correct;
     if (correct) qzScore++;
     qzAnswers.push({ correct });
+    const tick = `<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><polyline points="1.5,6 4.5,9.5 10.5,2.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+    const cross = `<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><line x1="2" y1="2" x2="10" y2="10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="10" y1="2" x2="2" y2="10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`;
     q.opts.forEach((_, i) => {
       const el = document.getElementById(`qz-opt-${i}`);
       if (!el) return;
       el.classList.add('qz-locked');
-      if (i === q.correct) el.classList.add('qz-correct');
-      else if (i === idx)  el.classList.add('qz-wrong');
+      if (i === q.correct) {
+        el.classList.add('qz-correct');
+        el.querySelector('.qz-opt-key').innerHTML = tick;
+      } else if (i === idx) {
+        el.classList.add('qz-wrong');
+        el.querySelector('.qz-opt-key').innerHTML = cross;
+      }
     });
     const exp = document.getElementById('qz-exp');
     exp.textContent = q.exp;
@@ -1771,14 +1819,6 @@ git commit -m "fix: divide by total bases not AT count in calculate_gc_content"<
         <div class="qz-row-q"><strong>Q${i + 1}:</strong> ${QZ_QUESTIONS[i].q}</div>
       </div>`
     ).join('');
-    const pct = Math.round((qzScore / total) * 100);
-    const rows = qzAnswers.map((a, i) =>
-      `| Q${i+1} | ${QZ_QUESTIONS[i].q} | ${a.correct ? '✓ Correct' : '✗ Incorrect'} |`
-    ).join('%0A');
-    const body = `**Name:** ${qzUserName}%0A%0A**Score:** ${qzScore} / ${total} (${pct}%25)%0A%0A| # | Question | Result |%0A|---|---|---|%0A${rows}`;
-    const title = encodeURIComponent(`Quiz Result — ${qzUserName} — ${qzScore}/${total}`);
-    document.getElementById('qz-issue-link').href =
-      `https://github.com/g-pyxl/bioinformatics_intro/issues/new?title=${title}&body=${body}&labels=quiz-result`;
   }
 
   updateUI();
