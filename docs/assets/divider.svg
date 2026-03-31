@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 830 4" width="830" height="4">
+  <title>section divider</title>
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="0" gradientUnits="objectBoundingBox">
+      <stop offset="0%"   stop-color="#238636" stop-opacity="0"/>
+      <stop offset="15%"  stop-color="#238636"/>
+      <stop offset="50%"  stop-color="#1f6feb"/>
+      <stop offset="85%"  stop-color="#8957e5"/>
+      <stop offset="100%" stop-color="#8957e5" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="shim" x1="0" y1="0" x2="1" y2="0" gradientUnits="objectBoundingBox">
+      <stop offset="0%"   stop-color="white" stop-opacity="0"/>
+      <stop offset="50%"  stop-color="white" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="white" stop-opacity="0"/>
+    </linearGradient>
+    <clipPath id="c">
+      <rect width="830" height="4" rx="2"/>
+    </clipPath>
+    <style>
+      .s { animation: shimmer 4s ease-in-out infinite }
+      @keyframes shimmer {
+        from { transform: translateX(-830px); }
+        to   { transform: translateX(830px);  }
+      }
+    </style>
+  </defs>
+  <g clip-path="url(#c)">
+    <rect width="830" height="4" fill="url(#g)"/>
+    <rect class="s" width="830" height="4" fill="url(#shim)"/>
+  </g>
+</svg>
