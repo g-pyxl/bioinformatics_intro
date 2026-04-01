@@ -1264,6 +1264,7 @@ GC content = 4 / 8 × 100 = <span class="g">50%</span></div>
             <li><div class="sn">7</div><div>Commit your change with a clear, descriptive message</div></li>
             <li><div class="sn">8</div><div>Push your branch to GitHub</div></li>
             <li><div class="sn">9</div><div>Open a Pull Request — this is your submission</div></li>
+            <li><div class="sn">10</div><div>Merge your Pull Request</div></li>
           </ul>
         </div>
 
@@ -1288,7 +1289,7 @@ GC content = 4 / 8 × 100 = <span class="g">50%</span></div>
           <div class="screenshot-wrap">
             <img src="assets/user_repo.png" alt="GitHub Classroom confirmation page showing the repository link" />
           </div>
-          <div class="info-box"><b>Your repository is private. Only you and the instructor can see it.</b></div>
+          <div class="info-box">Your repository is private. Only you and the instructor can see it. <b>Please click on the link to open your repository.</b></div>
         </div>
 
         <!-- ── PAGE 6: Step 2 ── -->
@@ -1503,23 +1504,27 @@ git commit -m "fix: divide by total bases not AT count in calculate_gc_content"<
           <p class="page-lead">A Pull Request is how you propose your fix for review — and it is your submission.</p>
 
           <ul class="step-list">
-            <li><div class="sn">1</div><div>Go back to your assignment repository on GitHub</div></li>
-            <li><div class="sn">2</div><div>You should see a yellow banner — <strong>"fix/gc-content-bug had recent pushes"</strong> — click <strong>Compare & pull request</strong></div></li>
-            <li><div class="sn">3</div><div><strong>Check the base repository.</strong> GitHub may default to the original template repository — you need to change it to point to <strong>your own repository</strong> so the PR stays within your private copy. Use the <strong>base repository</strong> drop-down at the top of the page to select your own repository:</div></li>
+            <li><div class="sn">1</div><div>Go back to your assignment repository on GitHub and click the <strong>Pull requests</strong> tab</div></li>
           </ul>
 
           <div class="screenshot-wrap">
-            <img src="assets/pr_base.png" alt="GitHub PR page showing the base repository drop-down being changed to the student's own repository" />
+            <img src="assets/open_pr.png" alt="GitHub repository showing the Pull requests tab" />
           </div>
 
           <ul class="step-list">
-            <li><div class="sn">4</div><div>In the <strong>Add a description</strong> box, enter your <strong>full name</strong> — this is how we identify your submission</div></li>
-            <li><div class="sn">5</div><div>Click <strong>Create pull request</strong></div></li>
+            <li><div class="sn">2</div><div>Click <strong>New pull request</strong></div></li>
+            <li><div class="sn">3</div><div>Set <strong>base</strong> to <code>main</code> and <strong>compare</strong> to <code>fix/gc-content-bug</code></div></li>
+            <li><div class="sn">4</div><div>Click <strong>Create pull request</strong></div></li>
           </ul>
 
           <div class="screenshot-wrap">
-            <img src="assets/pull_request.png" alt="GitHub showing the Compare & pull request banner" />
+            <img src="assets/compare_pr.png" alt="GitHub compare branches screen with base set to main and compare set to fix/gc-content-bug" />
           </div>
+
+          <ul class="step-list">
+            <li><div class="sn">5</div><div>In the <strong>Add a description</strong> box, enter your <strong>full name</strong> — this is how we identify your submission</div></li>
+            <li><div class="sn">6</div><div>Click <strong>Create pull request</strong></div></li>
+          </ul>
 
           <div class="success-box"><strong>Opening the Pull Request is your submission.</strong> Your instructor will be notified automatically and will review your fix in GitHub Classroom.</div>
         </div>
